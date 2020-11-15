@@ -1,6 +1,7 @@
 # Jacob's Blog
 
 *My blog and portfolio website.*
+
 *Location:* [jacobianmatthews.com](https://jacobianmatthews.com)
 
 # Contribution
