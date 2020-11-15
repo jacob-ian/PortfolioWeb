@@ -1,0 +1,23 @@
+name: Continuous Integration
+on:
+  pull_request:
+    branches: [main]
+jobs:
+  integrate:
+    name: Build and Test Project
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Branch
+        uses: actions/checkout@master
+      - name: Setup Node.js Environment
+        uses: actions/setup-node@master
+        with:
+          node_version: '10.x'
+      - name: Install Project Dependencies
+        run: npm ci
+      - name: Build Project
+        run: npm run build
+      - name: Run Project Tests
+        run: npm run test
+
+
