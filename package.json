@@ -7,7 +7,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "release-install": "npm install -D semantic-release @semantic-release/git latest-release-git"
   },
   "private": true,
   "dependencies": {
@@ -27,9 +28,10 @@
     "@angular-devkit/build-angular": "~0.1001.2",
     "@angular/cli": "~10.1.2",
     "@angular/compiler-cli": "~10.1.2",
-    "@types/node": "^12.11.1",
+    "@semantic-release/git": "^9.0.0",
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
+    "@types/node": "^12.11.1",
     "codelyzer": "^6.0.0",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~5.0.0",
@@ -38,9 +40,33 @@
     "karma-coverage-istanbul-reporter": "~3.0.2",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
+    "last-release-git": "0.0.3",
     "protractor": "~7.0.0",
+    "semantic-release": "^17.2.2",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
     "typescript": "~4.0.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jacob-ian/PortfolioWeb.git"
+  },
+  "release": {
+    "getLastRelease": "latest-release-git",
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/npm",
+      "@semantic-release/github",
+      [
+        "@semantic-release/git",
+        {
+          "assets": [
+            "package.json"
+          ],
+          "message": "chore(release): [skip ci] ${nextRelease.version} \n\n${nextRelease.notes}"
+        }
+      ]
+    ]
   }
 }
