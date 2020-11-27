@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "jacobianmatthews-portfolio"
+  },
+  "targets": {
+    "jacobianmatthews-portfolio": {
+      "hosting": {
+        "PortfolioWeb": [
+          "jacobianmatthews-portfolio"
+        ]
+      }
+    }
   }
 }
