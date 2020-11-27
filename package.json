@@ -1,14 +1,17 @@
 {
   "name": "portfolio-web",
-  "version": "0.0.0",
+  "version": "0.0.0-development",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "install:ci": "npm ci && npm --prefix functions ci",
     "build": "ng build",
+    "build:prod": "ng build --prod",
+    "build:ci": "ng build --prod && npm --prefix functions run build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "release-install": "npm install -D semantic-release @semantic-release/git latest-release-git"
+    "semantic-release": "semantic-release"
   },
   "private": true,
   "dependencies": {
@@ -29,6 +32,7 @@
     "@angular/cli": "~10.1.2",
     "@angular/compiler-cli": "~10.1.2",
     "@semantic-release/git": "^9.0.0",
+    "@semantic-release/npm": "^7.0.8",
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.11.1",
@@ -52,7 +56,7 @@
     "url": "https://github.com/jacob-ian/PortfolioWeb.git"
   },
   "release": {
-    "getLastRelease": "latest-release-git",
+    "getLastRelease": "last-release-git",
     "plugins": [
       "@semantic-release/commit-analyzer",
       "@semantic-release/release-notes-generator",
@@ -62,9 +66,10 @@
         "@semantic-release/git",
         {
           "assets": [
-            "package.json"
+            "package.json",
+            "package-lock.json"
           ],
-          "message": "chore(release): [skip ci] ${nextRelease.version} \n\n${nextRelease.notes}"
+          "message": "chore(release): ${nextRelease.version} [skip ci] \n\n${nextRelease.notes}"
         }
       ]
     ]
