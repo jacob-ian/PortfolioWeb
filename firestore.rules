@@ -4,10 +4,10 @@ service cloud.firestore {
     match /{document=**} {
       allow read, write: if false 
     }
-
+    
     match /posts/{postId} {
       allow read: if true;
-      allow create: if hasAuthorRole(request.auth.uid) || hasAdminRole(request.auth.uid);
+      allow create: if (hasAuthorRole(request.auth.uid) || hasAdminRole(request.auth.uid)) && postValid(request.resource.data);
       allow update: if isAuthor(request.auth.uid, postId) || hasAdminRole(request.auth.uid);
       allow delete: if isAuthor(request.auth.uid, postId) || hasAdminRole(request.auth.uid);
     }
@@ -28,6 +28,10 @@ service cloud.firestore {
 
     function hasAdminRole(userId){
       return 'admin' in get(/databases/$(database)/documents/users/$(userId)).data.roles;
+    }
+
+    function postValid(data) {
+      return data.keys().hasAll([ "id", "title", "name", "href", "thumbnail", "author", "description", "content", "tags", "dateCreated", "comments" ]);
     }
 
     function isAuthor(userId, postId) {
