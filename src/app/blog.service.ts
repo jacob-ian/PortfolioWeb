@@ -3,8 +3,40 @@ import {
   AngularFirestore,
   AngularFirestoreCollection,
 } from '@angular/fire/firestore';
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 import { AuthService } from './auth.service';
+
+/**
+ * An interface for the Author of a post
+ */
+interface Author {
+  uid: string; // the UID of the post's author
+  name: string; // the name of the author
+  image: {
+    href: string; // the location of the author's image
+  };
+}
+
+export interface Comment {
+  id: string; // the ID of the comment
+  content: string; // the content of the comment
+  author: Author; // the author of the comment
+  dateCreated: number; // The date/time of creation
+}
+
+interface NewComment {
+  content: string; // the content of the comment
+  postId: string; // the id of the post to comment on
+}
+
+interface DeletedComment {
+  id: string; // the ID of the comment that was deleted
+  message: string; // the confirmation message
+}
 
 /**
  * An interface for a Blog Post object
@@ -19,18 +51,13 @@ export interface Post {
     href: string; // the URL to the thumbnail image
   };
   // the author of the post
-  author: {
-    name: string; // the name of the author
-    image: {
-      type: 'image/jpeg' | 'image/gif' | 'image/png' | 'image/svg'; // the image type for the thumbnail
-      href: string; // the URL of the author's image
-    };
-  };
+  author: Author;
   description: string; // the description of the blog post
   content: string; // the Markdown string content
   tags: string[]; // the tags associated with the post
   dateCreated: number; // the created date and time
   dateUpdated?: number; // the date of last edit
+  comments: Comment[];
 }
 
 /**
@@ -45,14 +72,6 @@ interface PostRequest {
     type: 'image/jpeg' | 'image/gif' | 'image/png' | 'image/svg';
     href: string; // the URL to the thumbnail image
   };
-  // If left blank, it will be populated from the auth service
-  author?: {
-    name: string; // the name of the author
-    image: {
-      type: 'image/jpeg' | 'image/gif' | 'image/png' | 'image/svg';
-      href: string; // the URL to the author's image
-    };
-  };
 }
 
 interface PostUpdate {
@@ -66,13 +85,7 @@ interface PostUpdate {
     type: 'image/jpeg' | 'image/gif' | 'image/png' | 'image/svg';
     href: string; // the URL to the thumbnail image
   };
-  author?: {
-    name: string; // the name of the author
-    image: {
-      type: 'image/jpeg' | 'image/gif' | 'image/png' | 'image/svg';
-      href: string; // the URL to the author's image
-    };
-  };
+  author?: Author;
 }
 
 interface PostDeleted {
@@ -101,10 +114,68 @@ export class BlogService {
   // The Firestore collection
   private collection: AngularFirestoreCollection<Post>;
 
-  constructor(private firestore: AngularFirestore, private auth: AuthService) {
+  // The Posts list object
+  posts$: Observable<Post[]>;
+
+  // Create the filter objects
+  limitFilter$: BehaviorSubject<number | null>;
+  offsetFilter$: BehaviorSubject<number | null>;
+  queryFilter$: BehaviorSubject<string | null>;
+  tagsFilter$: BehaviorSubject<string[] | null>;
+  orderByFilter$: BehaviorSubject<'dateCreated' | 'dateUpdated' | 'title'>;
+
+  constructor(private afs: AngularFirestore, private auth: AuthService) {
     // Define the collection
-    this.collection = this.firestore.collection('posts');
+    this.collection = this.afs.collection('posts');
+
+    // Define the filters
+    this.limitFilter$ = new BehaviorSubject(null);
+    this.offsetFilter$ = new BehaviorSubject(null);
+    this.tagsFilter$ = new BehaviorSubject(null);
+    this.orderByFilter$ = new BehaviorSubject('dateCreated');
+    this.queryFilter$ = new BehaviorSubject(null);
+
+    // Get the posts collection observable by combining the filters
+    this.posts$ = combineLatest([
+      this.limitFilter$,
+      this.offsetFilter$,
+      this.tagsFilter$,
+      this.orderByFilter$,
+      this.queryFilter$,
+    ]).pipe(
+      switchMap(([limit, offset, tags, orderBy, querySearch]) =>
+        this.afs
+          .collection<Post>('posts', (ref) => {
+            let query:
+              | firebase.firestore.CollectionReference
+              | firebase.firestore.Query = ref;
+            if (limit) {
+              query.limit(limit);
+            }
+            if (offset) {
+              query.startAt(offset);
+            }
+            if (tags) {
+              query.where('tags', 'array-contains', tags);
+            }
+            if (orderBy) {
+              query.orderBy(orderBy);
+            }
+            if (querySearch) {
+              query.where('title', 'in', querySearch);
+            }
+            return query;
+          })
+          .valueChanges()
+      )
+    );
   }
+
+  /**
+   *
+   * BLOG POSTS
+   *
+   */
 
   /**
    * Fetches a Blog Post object by URL name
@@ -132,18 +203,7 @@ export class BlogService {
       throw error;
     }
 
-    // Check how many documents were returned
-    if (docs.size > 1) {
-      // We have a problem, there should only be one document per name
-      const error: BlogServiceError = {
-        code: 404,
-        error: 'invalid-request',
-        description: 'The request was invalid.',
-      };
-      throw error;
-    }
-
-    // We can return the document
+    // Return the post's data
     return docs.docs[0].data();
   }
 
@@ -154,16 +214,16 @@ export class BlogService {
    * @throws BlogService Error
    */
   async getPostById(id: string): Promise<Post> {
-    // Call firestore to fetch the post that has the matching name
+    // Get the post by ID from Firestore
     try {
-      var docs = await this.collection.ref.where('id', '==', id).get();
+      var doc = await this.afs.doc<Post>(`/posts/${id}`).get().toPromise();
     } catch (err) {
       // Rethrow the error
       throw err;
     }
 
     // Check if a document was returned
-    if (docs.empty) {
+    if (doc.exists) {
       // Throw an error
       const error: BlogServiceError = {
         code: 404,
@@ -173,19 +233,8 @@ export class BlogService {
       throw error;
     }
 
-    // Check how many documents were returned
-    if (docs.size > 1) {
-      // We have a problem, there should only be one document per ID
-      const error: BlogServiceError = {
-        code: 500,
-        error: 'internal',
-        description: 'There was an internal error.',
-      };
-      throw error;
-    }
-
     // We can return the document
-    return docs.docs[0].data();
+    return doc.data();
   }
 
   /**
@@ -193,58 +242,37 @@ export class BlogService {
    * @param limit the number of posts to fetch
    * @param offset the post number to start fetching from (for pagination)
    * @param tags the post's tags to search by
-   * @param sort the sort by method, default 'new': new first, 'old': old first
+   * @param orderBy the sort by method, default 'new': new first, 'old': old first
    * @param query a search query to filter the posts titles with
    * @returns an array of Post objects
    * @throws BlogServiceError object
    */
-  async getPosts(
+  getPosts(
     limit: number,
     orderBy: 'dateCreated' | 'dateUpdated' | 'title',
     offset?: number,
     tags?: string[],
     query?: string
-  ): Promise<Post[]> {
-    // Try fetch the documents
-    try {
-      // Create the document query
-      var docQuery = this.collection.ref.orderBy(orderBy).limit(limit);
-
-      // Check if a search query was provided
-      if (query) {
-        docQuery.where('title', 'in', query);
-      }
-
-      // Check if any tags were provided
-      if (tags) {
-        docQuery.where('tags', 'array-contains', tags);
-      }
-
-      // Check if an offset was provided
-      if (offset) {
-        docQuery.startAt(offset);
-      }
-
-      // Fetch the documents
-      var docs = await docQuery.get();
-    } catch (err) {
-      // Rethrow the error
-      throw err;
+  ): Observable<Post[]> {
+    // Update the filters if they exist
+    if (limit) {
+      this.limitFilter$.next(limit);
+    }
+    if (orderBy) {
+      this.orderByFilter$.next(orderBy);
+    }
+    if (offset) {
+      this.offsetFilter$.next(offset);
+    }
+    if (tags) {
+      this.tagsFilter$.next(tags);
+    }
+    if (query) {
+      this.queryFilter$.next(query);
     }
 
-    // Check if anything was returned
-    if (docs.empty) {
-      // Create an error
-      const err: BlogServiceError = {
-        code: 404,
-        error: 'not-found',
-        description: 'No posts were found.',
-      };
-      throw err;
-    }
-
-    // Return the posts
-    return docs.docs.map((doc) => doc.data());
+    // Return the posts observable
+    return this.posts$;
   }
 
   /**
@@ -254,34 +282,44 @@ export class BlogService {
    * @throws BlogServiceError object
    */
   async createPost(post: PostRequest): Promise<Post> {
-    // Destructure the data
-    var { author, title, description, thumbnail, tags, content } = post;
+    // Get the current user
+    const user = await this.auth.getSignedInUser();
 
-    // Get the logged in user
-    const user = this.auth.getLoggedInUser();
-
-    // Check if an author object was defined in the request
-    if (!author) {
-      // Get the display name and their photo URL
-      author = {
-        name: user.displayName,
-        image: {
-          type: 'image/jpeg',
-          href: user.photoUrl,
-        },
+    // Check that the user exists
+    if (!user) {
+      // Throw an error of unauthenticated
+      const err: BlogServiceError = {
+        code: 401,
+        error: 'unauthenticated',
+        description: 'You must be logged in to make a blog post.',
       };
+      throw err;
     }
 
-    // Create the title by URL-safing the title
-    // Get the first 12 characters of the title and remove all special characters
-    // Add dash delimiters
-    var name = this.createNameFromTitle(title);
+    // Destructure the data
+    var { title, description, thumbnail, tags, content } = post;
+
+    // Get the display name and their photo URL
+    const author: Author = {
+      uid: user.uid,
+      name: user.name,
+      image: {
+        href: user.imageUrl,
+      },
+    };
+
+    // Create the relative URL/name
+    try {
+      var name = await this.createNameFromTitle(title);
+    } catch (err) {
+      throw err;
+    }
 
     // Create the href
     const href = this.createHrefFromName(name);
 
     // Create the id
-    const id = this.firestore.createId();
+    const id = this.afs.createId();
 
     // Get the current time
     const dateCreated = Date.now();
@@ -298,162 +336,79 @@ export class BlogService {
       content,
       tags,
       dateCreated,
+      comments: [],
     };
 
     // Add it to firestore
     try {
-      var response = await (await this.collection.ref.add(newPost)).get();
+      await this.afs.doc<Post>(`/posts/${id}`).set(newPost);
     } catch (err) {
-      throw err;
-    }
-
-    // Check if it exists
-    if (!response.exists) {
-      // Throw an error
-      const err: BlogServiceError = {
-        code: 500,
-        error: 'internal',
-        description: "The post couldn't be saved.",
-      };
       throw err;
     }
 
     // Return the post
-    return response.data();
+    return newPost;
   }
 
   /**
-   * Updates a post given its ID
-   * @param post a PostUpdate object
-   * @returns promise to a Post with the updated post
-   * @throws BlogServiceError
+   * Edits an existing post on the database.
+   * @param postUpdate the fields to update on the post.
+   * @returns the edited Post
    */
-  async updatePost(post: PostUpdate): Promise<Post> {
-    // Destructure the input data
-    var {
-      id,
-      title,
-      name,
-      description,
-      content,
-      tags,
-      thumbnail,
-      author,
-    } = post;
-
-    // Create the dateUpdated value
-    const dateUpdated = Date.now();
-
-    // Find the document with the ID
-    try {
-      var docs = await this.collection.ref.where('id', '==', id).get();
-    } catch (err) {
-      throw err;
-    }
-
-    // Check that the document exists
-    if (docs.empty) {
-      // Throw a not found error
-      const err: BlogServiceError = {
-        code: 404,
-        error: 'not-found',
-        description: "The blog post couldn't be found",
-      };
-      throw err;
-    }
-
-    // Get the document
-    const docRef = docs.docs[0];
-    var docData = docRef.data();
-
-    // Update the data
-    docData.dateUpdated = dateUpdated;
-
-    // Check if a new name was included
-    if (name) {
-      // We need to update the href
-      var href = this.createHrefFromName(name);
-
-      // Update the two values
-      docData.name = name;
-      docData.href = href;
-    }
+  async updatePost(postUpdate: Partial<Post>): Promise<Post> {
+    // Store the dateUpdated value
+    postUpdate.dateUpdated = Date.now();
 
     // Check if there is a new title
-    if (title) {
+    if (postUpdate.title) {
       // We need to create a new name
-      var name = this.createNameFromTitle(title);
+      try {
+        postUpdate.name = await this.createNameFromTitle(postUpdate.title);
+      } catch (err) {
+        throw err;
+      }
 
       // We also need to update the href
-      var href = this.createHrefFromName(name);
-
-      // Update all three values
-      docData.title = title;
-      docData.name = name;
-      docData.href = href;
+      postUpdate.href = this.createHrefFromName(postUpdate.name);
+    } else {
+      // Check if a new name was included
+      if (postUpdate.name) {
+        // We need to update the href
+        postUpdate.href = this.createHrefFromName(postUpdate.name);
+      }
     }
 
-    // Check if the author was changed
-    if (author) {
-      // Update the author
-      docData.author = author;
-    }
+    // Get the document reference
+    const documentRef = this.afs.doc<Post>(`/posts/${postUpdate.id}`);
 
-    // Check if the description was changed
-    if (description) {
-      // Update the description
-      docData.description = description;
-    }
-
-    // Check if the post content was changed
-    if (content) {
-      // Update the content
-      docData.content = content;
-    }
-
-    // Check if the tags were changed
-    if (tags) {
-      // Update the tags
-      docData.tags = tags;
-    }
-
-    // Check if the thumbnail was changed
-    if (thumbnail) {
-      // Update the thumbnail
-      docData.thumbnail = thumbnail;
-    }
-
-    // Update the document on Firestore
+    // Update the document on the database
     try {
-      await docRef.ref.set(docData);
-
-      // Fetch the updated document
-      var updated = await docRef.ref.get();
+      await documentRef.update(postUpdate);
     } catch (err) {
       throw err;
     }
 
     // Return the updated document
-    return updated.data();
+    try {
+      return (await documentRef.get().toPromise()).data();
+    } catch (err) {
+      throw err;
+    }
   }
 
   /**
    * Deletes a post given its ID
-   * @param id the post's ID
+   * @param postId the post's ID
    * @retunrs a promise to post deletion confirmation
    * @throws BlogService Error
    */
-  async deletePost(id: string): Promise<PostDeleted> {
-    try {
-      // Fetch the post
-      var docs = await this.collection.ref.where('id', '==', id).get();
-    } catch (err) {
-      throw err;
-    }
+  async deletePost(postId: string): Promise<PostDeleted> {
+    // Create the document reference
+    const docRef = this.afs.doc<Post>(`/posts/${postId}`);
 
-    // Check if a post was returned
-    if (docs.empty) {
-      // Throw an error
+    // Check if the document exists
+    if (!(await docRef.get().toPromise()).exists) {
+      // Return an error
       const err: BlogServiceError = {
         code: 404,
         error: 'not-found',
@@ -462,19 +417,110 @@ export class BlogService {
       throw err;
     }
 
-    // Get the document
-    var doc = docs.docs[0];
+    // Delete the document
+    return docRef.delete().then(() => {
+      // Create the deleted message
+      const deleted: PostDeleted = {
+        id: postId,
+        message: 'Blog post deleted.',
+      };
+      return deleted;
+    });
+  }
 
-    // Try to delete the document
-    return doc.ref
+  /**
+   *
+   * COMMENTS
+   *
+   */
+
+  /**
+   * Add a comment to a blog post.
+   * @param newComment the comment to be added
+   * @returns the comment object
+   */
+  async addComment({ content, postId }: NewComment): Promise<Comment> {
+    // Get the current user
+    const user = await this.auth.getSignedInUser();
+
+    // Check that the user exists
+    if (!user) {
+      // Throw an error of unauthenticated
+      const err: BlogServiceError = {
+        code: 401,
+        error: 'unauthenticated',
+        description: 'You must be logged in to post a comment.',
+      };
+      throw err;
+    }
+
+    // Create the comment Id
+    const id = this.afs.createId();
+
+    // Create the document reference
+    const docRef = this.afs.doc<Post>(`/posts/${postId}`);
+
+    // Check that the post exists
+    if (!(await docRef.get().toPromise()).exists) {
+      // Throw an error
+      const err: BlogServiceError = {
+        code: 404,
+        error: 'not-found',
+        description: "The blog post couldn't be found.",
+      };
+      throw err;
+    }
+
+    // Create the comment ref
+    const commentRef = this.afs.doc<Comment>(`/posts/${postId}/comments/${id}`);
+
+    // Create the comment object
+    const comment: Comment = {
+      id,
+      author: {
+        uid: user.uid,
+        name: user.name,
+        image: {
+          href: user.imageUrl,
+        },
+      },
+      content,
+      dateCreated: Date.now(),
+    };
+
+    // Add the comment
+    try {
+      await commentRef.set(comment);
+    } catch (err) {
+      throw err;
+    }
+
+    // Return the complete comment
+    return comment;
+  }
+
+  /**
+   * Delete a comment from a post.
+   * @param postId the ID of the post
+   * @param commentId the Id of the comment
+   */
+  async deleteComment(
+    postId: string,
+    commentId: string
+  ): Promise<DeletedComment> {
+    // Get the comment ref
+    const commentRef = this.afs.doc(`/posts/${postId}/comments/${commentId}`);
+
+    // Delete the comment
+    return commentRef
       .delete()
       .then(() => {
-        // Return successful
-        const success: PostDeleted = {
-          id,
-          message: 'Blog post deleted.',
+        // Return the deleted comment object
+        const deleted: DeletedComment = {
+          id: commentId,
+          message: 'The comment was deleted.',
         };
-        return success;
+        return deleted;
       })
       .catch((err) => {
         throw err;
@@ -482,15 +528,58 @@ export class BlogService {
   }
 
   /**
+   *
+   * UTILS
+   *
+   */
+
+  /**
    * Create a url-safe name from a given title
    * @param title the title string
    * @returns a string with the URL-Safe name
    */
-  createNameFromTitle(title: string): string {
-    return title
+  private async createNameFromTitle(title: string): Promise<string> {
+    // Create the name
+    var name = title
       .split(' ')
       .map((set) => set.match(/[0-9a-zA-Z]/g).join(''))
       .join('-');
+
+    // Check that the name is available
+    try {
+      var available = await this.checkName(name);
+    } catch (err) {
+      throw err;
+    }
+
+    if (available) {
+      // The name is available, we can return the name
+      return name;
+    } else {
+      // Add an integer to the end and loop
+      var loop = true;
+      var i = 1;
+      while (loop) {
+        // Append the integer to the end of the name
+        name = `${name}-${i}`;
+
+        // Check the name
+        try {
+          var available = await this.checkName(name);
+        } catch (err) {
+          throw err;
+        }
+
+        if (available) {
+          // Return the name
+          loop = false;
+          return name;
+        } else {
+          // Increment the integer
+          i++;
+        }
+      }
+    }
   }
 
   /**
@@ -498,7 +587,30 @@ export class BlogService {
    * @param name the url-safe name
    * @returns the URL to the blog post
    */
-  createHrefFromName(name: string): string {
+  private createHrefFromName(name: string): string {
     return `https://jacobianmatthews.com/blog/${name}`;
+  }
+
+  /**
+   * Checks if a name (relative url) exists already
+   * @param name the name to check
+   * @returns true if the name is available
+   */
+  private async checkName(name: string): Promise<boolean> {
+    // Find the document
+    try {
+      var doc = await this.collection.ref.where('name', '==', name).get();
+    } catch (err) {
+      throw err;
+    }
+
+    // Check if it exists
+    if (doc.empty) {
+      // It doesn't exist
+      return true;
+    } else {
+      // It already exists
+      return false;
+    }
   }
 }
