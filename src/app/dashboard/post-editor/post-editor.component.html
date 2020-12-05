@@ -1,0 +1,28 @@
+<form [formGroup]="postForm" (submit)="savePost(postForm.value)">
+  <label for="title">Title</label>
+  <input formControlName="title" name="title" required />
+  <br />
+  <label for="description">Description</label>
+  <textarea formControlName="description" name="content" required></textarea>
+  <br />
+  <label for="thumbnail-input">Thumbnail:</label>
+  <div formGroupName="thumbnail">
+    <input type="file" formControlName="type" name="thumbnail-input" required (change)="uploadImage($event)" />
+    <input type="url" formControlName="href" name="thumbnail" hidden />
+  </div>
+  <br />
+  <label for="content">Blog Post:</label>
+  <textarea formControlName="content" name="content" required></textarea>
+
+  <br />
+
+  <label for="tags">Tags:</label>
+  <div formGroupName="tags" *ngFor="let tag of tagOptions">
+    <label [for]="tag">{{tag}}</label>
+    <input type="checkbox" [formControlName]="tag">
+    <br />
+  </div>
+
+  <br />
+  <button type="submit" [disabled]="!postForm.valid">Submit</button>
+</form>
