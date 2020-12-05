@@ -16,6 +16,18 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireFunctionsModule } from '@angular/fire/functions';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
+import { RecentPostsComponent } from './home/recent-posts/recent-posts.component';
+import { PostEditorComponent } from './post-editor/post-editor.component';
+
+// Other Angular libraries
+import { ReactiveFormsModule } from '@angular/forms';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { LoginComponent } from './login/login.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
+import { TermsConditionsComponent } from './terms-conditions/terms-conditions.component';
+import { PostComponent } from './blog/post/post.component';
+import { PostFeedComponent } from './blog/post-feed/post-feed.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +36,15 @@ import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
     BlogComponent,
     PortfolioComponent,
     ContactComponent,
+    RecentPostsComponent,
+    PostEditorComponent,
+    DashboardComponent,
+    LoginComponent,
+    NotFoundComponent,
+    PrivacyPolicyComponent,
+    TermsConditionsComponent,
+    PostComponent,
+    PostFeedComponent,
   ],
   imports: [
     BrowserModule,
@@ -32,10 +53,11 @@ import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
       enabled: environment.production,
     }),
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFirestoreModule,
+    AngularFirestoreModule.enablePersistence(),
     AngularFireFunctionsModule,
     AngularFireAnalyticsModule,
     AngularFireStorageModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
