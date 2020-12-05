@@ -4,46 +4,48 @@ service cloud.firestore {
     match /{document=**} {
       allow read, write: if false 
     }
+
+    function hasAuthorRole() {
+      return request.auth.token.author
+    }
+
+    function hasAdminRole(){
+      return request.auth.token.admin
+    }
+
+    match /snippets/{snippetId} {
+      allow read;
+      allow write: if false;
+    }
     
     match /posts/{postId} {
-      allow read: if true;
-      allow create: if (hasAuthorRole(request.auth.uid) || hasAdminRole(request.auth.uid)) && postValid(request.resource.data);
-      allow update: if isAuthor(request.auth.uid, postId) || hasAdminRole(request.auth.uid);
-      allow delete: if isAuthor(request.auth.uid, postId) || hasAdminRole(request.auth.uid);
+      allow read;
+      allow create: if hasAuthorRole() || hasAdminRole()
+      allow update: if isPostAuthor(postId) || hasAdminRole();
+      allow delete: if isPostAuthor(postId) || hasAdminRole();
     }
 
     match /posts/{postId}/comments/{commentId} {
-      allow read: if true;
+      allow read;
       allow create: if request.auth.uid != null;
-      allow delete: if isAuthor(request.auth.uid, postId) || hasAdminRole(request.auth.uid) || isCommenter(request.auth.uid, postId, commentId)
+      allow update: if false;
+      allow delete: if isPostAuthor(postId) || isCommentAuthor(postId, commentId) || hasAdminRole();
     }
 
     match /user/{userId} {
       allow write, read: if isOwner(userId);
     }
-
-    function hasAuthorRole(userId) {
-      return 'author' in get(/databases/$(database)/documents/users/$(userId)).data.roles;
+    
+    function isPostAuthor(postId) {
+      return get(/databases/$(database)/documents/posts/$(postId)).data.author.uid == request.auth.uid;
     }
 
-    function hasAdminRole(userId){
-      return 'admin' in get(/databases/$(database)/documents/users/$(userId)).data.roles;
-    }
-
-    function postValid(data) {
-      return data.keys().hasAll([ "id", "title", "name", "href", "thumbnail", "author", "description", "content", "tags", "dateCreated", "comments" ]);
-    }
-
-    function isAuthor(userId, postId) {
-      return get(/databases/$(database)/documents/posts/$(postId)).data.author.uid == userId;
-    }
-
-    function isCommenter(userId, postId, commentId) {
-      return get(/databases/$(database)/documents/posts/$(postId)/comments/$(commentId)).data.author.uid == userId;
+    function isCommentAuthor(postId, commentId) {
+      return get(/databases/$(database)/documents/posts/$(postId)/comments/$(commentId)).data.author.uid == request.auth.uid;
     }
 
     function isOwner(userId) {
-      return request.auth.uid == userId;
+      return userId == request.auth.uid
     }
   }
 }
