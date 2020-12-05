@@ -1,0 +1,13 @@
+<div class="recent-posts-container">
+  <div class="snippet" *ngFor="let snippet of snippets$ | async">
+    <div class="title">{{snippet.title}}</div>
+    <div class="description">{{snippet.description}}</div>
+    <img [src]='snippet.thumbnail.href' />
+  </div>
+  <button (click)="next()">></button>
+  <button *ngIf="snippetsIndex > 2" (click)="prev()">
+    < </button>
+      <div *ngIf="error">
+        <i class="material-icons md-36">error</i> {{error}}
+      </div>
+</div>
