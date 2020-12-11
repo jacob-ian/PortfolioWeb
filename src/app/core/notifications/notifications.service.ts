@@ -1,4 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireFunctions } from '@angular/fire/functions';
 import { AngularFireMessaging } from '@angular/fire/messaging';
 import { Subscription } from 'rxjs';
 
@@ -9,20 +11,29 @@ export class NotificationsService implements OnDestroy {
   // The subscription to the token
   tokenSubscription: Subscription;
 
-  constructor(private afm: AngularFireMessaging) {}
+  constructor(
+    private afm: AngularFireMessaging,
+    private aff: AngularFireFunctions
+  ) {}
 
   /**
    * Request permissions and subscribe client to push notifications.
    * @returns void
    */
-  subscribe(): void {
+  async subscribe(): Promise<void> {
     // Call the token and permissions request
     this.tokenSubscription = this.afm.requestToken.subscribe(
-      (token) => {
-        console.log(`Send token to server: ${token}`);
+      async (token) => {
+        // Register the token with a firebase function
+        const fn = this.aff.httpsCallable('registerToken');
+        try {
+          return await fn({ token }).toPromise();
+        } catch (err) {
+          throw err;
+        }
       },
       (error) => {
-        console.error(error);
+        throw error;
       }
     );
   }
