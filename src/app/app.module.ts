@@ -39,6 +39,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 // Misc
 import { MarkdownModule } from 'ngx-markdown';
+import { NotificationsComponent } from './core/notifications/notifications.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { MarkdownModule } from 'ngx-markdown';
     ErrorMessageComponent,
     LoaderComponent,
     SidebarComponent,
+    NotificationsComponent,
   ],
   imports: [
     BrowserModule,
