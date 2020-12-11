@@ -23,11 +23,14 @@ const messaging = firebase.messaging();
 
 // Configure the desktop notifications for when the app is in the background
 messaging.onBackgroundMessage(function (payload) {
-  // Create the title and options
+  // Create the title
   const title = payload.notification.title;
+
+  // Set the options
   const options = {
     body: payload.notification.body,
     icon: "assets/icons/icon-192x192.png",
+    clickAction: payload.notification.clickAction,
   };
 
   // Show the notification
