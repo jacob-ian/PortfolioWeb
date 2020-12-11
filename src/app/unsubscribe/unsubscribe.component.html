@@ -1,0 +1,7 @@
+<h1>{{title}}</h1>
+<app-loader *ngIf="loading && !error"></app-loader>
+<div class="success" *ngIf="success">
+  <h2>Success</h2>
+  <p>Your email address was successfully unsubscribed from the mailing list.</p>
+</div>
+<app-error-message *ngIf="error" [error]='error' standalone='true'></app-error-message>
