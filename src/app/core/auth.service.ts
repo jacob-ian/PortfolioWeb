@@ -6,18 +6,22 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Observable, of, Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-
 import { User, UserMetadata } from './core.models';
+
+export { User, UserMetadata };
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService implements OnDestroy {
   // The user document observable
-  user: Observable<User>;
+  user$: Observable<User>;
 
   // The subscription to the metadata document
   metaSubscription: Subscription;
+
+  // The subscription to OAuth redirects
+  redirectSubscription: Subscription;
 
   constructor(
     private afs: AngularFirestore,
@@ -26,12 +30,21 @@ export class AuthService implements OnDestroy {
   ) {
     // Fetch the firestore document from the auth state and bind it to the user
     // observable
-    this.user = this.afAuth.authState.pipe(
+    this.user$ = this.afAuth.authState.pipe(
       switchMap((user) => {
         // Check if the user is logged in
         if (user) {
+          // Subscribe to changes in the metadata document
+          this.metaSubscription = this.afs
+            .doc<UserMetadata>(`/metadata/${user.uid}`)
+            .valueChanges()
+            .subscribe(() => {
+              // Force the user's JWT to be refreshed on update
+              user.getIdToken(true);
+            });
+
           // Return the firestore document
-          this.afs.doc<User>(`/users/${user.uid}`).valueChanges();
+          return this.afs.doc<User>(`/users/${user.uid}`).valueChanges();
         } else {
           // We aren't logged in, return null
           return of(null);
@@ -39,28 +52,49 @@ export class AuthService implements OnDestroy {
       })
     );
 
-    // Set the authstate listener
-    firebase.auth().onAuthStateChanged((user) => {
-      // Check if there is a user logged in
-      if (user) {
-        // Subscribe to changes in the metadata document
-        this.metaSubscription = this.afs
-          .doc<UserMetadata>(`/metadata/${user.uid}`)
-          .valueChanges()
-          .subscribe(() => {
-            // Force the user's JWT to be refreshed
-            user.getIdToken(true);
+    // Check the authstate for a signin redirect
+    this.redirectSubscription = this.afAuth.authState.subscribe(async () => {
+      // Get the redirect result
+      try {
+        var redirectResult = await this.afAuth.getRedirectResult();
+      } catch (err) {
+        // Get the error message and code
+        const code = err.code;
+        const message = err.message;
+
+        // Redirect the user to the login page with errors
+        return await this.router.navigate(['/login'], {
+          queryParams: { error: code, error_description: message },
+        });
+      }
+
+      // Check if this was a redirect
+      if (redirectResult.user) {
+        // Check if this is the first signup
+        if (redirectResult.additionalUserInfo.isNewUser) {
+          // We can redirect to the setup page
+          return await this.router.navigate(['/register']);
+        } else {
+          // Update the user's details
+          return this.updateUserDetails(redirectResult.user).then(() => {
+            // Redirect to the dashboard
+            return this.router.navigate(['/dashboard']);
           });
-      } else {
-        // There isn't a user, we can unsubscribe from the metadata
-        this.metaSubscription.unsubscribe();
+        }
       }
     });
   }
 
   ngOnDestroy(): void {
     // Unsubscribe from the user metadata
-    this.metaSubscription.unsubscribe();
+    if (this.metaSubscription) {
+      this.metaSubscription.unsubscribe();
+    }
+
+    // Unsubscribe from the redirect service
+    if (this.redirectSubscription) {
+      this.redirectSubscription.unsubscribe();
+    }
   }
 
   /**
@@ -68,7 +102,7 @@ export class AuthService implements OnDestroy {
    */
   async getSignedInUser(): Promise<User> {
     // Return the user document
-    return await this.user.toPromise();
+    return await this.user$.toPromise();
   }
 
   /**
@@ -113,10 +147,7 @@ export class AuthService implements OnDestroy {
     provider.addScope('profile');
 
     // Get the credentials from the user
-    const credential = await this.afAuth.signInWithPopup(provider);
-
-    // Update the user's details in the database if they have changed
-    return this.updateUserDetails(credential.user);
+    return await this.afAuth.signInWithRedirect(provider);
   }
 
   /**
@@ -134,19 +165,27 @@ export class AuthService implements OnDestroy {
       throw err;
     }
 
-    // Check if it exists, otherwise we can let the backend handle creation
+    // Check if it exists, otherwise we can let the backend handle registration
     if (userDoc.exists) {
       // We can update it
       var data = userDoc.data();
 
+      // Destructure the firebase user details
+      const { email, photoURL, displayName } = user;
+
+      // Check if there is an image provided
+      if (photoURL) {
+        // Update the image
+        data.imageUrl = photoURL;
+      }
+
       // Update the details
-      data.email = user.email;
-      data.imageUrl = user.photoURL;
-      data.name = user.displayName;
+      data.email = email;
+      data.name = displayName;
 
       // We can now update/add the document
       try {
-        return await userRef.set(data, { merge: true });
+        return await userRef.update(data);
       } catch (err) {
         throw err;
       }
