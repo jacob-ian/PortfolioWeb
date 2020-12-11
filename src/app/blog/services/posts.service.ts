@@ -96,7 +96,7 @@ export class PostsService {
    * @returns a promise to the completed Post
    * @throws a BlogServiceError
    */
-  async create(postRequest: PostRequest): Promise<Post> {
+  async create(postRequest: PostRequest): Promise<void> {
     return;
   }
 
@@ -106,7 +106,7 @@ export class PostsService {
    * @returns a promise to the updated Post.
    * @throws a BlogServiceError
    */
-  async update(update: Partial<Post>): Promise<Post> {
+  async update(update: Partial<Post>): Promise<void> {
     return;
   }
 
@@ -116,7 +116,7 @@ export class PostsService {
    * @returns a promise to the ID of the deleted post
    * @throws a BlogServicError
    */
-  async delete(postId: string): Promise<PostDeleted> {
+  async delete(postId: string): Promise<void> {
     return;
   }
 }
