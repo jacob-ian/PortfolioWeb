@@ -1,0 +1,30 @@
+.navigation
+  background: var(--color-primary)
+
+  ul
+    margin: 0
+    padding: 0
+    display: flex
+    flex-direction: row
+    align-items: center
+    justify-content: flex-end
+
+    li
+      list-style: none
+      margin: 0 15px
+      padding: 40px 30px
+
+      a
+        text-decoration: none
+        background: transparent
+        color: white
+        font-family: Comfortaa, Helvetica, Arial, sans-serif
+        text-transform: lowercase
+        font-size: 1.1rem
+        transition: all 200ms ease-in-out
+
+      a:hover
+        color: var(--color-accent)
+
+      .activated
+        color: var(--color-accent)

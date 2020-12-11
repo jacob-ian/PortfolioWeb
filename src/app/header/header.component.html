@@ -1,0 +1,17 @@
+<nav class="navigation">
+  <ul>
+    <li><a routerLink="" routerLinkActive="active" [class.activated]="currentRoute ===''">Home</a></li>
+    <li><a routerLink="blog" routerLinkActive="active" [class.activated]="currentRoute === 'blog'">Blog</a></li>
+    <li><a routerLink="portfolio" routerLinkActive="active"
+        [class.activated]="currentRoute === 'portfolio'">Portfolio</a></li>
+    <li><a routerLink="contact" routerLinkActive="active" [class.activated]="currentRoute==='contact'">Contact</a></li>
+    <li *ngIf="this.auth.user$ | async; then dashboard else login"></li>
+    <ng-template #dashboard>
+      <li><a routerLink="dashboard" routerLinkActive="active"
+          [class.activated]="currentRoute === 'dashboard'">Dashboard</a></li>
+    </ng-template>
+    <ng-template #login>
+      <li><a routerLink="login" routerLinkActive="active" [class.activated]="currentRoute === 'login'">Login</a></li>
+    </ng-template>
+  </ul>
+</nav>
