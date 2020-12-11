@@ -1,3 +1,6 @@
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+
 /**
  * A user database model
  */
@@ -8,7 +11,19 @@ export interface User {
   email: string; // the user's email address
   roles: string[]; // the user's assigned roles
   posts: string[]; // the IDs of the user's created posts
+  comments: string[]; // the IDs of the the user's posted comments
+  draftCount: number | firebase.firestore.FieldValue;
   dateCreated: number; // the date of user registration
+  notifications: {
+    email: boolean; // if the user is subscribed to post notifications
+  };
+}
+
+/**
+ * A user metadata model
+ */
+export interface UserMetadata {
+  refreshTime: number; // the time of update of the document
 }
 
 /**

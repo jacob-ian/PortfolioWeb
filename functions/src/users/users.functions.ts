@@ -78,12 +78,17 @@ export const createUser = functions.auth
     // Create the user document
     const doc: User = {
       uid,
-      email,
       name: displayName,
       imageUrl: photoURL,
-      posts: [],
+      email,
       roles,
+      posts: [],
+      comments: [],
+      draftCount: 0,
       dateCreated: Date.now(),
+      notifications: {
+        email: false,
+      },
     };
 
     // Add the document to the database
