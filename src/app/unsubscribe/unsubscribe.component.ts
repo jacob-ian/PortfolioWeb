@@ -13,9 +13,6 @@ export class UnsubscribeComponent implements OnInit, OnDestroy {
   // The subscription to the parameters
   paramSub: Subscription;
 
-  // Create the document title
-  @Input() title = 'Unsubscribe';
-
   // Set a loading state
   @Input() loading: boolean = true;
 
@@ -26,18 +23,9 @@ export class UnsubscribeComponent implements OnInit, OnDestroy {
   @Input() error: string;
 
   constructor(
-    private metaService: MetaService,
     private route: ActivatedRoute,
     private emailService: EmailService
-  ) {
-    // Set the title of the page
-    this.metaService.updateTitle(this.title);
-
-    // Set the page description
-    this.metaService.updateDescription(
-      'Unsubscribe an email address from the mailing list.'
-    );
-  }
+  ) {}
 
   ngOnInit(): void {
     // Fetch the query parameters
