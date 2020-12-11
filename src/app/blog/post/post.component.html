@@ -1,1 +1,11 @@
-<p>post works!</p>
+<a routerLink='/blog' routerLinkActive="active"><i class="material-icons md-36">arrow_back</i>Back</a>
+
+<article *ngIf="post$ | async as post">
+  <h1>{{post.title}}</h1>
+  <h3>{{post.author.name}}</h3>
+  <div class="post-content" [innerHTML]="post.content | language: 'typescript' | markdown"></div>
+</article>
+
+<div class="post-error" *ngIf="error">
+  <i class="material-icons md-36">error</i> {{error}}
+</div>
