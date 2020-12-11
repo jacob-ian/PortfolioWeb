@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { PostsService } from '../services/posts.service';
-import { MetaService, MetaTags } from 'src/app/core/meta.service';
+import { MetaService, MetaTags } from 'src/app/core/services/meta.service';
 import { Post } from '@functions/blog/blog.models';
 
 @Component({

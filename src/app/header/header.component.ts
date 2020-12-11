@@ -7,8 +7,8 @@ import {
 } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter, map, mergeMap } from 'rxjs/operators';
-import { AuthService } from '../core/auth.service';
-import { MetaService } from '../core/meta.service';
+import { AuthService } from '../core/services/auth.service';
+import { MetaService } from '../core/services/meta.service';
 
 @Component({
   selector: 'app-header',

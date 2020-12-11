@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../core/auth.service';
+import { AuthService } from '../core/services/auth.service';
 import { User } from '@functions/users/users.models';
 
 @Component({
@@ -55,6 +55,7 @@ export class RegisterComponent implements OnInit {
 
     // Check if the user wants to subscribe to push notifications
     if (notificationsSubscribe) {
+      // Call the push notifications service worker
     }
 
     // Update the user document

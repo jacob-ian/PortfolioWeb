@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { AuthService } from 'src/app/core/auth.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 import {
   BlogServiceError,
   Draft,

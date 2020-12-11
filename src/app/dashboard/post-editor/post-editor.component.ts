@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PostRequest, Tags } from '@functions/blog/blog.models';
-import { ImageService } from '../../core/image.service';
+import { ImageService } from '../../core/services/image.service';
 import { PostsService } from '../../blog/services/posts.service';
 
 @Component({
