@@ -71,12 +71,18 @@ export interface Comment {
 }
 
 /**
- * An database model for any mail sent through the function.
+ * An object containing open graph details
  */
-export interface SentMail {
-  uid?: string;
-  to: string[];
-  from: string;
-  subject: string;
-  timestamp: number;
+export interface MetaTags {
+  title: string; // the page title
+  description: string; // the page description
+  image?: string; // the image URL of the page
+  type?: 'article' | 'website';
+  article?: {
+    published_time: string; // ISO8601 date time
+    modified_time?: string; // ISO8601 date time
+    author: string; // the author's name
+    section: string; // the overarching category
+    tag: string[]; // keywords for the article
+  };
 }
