@@ -2,8 +2,6 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { EmailService } from '../core/email.service';
-import { MetaService } from '../core/meta.service';
-
 @Component({
   selector: 'app-unsubscribe',
   templateUrl: './unsubscribe.component.html',
