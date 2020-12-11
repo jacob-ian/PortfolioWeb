@@ -25,6 +25,8 @@ export {
   createSnippet,
   updateSnippet,
   deleteSnippet,
+  registerToken,
+  pushNotify,
 } from './blog/blog.functions';
 
 /**

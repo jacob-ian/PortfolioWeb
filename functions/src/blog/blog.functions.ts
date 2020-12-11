@@ -82,7 +82,7 @@ export const updateSnippet = functions.firestore
  * Delete a Snippet on deleting a blog Post
  */
 export const deleteSnippet = functions.firestore
-  .document('/posts/{postId')
+  .document('/posts/{postId}')
   .onDelete(async (snap) => {
     // Grab the ID of the post
     const postId = snap.data().id;
@@ -97,3 +97,48 @@ export const deleteSnippet = functions.firestore
       );
     }
   });
+
+/**
+ * Notify push notification subscribed clients of a new post.
+ */
+export const pushNotify = functions.firestore
+  .document('/posts/{postId}')
+  .onCreate(async (snap) => {
+    // Get the title of the post and the href
+    const { title, description, author, href } = <Post>snap.data();
+
+    // Define the cloud messaging topic
+    const topic = 'posts';
+
+    // Send a notification to the topic
+    admin.messaging().sendToTopic(topic, {
+      notification: {
+        title: `New Blog Post by ${author.name}!`,
+        body: title,
+        clickAction: href,
+      },
+      data: {
+        description,
+      },
+    });
+  });
+
+/**
+ * Add a device to a push notification topic.
+ */
+export const registerToken = functions.https.onCall((data) => {
+  // Get the token from the request
+  const tokens = [data.token];
+
+  // Add the token to the list
+  admin
+    .messaging()
+    .subscribeToTopic(tokens, 'posts')
+    .then(() => {
+      return true;
+    })
+    .catch((err) => {
+      // Throw the error back to the client
+      throw new functions.https.HttpsError('internal', err);
+    });
+});
