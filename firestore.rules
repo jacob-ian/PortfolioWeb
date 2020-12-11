@@ -35,7 +35,12 @@ service cloud.firestore {
     match /user/{userId} {
       allow write, read: if isOwner(userId);
     }
-    
+
+    match /emails/{emailId} {
+      allow create;
+      allow delete; 
+    }
+
     function isPostAuthor(postId) {
       return get(/databases/$(database)/documents/posts/$(postId)).data.author.uid == request.auth.uid;
     }
