@@ -16,14 +16,18 @@ export {
   updateAuthors,
   removeAdmin,
   removeAuthor,
-} from './users';
+} from './users/users.functions';
 
 /**
  * POST-RELATED FUNCTIONS
  */
 export {
-  notifyNewPost,
   createSnippet,
   updateSnippet,
   deleteSnippet,
-} from './posts';
+} from './posts/posts.functions';
+
+/**
+ * EMAIL-RELATED FUNCTIONS
+ */
+export { notifyNewPost } from './emails/emails.functions';
