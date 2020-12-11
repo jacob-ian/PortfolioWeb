@@ -61,7 +61,7 @@ export class RegisterComponent implements OnInit {
     return this.afs
       .doc<User>(`/users/${uid}`)
       .update({
-        notifications: { email: emailSubscribe, push: notificationsSubscribe },
+        notifications: { email: emailSubscribe },
       })
       .then(() => {
         // Redirect the user back to the homepage
