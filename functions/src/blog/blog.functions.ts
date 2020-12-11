@@ -1,12 +1,12 @@
 /**
- * This file contains the post-related back-end functions.
+ * This file contains the blog-related back-end functions.
  *
  * @author Jacob Ian Matthews
  */
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 
-import { Post } from './posts.models';
+import { Post } from './blog.models';
 
 // Initliaze Firebase admin
 admin.initializeApp();

@@ -19,13 +19,13 @@ export {
 } from './users/users.functions';
 
 /**
- * POST-RELATED FUNCTIONS
+ * BLOG-RELATED FUNCTIONS
  */
 export {
   createSnippet,
   updateSnippet,
   deleteSnippet,
-} from './posts/posts.functions';
+} from './blog/blog.functions';
 
 /**
  * EMAIL-RELATED FUNCTIONS
