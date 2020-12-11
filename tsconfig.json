@@ -15,7 +15,7 @@
     "lib": ["es2018", "dom"],
     "allowSyntheticDefaultImports": true,
     "paths": {
-      "@functions/*": ["functions/src"]
+      "@functions/*": ["functions/src/*"]
     }
   }
 }

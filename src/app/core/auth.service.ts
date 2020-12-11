@@ -6,7 +6,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Observable, of, Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { User, UserMetadata } from './core.models';
+import { User, UserMetadata } from '@functions/users/users.models';
 
 export { User, UserMetadata };
 

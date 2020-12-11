@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { Snippet, SnippetQuery, Tags } from './blog.models';
+
+import { Snippet, SnippetQuery, Tags } from '@functions/blog/blog.models';
+
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 

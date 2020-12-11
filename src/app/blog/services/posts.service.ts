@@ -7,7 +7,7 @@ import {
   Post,
   PostDeleted,
   PostRequest,
-} from './blog.models';
+} from '@functions/blog/blog.models';
 
 @Injectable({
   providedIn: 'root',

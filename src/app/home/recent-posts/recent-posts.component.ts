@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Snippet } from '../../blog/services/blog.models';
+import { Snippet } from '@functions/blog/blog.models';
 import { SnippetsService } from '../../blog/services/snippets.service';
 
 @Component({

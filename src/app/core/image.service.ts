@@ -4,7 +4,7 @@ import {
   AngularFireUploadTask,
 } from '@angular/fire/storage';
 import { AuthService } from './auth.service';
-import { ImageServiceError } from './core.models';
+import { ImageServiceError } from '@functions/images/images.models';
 
 @Injectable({
   providedIn: 'root',

@@ -3,7 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../core/auth.service';
-import { User } from '../core/core.models';
+import { User } from '@functions/users/users.models';
 
 @Component({
   selector: 'app-register',

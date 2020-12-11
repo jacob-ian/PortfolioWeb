@@ -18,6 +18,45 @@ export interface Post {
   dateCreated: number; // the created date and time
   dateUpdated?: number; // the date of last edit
   commentCount: number;
+  section: string; // The overarching category of the post
+}
+
+/**
+ * An object with data for a new post to be created.
+ */
+export interface PostRequest {
+  id: string; // the ID of the post
+  title: string; // the name of the post
+  description: string; // the description for the post
+  content: string; // the Markdown/HTML content for the post
+  tags: Tags; // the tags associated with the post
+  thumbnail: {
+    type: 'image/jpeg' | 'image/gif' | 'image/png' | 'image/svg';
+    href: string; // the URL to the thumbnail image
+  };
+}
+
+/**
+ *  An object to show the deletion of a Post
+ */
+export interface PostDeleted {
+  postId: string; // the ID of the deleted post
+}
+
+/**
+ * A database model for a draft Post
+ */
+export interface Draft {
+  id: string; // the Draft/Post ID
+  title: string;
+  description?: string;
+  content?: string;
+  tags?: Tags;
+  thumbnail?: {
+    href: string;
+  };
+  dateCreated: number;
+  dateUpdated?: number;
 }
 
 /**
@@ -35,6 +74,17 @@ export interface Snippet {
     href: string; // the location of the thumbnail
   };
   commentCount: number; // the number of comments
+}
+
+/**
+ * A query to fetch a list of snippets
+ */
+export interface SnippetQuery {
+  limit?: number; // limits the number of results
+  startAfter?: number; // the timestamp to start after in pagination
+  endBefore?: number;
+  order?: 'asc' | 'desc'; // the direction of the snippets list
+  tags?: Partial<Tags>; // any tags requested in the query
 }
 
 /**
@@ -71,6 +121,19 @@ export interface Comment {
 }
 
 /**
+ * A new comment
+ */
+export interface NewComment {
+  content: string; // the content of the comment
+  postId: string; // the id of the post to comment on
+}
+
+export interface DeletedComment {
+  id: string; // the ID of the comment that was deleted
+  message: string; // the confirmation message
+}
+
+/**
  * An object containing open graph details
  */
 export interface MetaTags {
@@ -85,4 +148,18 @@ export interface MetaTags {
     section: string; // the overarching category
     tag: string[]; // keywords for the article
   };
+}
+
+/**
+ * An interface to handle the Blog Service's errors
+ */
+export interface BlogServiceError {
+  code: number; // the HTTP code
+  error:
+    | 'not-found'
+    | 'access-denied'
+    | 'internal'
+    | 'invalid-request'
+    | 'unauthenticated'; // the name of the error
+  description: string; // the human-readable description of the error
 }

@@ -3,7 +3,7 @@ import { Meta, Title } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter, map, mergeMap } from 'rxjs/operators';
-import { MetaTags } from './core.models';
+import { MetaTags } from '@functions/blog/blog.models';
 
 export { MetaTags };
 
