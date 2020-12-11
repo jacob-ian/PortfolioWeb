@@ -7,7 +7,7 @@
 import * as functions from 'firebase-functions';
 import { UserRecord } from 'firebase-functions/lib/providers/auth';
 import * as admin from 'firebase-admin';
-import { CustomClaims, User } from './models';
+import { CustomClaims, User } from './users.models';
 
 // Initiliaze Firebase
 admin.initializeApp();

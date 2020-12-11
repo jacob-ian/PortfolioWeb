@@ -9,7 +9,7 @@ import { createTransport } from 'nodemailer';
 import Mail = require('nodemailer/lib/mailer');
 import { URLSearchParams } from 'url';
 
-import { Post, SentMail } from './models';
+import { Post, SentMail } from './posts.models';
 
 // Initliaze Firebase admin
 admin.initializeApp();
