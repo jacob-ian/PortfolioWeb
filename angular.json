@@ -27,7 +27,9 @@
               "src/favicon.ico",
               "src/assets",
               "src/manifest.webmanifest",
-              "src/browserconfig.xml"
+              "src/browserconfig.xml",
+              "src/main-sw.js",
+              "src/firebase-messaging-sw.js"
             ],
             "styles": [
               "src/styles.sass",

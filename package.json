@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --host 0.0.0.0",
+    "start:sw": "npm run build:prod && http-server -p 8080 -c-1 dist/PortfolioWeb",
     "install:ci": "npm ci && npm --prefix functions ci",
     "build": "ng build",
     "build:prod": "ng build --prod",
@@ -86,5 +87,6 @@
         }
       ]
     ]
-  }
+  },
+  "serviceWorker": "true"
 }

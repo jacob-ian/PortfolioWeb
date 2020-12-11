@@ -33,6 +33,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireFunctionsModule } from '@angular/fire/functions';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
+import { AngularFireMessagingModule } from '@angular/fire/messaging';
 
 // Other Angular libraries
 import { ReactiveFormsModule } from '@angular/forms';
@@ -69,7 +70,7 @@ import { NotificationsComponent } from './core/notifications/notifications.compo
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ServiceWorkerModule.register('ngsw-worker.js', {
+    ServiceWorkerModule.register('main-sw.js', {
       enabled: environment.production,
     }),
     AngularFireModule.initializeApp(environment.firebaseConfig),
@@ -79,6 +80,7 @@ import { NotificationsComponent } from './core/notifications/notifications.compo
     AngularFireStorageModule,
     ReactiveFormsModule,
     MarkdownModule.forRoot(),
+    AngularFireMessagingModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
