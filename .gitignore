@@ -48,3 +48,5 @@ Thumbs.db
 # Firebase stuff
 firestore-debug.log
 ui-debug.log
+
+/ssl
