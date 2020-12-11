@@ -29,9 +29,13 @@
               "src/manifest.webmanifest"
             ],
             "styles": [
-              "src/styles.sass"
+              "src/styles.sass",
+              "node_modules/katex/dist/katex.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/marked/lib/marked.js",
+              "node_modules/katex/dist/katex.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -95,9 +99,7 @@
               "src/assets",
               "src/manifest.webmanifest"
             ],
-            "styles": [
-              "src/styles.sass"
-            ],
+            "styles": ["src/styles.sass"],
             "scripts": []
           }
         },
@@ -109,9 +111,7 @@
               "tsconfig.spec.json",
               "e2e/tsconfig.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         },
         "e2e": {
