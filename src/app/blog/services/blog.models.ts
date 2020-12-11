@@ -60,6 +60,7 @@ export interface Post {
   description: string; // the description of the blog post
   content: string; // the Markdown string content
   tags: Tags; // the tags associated with the post
+  section: string; // the overarching category
   dateCreated: number; // the created date and time
   dateUpdated?: number; // the date of last edit
   commentCount: number;
