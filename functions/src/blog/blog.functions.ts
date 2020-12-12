@@ -105,7 +105,7 @@ export const pushNotify = functions.firestore
   .document('/posts/{postId}')
   .onCreate(async (snap) => {
     // Get the title of the post and the href
-    const { title, description, author, href } = <Post>snap.data();
+    const { title, name, author, href } = <Post>snap.data();
 
     // Define the cloud messaging topic
     const topic = 'posts';
@@ -115,10 +115,10 @@ export const pushNotify = functions.firestore
       notification: {
         title: `New Blog Post by ${author.name}!`,
         body: title,
-        clickAction: href,
+        clickAction: href, // for the background message handler
       },
       data: {
-        description,
+        routerLink: `/blog/${name}`, // for the foreground message handler
       },
     });
   });
