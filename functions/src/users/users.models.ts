@@ -10,7 +10,7 @@ export interface User {
   imageUrl: string | undefined; // the display image of the user
   email: string; // the user's email address
   roles: string[]; // the user's assigned roles
-  posts: string[]; // the IDs of the user's created posts
+  posts: string[] | firebase.firestore.FieldValue; // the IDs of the user's created posts
   comments: string[]; // the IDs of the the user's posted comments
   draftCount: number | firebase.firestore.FieldValue;
   dateCreated: number; // the date of user registration

@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { AuthService } from 'src/app/core/services/auth.service';
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+const firestore = firebase.firestore;
+import { AuthService, User } from 'src/app/core/services/auth.service';
 import {
+  Author,
   BlogServiceError,
-  Draft,
   Post,
-  PostDeleted,
   PostRequest,
 } from '@functions/blog/blog.models';
 
@@ -97,7 +99,82 @@ export class PostsService {
    * @throws a BlogServiceError
    */
   async create(postRequest: PostRequest): Promise<void> {
-    return;
+    // Get the signed in user
+    try {
+      var user = await this.auth.getSignedInUser();
+    } catch (err) {
+      // Rethrow the error
+      throw err;
+    }
+
+    // Check that a user is signed in
+    if (!user) {
+      // Throw an error
+      const error: BlogServiceError = {
+        code: 401,
+        error: 'unauthenticated',
+        description: 'You must be logged in to post.',
+      };
+      throw error;
+    }
+
+    // Get the user Id
+    const { uid } = user;
+
+    // Create the author object
+    const author: Author = {
+      uid: user.uid,
+      name: user.name,
+      image: {
+        href: user.imageUrl,
+      },
+    };
+
+    // Get the ID and title from the request
+    const { id, name } = postRequest;
+
+    // Check that the name is valid
+    if (!(await this.checkName(name))) {
+      // Throw an error that the input is invalid
+      const err: BlogServiceError = {
+        code: 400,
+        error: 'invalid-request',
+        description:
+          'The blog post URL name is already taken. Please try another.',
+      };
+      throw err;
+    }
+
+    // Create the HREF of the post
+    const href = `https://jacobianmatthews.com/blog/${name}`;
+
+    // Create the document reference
+    const ref = this.afs.doc<Post>(`/posts/${id}`);
+
+    // Add the document to the collection
+    ref
+      .set({
+        ...postRequest,
+        author,
+        dateCreated: Date.now(),
+        commentCount: 0,
+        href,
+      })
+      .then(async () => {
+        // Add the post ID to the user's document
+        try {
+          return await this.afs
+            .doc<User>(`/users/${uid}`)
+            .update({ posts: firestore.FieldValue.arrayUnion([id]) });
+        } catch (err) {
+          // throw the error
+          throw err;
+        }
+      })
+      .catch((err) => {
+        // rethrow the error
+        throw err;
+      });
   }
 
   /**
@@ -107,7 +184,46 @@ export class PostsService {
    * @throws a BlogServiceError
    */
   async update(update: Partial<Post>): Promise<void> {
-    return;
+    // Get the signed in user
+    try {
+      var user = await this.auth.getSignedInUser();
+    } catch (err) {
+      throw err;
+    }
+
+    // Make sure the user exists
+    if (!user) {
+      // Throw an error
+      const err: BlogServiceError = {
+        code: 401,
+        error: 'unauthenticated',
+        description: 'You must be logged in to edit posts.',
+      };
+      throw err;
+    }
+
+    // Get the post id
+    const { id } = update;
+
+    // Make sure the ID exists
+    if (!id) {
+      // Return an error
+      const err: BlogServiceError = {
+        code: 400,
+        error: 'invalid-request',
+        description: 'The Post ID is required to update a post.',
+      };
+      throw err;
+    }
+
+    // Try to update the document
+    try {
+      return await this.afs
+        .doc<Post>(`/posts/${id}`)
+        .update({ ...update, dateUpdated: Date.now() });
+    } catch (err) {
+      throw err;
+    }
   }
 
   /**
@@ -117,6 +233,78 @@ export class PostsService {
    * @throws a BlogServicError
    */
   async delete(postId: string): Promise<void> {
-    return;
+    // Get the signed-in user
+    try {
+      var user = await this.auth.getSignedInUser();
+    } catch (err) {
+      // Throw an error
+      throw err;
+    }
+
+    // Check the user exists
+    if (!user) {
+      // Throw an error
+      const err: BlogServiceError = {
+        code: 401,
+        error: 'unauthenticated',
+        description: 'You must be logged in to delete posts.',
+      };
+      throw err;
+    }
+
+    // Get the userId
+    const { uid } = user;
+
+    // Try delete the post with the given ID
+    this.afs
+      .doc(`/posts/${postId}`)
+      .delete()
+      .then(async () => {
+        // Remove the post ID from the user's document
+        try {
+          return await this.afs
+            .doc(`/users/${uid}`)
+            .update({ posts: firestore.FieldValue.arrayRemove([postId]) });
+        } catch (err) {
+          throw err;
+        }
+      })
+      .catch((err) => {
+        throw err;
+      });
+  }
+
+  /**
+   * Create the url-safe name of the blog post from the title
+   * @param title the title of the post
+   * @returns a string with the url-safe name that was created (not guaranteed to be available)
+   */
+  createName(title: string): string {
+    // Remove the url-unsafe characters and replace with hyphens
+    return title
+      .split(' ')
+      .map((set) => set.match(/[0-9a-zA-Z]/g).join(''))
+      .join('-');
+  }
+
+  /**
+   * Check the url-safe name of a post
+   * @param name the url-safe name
+   * @returns true if the name is available
+   */
+  async checkName(name: string): Promise<boolean> {
+    // Check the url-safe name against the database to make sure it isn't taken
+    // Search the database by name
+    try {
+      var docs = await this.afs
+        .collection('posts')
+        .ref.where('name', '==', name)
+        .get();
+    } catch (err) {
+      throw err;
+    }
+
+    // Return true if the docs list was empty
+    return !docs.empty;
   }
 }

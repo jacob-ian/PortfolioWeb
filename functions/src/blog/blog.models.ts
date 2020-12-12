@@ -27,6 +27,7 @@ export interface Post {
 export interface PostRequest {
   id: string; // the ID of the post
   title: string; // the name of the post
+  name: string; // the url-safe name of the post
   description: string; // the description for the post
   content: string; // the Markdown/HTML content for the post
   tags: Tags; // the tags associated with the post
@@ -34,6 +35,7 @@ export interface PostRequest {
     type: 'image/jpeg' | 'image/gif' | 'image/png' | 'image/svg';
     href: string; // the URL to the thumbnail image
   };
+  section: 'technology' | 'science' | 'business' | 'lifestyle'; // the overarching category of the post
 }
 
 /**
