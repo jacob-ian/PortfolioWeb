@@ -33,7 +33,9 @@ service cloud.firestore {
     }
 
     match /user/{userId} {
-      allow write, read: if isOwner(userId);
+      allow read: if isOwner(userId);
+      allow update: if isOwner(userId) && request.resource.data.roles == resource.data.roles;
+      allow delete: if isOwner(userId);
     }
 
     match /emails/{emailId} {
@@ -46,7 +48,7 @@ service cloud.firestore {
     }
 
     function postIsValid(){
-      return true
+      return request.resource.data.id is string && request.resource.data.title is string && request.resource.data.name is string && request.resource.data.href is string && request.resource.data.thumbnail.href is string && request.resource.data.author is map && request.resource.data.author.name is string && request.resource.data.author.uid is string && request.resource.data.author.image.href is string && request.resource.data.description is string && request.resource.data.content is string && request.resource.data.tags is array && request.resource.data.dateCreated is timestamp && request.resource.data.commentCount is number && request.resource.data.section is string
     }
 
     function isCommentAuthor(postId, commentId) {
