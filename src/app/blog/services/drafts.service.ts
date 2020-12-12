@@ -69,7 +69,7 @@ export class DraftsService {
       const err: BlogServiceError = {
         code: 401,
         error: 'unauthenticated',
-        description: 'You must be logged in to save a draft.',
+        message: 'You must be logged in to save a draft.',
       };
       throw err;
     }
@@ -83,7 +83,7 @@ export class DraftsService {
       const err: BlogServiceError = {
         code: 400,
         error: 'invalid-request',
-        description: 'A draft title and ID are required.',
+        message: 'A draft title and ID are required.',
       };
       throw err;
     }
@@ -133,7 +133,7 @@ export class DraftsService {
         const err: BlogServiceError = {
           code: 401,
           error: 'unauthenticated',
-          description: 'You must be logged in to update a draft.',
+          message: 'You must be logged in to update a draft.',
         };
         throw err;
       }
@@ -151,7 +151,7 @@ export class DraftsService {
       const err: BlogServiceError = {
         code: 400,
         error: 'invalid-request',
-        description: 'The Draft ID is required.',
+        message: 'The Draft ID is required.',
       };
       throw err;
     }
@@ -187,7 +187,7 @@ export class DraftsService {
         const err: BlogServiceError = {
           code: 401,
           error: 'unauthenticated',
-          description: 'You must be logged in to delete a draft.',
+          message: 'You must be logged in to delete a draft.',
         };
         throw err;
       }

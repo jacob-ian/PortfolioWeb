@@ -49,7 +49,7 @@ export class PostsService {
       const err: BlogServiceError = {
         code: 404,
         error: 'not-found',
-        description: "The requested post doesn't exist.",
+        message: "The requested post doesn't exist.",
       };
       throw err;
     }
@@ -83,7 +83,7 @@ export class PostsService {
       const err: BlogServiceError = {
         code: 404,
         error: 'not-found',
-        description: "The requested post doesn't exist.",
+        message: "The requested post doesn't exist.",
       };
       throw err;
     }
@@ -113,7 +113,7 @@ export class PostsService {
       const error: BlogServiceError = {
         code: 401,
         error: 'unauthenticated',
-        description: 'You must be logged in to post.',
+        message: 'You must be logged in to post.',
       };
       throw error;
     }
@@ -139,8 +139,7 @@ export class PostsService {
       const err: BlogServiceError = {
         code: 400,
         error: 'invalid-request',
-        description:
-          'The blog post URL name is already taken. Please try another.',
+        message: 'The blog post URL name is already taken. Please try another.',
       };
       throw err;
     }
@@ -197,7 +196,7 @@ export class PostsService {
       const err: BlogServiceError = {
         code: 401,
         error: 'unauthenticated',
-        description: 'You must be logged in to edit posts.',
+        message: 'You must be logged in to edit posts.',
       };
       throw err;
     }
@@ -211,7 +210,7 @@ export class PostsService {
       const err: BlogServiceError = {
         code: 400,
         error: 'invalid-request',
-        description: 'The Post ID is required to update a post.',
+        message: 'The Post ID is required to update a post.',
       };
       throw err;
     }
@@ -247,7 +246,7 @@ export class PostsService {
       const err: BlogServiceError = {
         code: 401,
         error: 'unauthenticated',
-        description: 'You must be logged in to delete posts.',
+        message: 'You must be logged in to delete posts.',
       };
       throw err;
     }

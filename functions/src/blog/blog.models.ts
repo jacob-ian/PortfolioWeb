@@ -163,5 +163,5 @@ export interface BlogServiceError {
     | 'internal'
     | 'invalid-request'
     | 'unauthenticated'; // the name of the error
-  description: string; // the human-readable description of the error
+  message: string; // the human-readable description of the error
 }
