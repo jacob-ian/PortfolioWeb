@@ -116,11 +116,11 @@ export class NotificationsService implements OnDestroy {
       });
 
       // Create a timeout ID for removing the notification from the dom
-      // Set the timeout to 5 seconds
+      // Set the timeout to 4 seconds
       this.timeout = setTimeout(() => {
         // Call the close method on the component
         componentRef.instance.closeNotification(true);
-      }, 5000);
+      }, 4000);
     }, 200);
   }
 

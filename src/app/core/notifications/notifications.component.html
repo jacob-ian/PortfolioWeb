@@ -1,17 +1,18 @@
 <div class="notification-box">
-  <a #closeBtn class="close-button" *ngIf="showElements" (click)="this.closeNotification(true)">
-    <svg alt="Close">
-      <use href="assets/svg/close-24px.svg#icon"></use>
-    </svg>
-  </a>
-  <a class="notification-card" *ngIf="showElements" [routerLink]="clickAction" (click)="this.closeNotification(true)"
-    [@slideInOut]>
-    <div class="icon">
-      <img [src]="icon" />
-    </div>
-    <div class="message">
-      <h3>{{title}}</h3>
-      <p>{{body}}</p>
-    </div>
-  </a>
+  <div class="notification-wrapper" *ngIf="showElements" [@slideInOut]>
+    <a #closeBtn class="close-button" (click)="this.closeNotification(true)">
+      <svg alt="Close">
+        <use href="assets/svg/close-24px.svg#icon"></use>
+      </svg>
+    </a>
+    <a class="notification-card" *ngIf="showElements" [routerLink]="clickAction" (click)="this.closeNotification(true)">
+      <div class="icon">
+        <img [src]="icon" />
+      </div>
+      <div class="message">
+        <h3>{{title}}</h3>
+        <p>{{body}}</p>
+      </div>
+    </a>
+  </div>
 </div>

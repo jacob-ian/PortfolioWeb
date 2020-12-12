@@ -2,73 +2,99 @@
   background: transparent
   position: absolute
   padding: 20px
-  display: flex
-  flex-direction: row
   z-index: 100
   top: 100px
   right: 25px
-  align-items: center
 
-  .close-button
-    flex: 0
-    order: 1
-    opacity: 0
-    transition: all 200ms ease-in-out
-    margin-right: 10px
-
-    svg
-      fill: var(--color-primary)
-      transition: all 200ms ease-in-out
-      width: 24px
-      height: 24px
-      -webkit-filter: drop-shadow(0px 2px 10px rgba(50, 50, 50, 0.75))
-      filter: drop-shadow(0px 2px 10px rgba(50, 50, 50, 0.75))
-
-  .close-button:hover
-    cursor: pointer
-
-    svg
-      fill: var(--color-accent)
-      -webkit-filter: drop-shadow(0px 2px 15px rgba(50, 50, 50, 0.75))
-      filter: drop-shadow(0px 2px 15px rgba(50, 50, 50, 0.75))
-
-  .notification-card
-    flex: 1
-    order: 2
-    background-color: white
-    border-radius: 20px
-    position: relative
+  .notification-wrapper
     display: flex
     flex-direction: row
     align-items: center
-    padding: 25px
-    padding-right: 30px
-    -webkit-box-shadow: 0px 2px 10px 0px rgba(50, 50, 50, 0.75)
-    -moz-box-shadow: 0px 2px 10px 0px rgba(50, 50, 50, 0.75)
-    box-shadow: 0px 2px 10px 0px rgba(50, 50, 50, 0.75)
-    color: black
-    max-width: 400px
 
-    .icon
-      margin-right: 25px
+    .close-button
+      flex: 0
+      order: 1
+      opacity: 0
+      transition: all 200ms ease-in-out
+      margin-right: 10px
 
-      img
-        width: 64px
-        height: 64px
+      svg
+        fill: var(--color-primary)
+        transition: all 200ms ease-in-out
+        width: 24px
+        height: 24px
+        -webkit-filter: drop-shadow(0px 2px 10px rgba(50, 50, 50, 0.75))
+        filter: drop-shadow(0px 2px 10px rgba(50, 50, 50, 0.75))
 
-    .message h3
-      color: var(--color-primary)
-      margin-top: 0
-      margin-bottom: 10px
+    .close-button:hover
+      cursor: pointer
 
-    .message p
-      font-size: 0.9rem
-      margin: 0
+      svg
+        fill: var(--color-accent)
+        -webkit-filter: drop-shadow(0px 2px 15px rgba(50, 50, 50, 0.75))
+        filter: drop-shadow(0px 2px 15px rgba(50, 50, 50, 0.75))
 
-  .notification-card:hover
-    -webkit-box-shadow: 0px 2px 15px 0px rgba(50, 50, 50, 0.75)
-    -moz-box-shadow: 0px 2px 15px 0px rgba(50, 50, 50, 0.75)
-    box-shadow: 0px 2px 15px 0px rgba(50, 50, 50, 0.75)
+    .notification-card
+      flex: 1
+      order: 2
+      background-color: white
+      border-radius: 20px
+      position: relative
+      display: flex
+      flex-direction: row
+      align-items: center
+      padding: 25px
+      padding-right: 30px
+      -webkit-box-shadow: 0px 2px 10px 0px rgba(50, 50, 50, 0.75)
+      -moz-box-shadow: 0px 2px 10px 0px rgba(50, 50, 50, 0.75)
+      box-shadow: 0px 2px 10px 0px rgba(50, 50, 50, 0.75)
+      color: black
+      max-width: 400px
 
-.notification-box:hover .close-button
+      .icon
+        margin-right: 25px
+
+        img
+          width: 64px
+          height: 64px
+
+      .message h3
+        color: var(--color-primary)
+        margin-top: 0
+        margin-bottom: 10px
+
+      .message p
+        font-size: 0.9rem
+        margin: 0
+
+    .notification-card:hover
+      -webkit-box-shadow: 0px 2px 15px 0px rgba(50, 50, 50, 0.75)
+      -moz-box-shadow: 0px 2px 15px 0px rgba(50, 50, 50, 0.75)
+      box-shadow: 0px 2px 15px 0px rgba(50, 50, 50, 0.75)
+
+.notification-box:hover .notification-wrapper .close-button
   opacity: 1
+
+@media screen and (max-width: 500px)
+  .notification-box
+    width: 95%
+    right: 0
+    left: 50%
+    transform: translateX(-50%)
+    padding: 0
+    top: 15px
+
+    .notification-wrapper
+      .close-button
+        position: absolute
+        top: 15px
+        right: 15px
+        opacity: 1
+        z-index: 100
+
+      .close-button:focus, .close-button:active
+        svg
+          fill: var(--color-accent)
+
+      .notification-card
+        max-width: 100%
