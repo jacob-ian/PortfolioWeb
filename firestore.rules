@@ -20,7 +20,7 @@ service cloud.firestore {
     
     match /posts/{postId} {
       allow read;
-      allow create: if hasAuthorRole() || hasAdminRole()
+      allow create: if (hasAuthorRole() || hasAdminRole()) && postIsValid();
       allow update: if isPostAuthor(postId) || hasAdminRole();
       allow delete: if isPostAuthor(postId) || hasAdminRole();
     }
@@ -43,6 +43,10 @@ service cloud.firestore {
 
     function isPostAuthor(postId) {
       return get(/databases/$(database)/documents/posts/$(postId)).data.author.uid == request.auth.uid;
+    }
+
+    function postIsValid(){
+      return true
     }
 
     function isCommentAuthor(postId, commentId) {
