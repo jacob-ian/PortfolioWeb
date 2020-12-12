@@ -9,7 +9,9 @@ import * as admin from 'firebase-admin';
 import { Post } from './blog.models';
 
 // Initliaze Firebase admin
-admin.initializeApp();
+admin.initializeApp({
+  storageBucket: 'jacobianmatthews-portfolio.appspot.com',
+});
 const firestore = admin.firestore();
 
 /**
@@ -99,6 +101,29 @@ export const deleteSnippet = functions.firestore
   });
 
 /**
+ * Delete the files associated with a deleted blog Post
+ */
+export const deletePostFiles = functions.firestore
+  .document('/posts/{postId}')
+  .onDelete(async (snap) => {
+    // Get the ID of the post that was deleted
+    const { id } = <Post>snap.data();
+
+    // Delete the files under this posts' storage directory
+    try {
+      return await admin
+        .storage()
+        .bucket()
+        .deleteFiles({
+          directory: `/posts/${id}`,
+        });
+    } catch (err) {
+      // Console the error
+      console.error(err);
+    }
+  });
+
+/**
  * Notify push notification subscribed clients of a new post.
  */
 export const pushNotify = functions.firestore
@@ -128,14 +153,14 @@ export const pushNotify = functions.firestore
  */
 export const registerToken = functions.https.onCall((data) => {
   // Get the token from the request
-  const tokens = [data.token];
+  const token = data.token;
 
   // Add the token to the list
   admin
     .messaging()
-    .subscribeToTopic(tokens, 'posts')
+    .subscribeToTopic(token, 'posts')
     .then(() => {
-      return true;
+      return { done: true };
     })
     .catch((err) => {
       // Throw the error back to the client
