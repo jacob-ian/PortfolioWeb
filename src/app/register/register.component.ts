@@ -69,13 +69,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
       // Check if there is a user
       if (user) {
         // Check if the user has the is registered boolean
-        // TODO: Remove the comment (commented for development)
-        /**
-         * if (user.isRegistered) {
+        if (user.isRegistered) {
           // We can redirect the user away from here
           this.redirectUser();
         }
-         */
       }
     });
   }
