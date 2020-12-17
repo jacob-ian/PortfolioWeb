@@ -15,6 +15,9 @@ import { TermsConditionsComponent } from './terms-conditions/terms-conditions.co
 import { NotFoundComponent } from './not-found/not-found.component';
 import { RegisterComponent } from './register/register.component';
 import { UnsubscribeComponent } from './unsubscribe/unsubscribe.component';
+import { AuthService } from './core/services/auth.service';
+import { LoginGuard } from './core/guards/login.guard';
+import { RegisteredGuard } from './core/guards/registered.guard';
 
 const routes: Routes = [
   {
@@ -78,6 +81,7 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+    canActivate: [LoginGuard],
     data: {
       title: 'Log In | Jacob Ian Matthews',
       description: 'Log in to jacobianmatthews.com.',
@@ -90,7 +94,7 @@ const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
-    canActivate: [AuthGuard], // Lock to users only
+    canActivate: [AuthGuard, RegisteredGuard], // Lock to users that are registered
     data: {
       title: 'Dashboard | Jacob Ian Matthews',
       description: 'Access your account information at jacobianmatthews.com.',
@@ -127,6 +131,7 @@ const routes: Routes = [
   },
   {
     path: 'register',
+    canActivate: [AuthGuard],
     component: RegisterComponent,
     data: {
       title: 'Register | Jacob Ian Matthews',

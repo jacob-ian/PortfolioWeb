@@ -1,20 +1,25 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import {
+  ActivatedRoute,
+  ActivatedRouteSnapshot,
+  Resolve,
+  Router,
+  RouterStateSnapshot,
+} from '@angular/router';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Observable, of, Subscription } from 'rxjs';
-import { first, switchMap } from 'rxjs/operators';
+import { first, switchMap, take } from 'rxjs/operators';
 import { User, UserMetadata } from '@functions/users/users.models';
-import { query } from '@angular/animations';
 
 export { User, UserMetadata };
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService implements OnDestroy {
+export class AuthService implements OnDestroy, Resolve<User> {
   // The user document observable
   user$: Observable<User>;
 
@@ -51,13 +56,16 @@ export class AuthService implements OnDestroy {
           // Return the firestore document
           return this.afs.doc<User>(`/users/${user.uid}`).valueChanges();
         } else {
-          // Unsubscribe to the metadata document
-          this.metaSubscription.unsubscribe();
+          // Check for a metadata subscription
+          if (this.metaSubscription) {
+            this.metaSubscription.unsubscribe();
+          }
 
           // We aren't logged in, return null
           return of(null);
         }
-      })
+      }),
+      take(1)
     );
 
     // Check the authstate for a signin redirect
@@ -82,6 +90,19 @@ export class AuthService implements OnDestroy {
         });
       }
     });
+  }
+
+  /**
+   * Resolve a user for Router Guards
+   * @param route the activated route snapshot
+   * @param state the router state
+   */
+  resolve(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): User | Observable<User> | Promise<User> {
+    // Return an observable of the user
+    return this.user$;
   }
 
   /**
@@ -127,31 +148,14 @@ export class AuthService implements OnDestroy {
   private async signInWithOidc(
     providerId: 'google.com' | 'apple.com'
   ): Promise<void> {
-    // Get the current query parameters
-    return this.route.queryParams
-      .pipe(first())
-      .toPromise()
-      .then(async (queryParams) => {
-        return this.router
-          .navigate([], {
-            queryParams: {
-              ...queryParams,
-              error: undefined,
-              error_description: undefined,
-              method: providerId,
-            },
-          })
-          .then(async () => {
-            // Create the provider
-            const provider = new firebase.auth.OAuthProvider(providerId);
+    // Create the provider
+    const provider = new firebase.auth.OAuthProvider(providerId);
 
-            // Add the profile scope so we can get their picture
-            provider.addScope('profile');
+    // Add the profile scope so we can get their picture
+    provider.addScope('profile');
 
-            // Get the credentials from the user
-            return await this.afAuth.signInWithRedirect(provider);
-          });
-      });
+    // Get the credentials from the user
+    return await this.afAuth.signInWithRedirect(provider);
   }
 
   /**

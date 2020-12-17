@@ -1,6 +1,6 @@
-<app-smart-box>
+<app-smart-box *ngIf="user$ | async as user">
   <h1>Register</h1>
-  <form [formGroup]="registerForm" *ngIf="user$ | async as user; else loading">
+  <form [formGroup]="registerForm">
     <h2>Account Details</h2>
     <div class="user-details">
       <button class="user-image">
@@ -15,7 +15,4 @@
     <label for="push">Enable Push Notifications?:</label>
     <input type="checkbox" formControlName="notificationsSubscribe" />
   </form>
-  <ng-template #loading>
-    <app-loader standalone="true"></app-loader>
-  </ng-template>
 </app-smart-box>

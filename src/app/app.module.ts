@@ -44,6 +44,11 @@ import { MarkdownModule } from 'ngx-markdown';
 import { NotificationsComponent } from './core/notifications/notifications.component';
 import { RssFeedComponent } from './rss-feed/rss-feed.component';
 import { SmartBoxComponent } from './core/smart-box/smart-box.component';
+import { AuthService } from './core/services/auth.service';
+import { AuthGuard } from './core/guards/auth.guard';
+import { RouterLoaderComponent } from './core/router-loader/router-loader.component';
+import { LoginGuard } from './core/guards/login.guard';
+import { RegisteredGuard } from './core/guards/registered.guard';
 
 @NgModule({
   declarations: [
@@ -71,6 +76,7 @@ import { SmartBoxComponent } from './core/smart-box/smart-box.component';
     NotificationsComponent,
     RssFeedComponent,
     SmartBoxComponent,
+    RouterLoaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -88,7 +94,7 @@ import { SmartBoxComponent } from './core/smart-box/smart-box.component';
     AngularFireMessagingModule,
     BrowserAnimationsModule,
   ],
-  providers: [],
+  providers: [AuthService, AuthGuard, LoginGuard, RegisteredGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

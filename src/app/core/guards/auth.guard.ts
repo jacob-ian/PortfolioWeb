@@ -7,7 +7,7 @@ import {
   Router,
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map, take, tap } from 'rxjs/operators';
+import { map, switchMap, take, tap } from 'rxjs/operators';
 import { AuthService } from 'src/app/core/services/auth.service';
 
 @Injectable({
@@ -31,13 +31,19 @@ export class AuthGuard implements CanActivate {
     | UrlTree {
     // Check if the user is logged in by getting the user object from the auth service
     return this.auth.user$.pipe(
-      take(1), // disregard the first, null value and get the second object
-      map((user) => !!user), // convert the user object into a boolean
+      map((user) => !!user),
       tap((loggedIn) => {
+        // Grab the path to the current page and the query parameters
+        const path = state.url;
+
         // Check if the user is logged in
         if (!loggedIn) {
           // The user isn't logged in, redirect to the login page
-          this.router.navigate(['/login']);
+          this.router.navigate(['/login'], {
+            queryParams: {
+              redirect_path: path,
+            },
+          });
         }
       })
     );
