@@ -1,0 +1,27 @@
+@keyframes load
+  0%
+    left: 0
+
+  100%
+    left: 100%
+    width: 20%
+
+.navigation-loader
+  width: 100%
+  position: relative
+  height: 3px
+  z-index: 1
+  overflow: hidden
+  background: transparent
+
+.navigation-loader::before
+  content: '',
+  position: absolute
+  width: 40%
+  height: 3px
+  background-color: var(--color-accent)
+  top: 0
+  bottom: 0
+  z-index: 0
+  animation: load ease-in-out 1s infinite
+  border-radius: 20px
