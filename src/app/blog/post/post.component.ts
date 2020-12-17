@@ -33,7 +33,7 @@ export class PostComponent implements OnInit, OnDestroy {
     this.post$ = this.route.paramMap.pipe(
       switchMap(async (params) => {
         // Get the name
-        const postName = params.get(name);
+        const postName = params.get('name');
 
         // Check if the name exists
         if (!postName) {
