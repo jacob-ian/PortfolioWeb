@@ -9,8 +9,6 @@ import { UserRecord } from 'firebase-functions/lib/providers/auth';
 import * as admin from 'firebase-admin';
 import { CustomClaims, User } from './users.models';
 
-// Initiliaze Firebase
-admin.initializeApp();
 const firestore = admin.firestore();
 
 /**
@@ -89,11 +87,12 @@ export const createUser = functions.auth
       notifications: {
         email: false,
       },
+      isRegistered: false, // we need to send the user through the registration flow
     };
 
     // Add the document to the database
     try {
-      await firestore.collection('users').doc(`/users/${uid}`).set(doc);
+      await firestore.doc(`/users/${uid}`).set(doc);
     } catch (err) {
       throw err;
     }

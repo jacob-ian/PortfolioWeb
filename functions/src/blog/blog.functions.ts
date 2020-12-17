@@ -8,10 +8,6 @@ import * as admin from 'firebase-admin';
 
 import { Post } from './blog.models';
 
-// Initliaze Firebase admin
-admin.initializeApp({
-  storageBucket: 'jacobianmatthews-portfolio.appspot.com',
-});
 const firestore = admin.firestore();
 
 /**

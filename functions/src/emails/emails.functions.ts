@@ -4,15 +4,12 @@
  */
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
-
-// Initliaze Firebase admin
-admin.initializeApp();
-const firestore = admin.firestore();
-
 import { createTransport } from 'nodemailer';
 import Mail = require('nodemailer/lib/mailer');
 import { URLSearchParams } from 'url';
 import { SentMail } from './emails.models';
+
+const firestore = admin.firestore();
 
 /**
  * Send an email to newsletter subscribers on making a new blog post.

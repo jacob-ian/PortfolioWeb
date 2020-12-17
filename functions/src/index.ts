@@ -7,6 +7,13 @@
  * @license Apache-2.0
  */
 
+import * as admin from 'firebase-admin';
+
+// Initiliaze Firebase
+admin.initializeApp({
+  storageBucket: 'jacobianmatthews-portfolio.appspot.com',
+});
+
 /**
  * USER-RELATED FUNCTIONS
  */

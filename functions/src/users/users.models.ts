@@ -17,6 +17,7 @@ export interface User {
   notifications: {
     email: boolean; // if the user is subscribed to post notifications
   };
+  isRegistered: boolean; // Check if the user has been through the registration flow
 }
 
 /**
@@ -32,4 +33,15 @@ export interface UserMetadata {
 export interface CustomClaims {
   admin?: boolean; // administrator flag
   author?: boolean; // author flag
+}
+
+/**
+ * A sign-in/sign-up redirect query
+ */
+export interface RedirectQuery {
+  uid?: string; // the user's id
+  redirect_path?: string; // a path to redirect the user to
+  redirect_params?: any; // any additional query parameters
+  error?: string; // the error code
+  error_description?: string; // the human-readable error
 }
