@@ -17,18 +17,24 @@ body, html
   margin: 0
   padding: 0
   height: 100%
+  background: var(--color-primary)
   font-family: var(--font-body)
   font-smoothing: auto
   -wekbkit-font-smoothing: antialiased
   -moz-osx-font-smoothing: antialiased
 
+body
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)
+
 h1
   font-family: var(--font-display)
   font-size: 2.5rem
-  margin-top: 40px
+  margin-top: 0
+  margin-bottom: 15px !important
   text-align: center
   flex-grow: 1
   margin-bottom: 0
+  letter-spacing: 0px
 
 h2
   text-align: center
@@ -52,7 +58,7 @@ a:hover
 
 .app-wrapper
   width: 100%
-  height: 100%
+  min-height: calc(var(--vh)*100)
   display: flex
   flex-direction: column
 
@@ -60,12 +66,26 @@ a:hover
   display: flex
   flex-direction: column
   flex-grow: 1
+  background-color: var(--color-primary)
+  padding: 0 20px
+  padding-bottom: 20px
 
 .content > *
   display: flex
   flex-direction: column
-  width: 100%
-  flex-grow: 1
+  flex-grow: 2
+  justify-content: center
 
 .content > router-outlet
   flex-grow: 0
+
+.content app-smart-box
+  display: flex
+  flex-direction: column
+  flex-grow: 2
+  justify-content: center
+
+@supports (-webkit-touch-callout: none)
+  /* CSS specific to iOS devices */ 
+  h1
+    letter-spacing: -3px
