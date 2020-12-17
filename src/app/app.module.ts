@@ -43,6 +43,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MarkdownModule } from 'ngx-markdown';
 import { NotificationsComponent } from './core/notifications/notifications.component';
 import { RssFeedComponent } from './rss-feed/rss-feed.component';
+import { SmartBoxComponent } from './core/smart-box/smart-box.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +70,7 @@ import { RssFeedComponent } from './rss-feed/rss-feed.component';
     SidebarComponent,
     NotificationsComponent,
     RssFeedComponent,
+    SmartBoxComponent,
   ],
   imports: [
     BrowserModule,
