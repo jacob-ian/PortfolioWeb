@@ -1,6 +1,20 @@
 .navigation
   background: var(--color-primary)
 
+  .click-area
+    display: none
+
+  .small-nav
+    display: none
+
+  @keyframes grow
+    from
+      opacity: 0
+      width: 0
+    to
+      opacity: 1
+      width: auto
+
   ul
     margin: 0
     padding: 0
@@ -8,11 +22,77 @@
     flex-direction: row
     align-items: center
     justify-content: flex-end
+    position: relative
+
+    .click-area
+      display: none
+
+    .home-icon
+      flex-grow: 1
+      margin-left: 25px
+      a
+        opacity: 0.8
+        img
+          height: 64px
+          width: 64px
+      a:hover
+        opacity: 1
 
     li
       list-style: none
       margin: 0 15px
       padding: 40px 30px
+
+      .search-box
+        display: flex
+        flex-direction: row
+        align-items: center
+        background: transparent
+        transition: all ease-in-out 300ms
+        border-radius: 25px
+        padding: 0 10px
+        position: relative
+
+        .search-btn
+          background: transparent
+          -webkit-appearance: none
+          color: white
+          font-size: 36px
+          outline: none
+          border: none
+          transition: all ease-in-out 200ms
+
+        .search-btn:hover
+          color: var(--color-accent)
+
+        input
+          display: none
+          border: none
+          font: inherit
+          background: none
+          position: relative
+          transition: all ease-in-out 200ms
+          flex-grow: 1
+          flex-shrink: 1
+          -webkit-appearance: none
+          appearance: none
+
+        input:focus
+          outline: none
+
+      .search-box:hover, .search-box:focus-within
+        background: white
+        cursor: text
+        -webkit-box-shadow: 0px 2px 15px 0px rgba(50, 50, 50, 0.75)
+        -moz-box-shadow: 0px 2px 15px 0px rgba(50, 50, 50, 0.75)
+        box-shadow: 0px 2px 15px 0px rgba(50, 50, 50, 0.75)
+
+        input
+          display: block
+          animation: grow 200ms ease-in-out
+
+        .search-btn
+          color: black
 
       a
         text-decoration: none
@@ -26,5 +106,201 @@
       a:hover
         color: var(--color-accent)
 
-      .activated
+    .activated
+      a
         color: var(--color-accent)
+
+@media screen and (max-width: 1040px)
+  .navigation
+    ul
+      li
+        padding: 30px 15px
+
+@media screen and (max-width: 830px)
+  .navigation
+    display: block
+    height: 100%
+
+    .small-nav
+      display: flex
+      flex-direction: row
+      align-items: center
+      justify-content: space-between
+      position: relative
+      margin: 0
+      border: none
+      padding: 15px 20px
+
+      .drawer-button
+        display: flex
+        width: 36px
+        height: 36px
+        background: none
+        -webkit-appearance: none
+        border: none
+        outline: none
+        color: white
+        flex-grow: 0
+        z-index: 2
+        align-items: center
+        justify-content: center
+        margin: 0
+
+        i
+          font-size: 36px
+
+      .drawer-button:focus, .drawer-button:active, .drawer-button:hover
+        color: var(--color-accent)
+
+      .page-title
+        font-size: 1.2rem
+        flex-grow: 1
+        text-align: center
+        position: absolute
+        width: 100%
+        z-index: 1
+        color: white
+        font-weight: 500
+
+    @keyframes drawerEnter
+      from
+        display: none
+        opacity: 0
+        transform: translateX(-100%)
+
+      to
+        display: flex
+        opacity: 1
+        transform: translateX(0)
+
+    @keyframes drawerClose
+      from
+        display: flex
+        opacity: 1
+        transform: translateX(0)
+      to
+        opacity: 0
+        transform: translateX(-100%)
+        display: none
+
+    .open
+      animation: drawerEnter 300ms ease-in-out
+      display: flex
+
+    .close
+      animation: drawerClose 300ms ease-in-out
+
+    @keyframes fadeIn
+      from
+        display: none
+        background: transparent
+      to
+        display: block
+        background: rgba(0,0,0,0.3)
+
+    .drawer-open
+      display: block
+      position: absolute
+      z-index: 999
+      height: calc(var(--vh)*100)
+      width: 100vw
+      top: 0
+      left: 0
+      background: rgba(0,0,0,0.3)
+      animation: fadeIn ease-in-out 300ms
+      margin: 0
+
+    ul
+      margin: 0
+      display: none
+      flex-direction: column
+      align-items: center
+      justify-content: center
+      position: absolute
+      top: 0
+      left: 0
+      height: calc(var(--vh)*100)
+      background: var(--color-primary)
+      -webkit-box-shadow: 0px 2px 15px 0px rgba(50, 50, 50, 0.75)
+      -moz-box-shadow: 0px 2px 15px 0px rgba(50, 50, 50, 0.75)
+      box-shadow: 0px 2px 15px 0px rgba(50, 50, 50, 0.75)
+      padding: 20px 30px
+      z-index: 1000
+      max-width: 80%
+
+      .activated
+        background-color: rgba(0,0,0,0.1)
+
+      .search-li
+        margin: 10px 0
+        display: flex
+        flex-direction: row
+
+      li
+        width: 100%
+        text-align: center
+        border-radius: 30px
+        margin: 0
+        flex-grow: 2
+        padding: 0
+        display: flex
+        flex-direction: column
+        align-items: center
+        justify-content: center
+        max-height: 70px
+
+        a
+          -webkit-touch-callout: none
+          -webkit-user-select: none
+          -khtml-user-select: none
+          -moz-user-select: none
+          -ms-user-select: none
+          user-select: none
+          -webkit-tap-highlight-color: transparent
+
+        .search-box
+          width: 100%
+          display: flex
+          flex-direction: row
+          align-items: center
+          justify-content: space-between
+          background: white
+          cursor: text
+          -webkit-box-shadow: 0px 2px 15px 0px rgba(50, 50, 50, 0.75)
+          -moz-box-shadow: 0px 2px 15px 0px rgba(50, 50, 50, 0.75)
+          box-shadow: 0px 2px 15px 0px rgba(50, 50, 50, 0.75)
+
+          .search-btn
+            width: 36px
+            color: black
+            flex-grow: 0
+            justify-self: flex-start
+
+          input
+            min-width: 50%
+            display: block
+            flex-grow: 1
+            overflow: scroll
+
+        .search-box:hover, .search-box:focus-within
+          input
+            animation: none
+
+      .home-icon
+        justify-self: flex-start
+        margin-left: 0
+        flex-grow: 1
+        margin-top: 0
+        margin-bottom: 30px
+        a
+          opacity: 1
+
+          img
+            height: 80px
+            width: 80px
+
+@media screen and (max-width: 500px)
+  .navigation
+
+    ul
+      width: 85%

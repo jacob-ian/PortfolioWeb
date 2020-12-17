@@ -1,4 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import {
   ActivatedRoute,
   NavigationEnd,
@@ -23,6 +30,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private metaService: MetaService
   ) {}
 
+  // The navigation drawer
+  @ViewChild('navigationDrawer', { static: true }) drawerRef: ElementRef;
+  navigationDrawer: HTMLElement;
+
+  // The clickable area to close the navigation drawer
+  @ViewChild('clickArea', { static: true }) clickAreaRef: ElementRef;
+  clickArea: HTMLElement;
+
   // The subscription to the url
   routeSubscription: Subscription;
 
@@ -30,9 +45,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
   metaSubscription: Subscription;
 
   // The currently navigated route
-  currentRoute: string;
+  @Input() currentRoute: string;
+
+  // The boolean to show an open drawer
+  isDrawerOpen: boolean;
 
   ngOnInit(): void {
+    // Define the navigation drawer and clickable area
+    this.navigationDrawer = this.drawerRef.nativeElement;
+    this.clickArea = this.clickAreaRef.nativeElement;
+
     // Subscribe to the page change event to update the active class
     this.routeSubscription = this.classSubscribe();
 
@@ -64,7 +86,66 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
         // Set the path
         this.currentRoute = paths[0] ? paths[0] : '';
+
+        // Set the drawer to closed
+        if (this.isDrawerOpen) {
+          this.closeDrawer();
+        }
       });
+  }
+
+  /**
+   * Open the navigation drawer
+   * @returns void
+   */
+  openDrawer(): void {
+    // Add the open class to the drawer and remove the close class
+    this.navigationDrawer.classList.remove('close');
+    this.navigationDrawer.classList.add('open');
+
+    // Add the class to clickable area
+    this.clickArea.classList.add('drawer-open');
+
+    // Change the drawer boolean
+    this.isDrawerOpen = true;
+  }
+
+  /**
+   * Close the navigation drawer
+   * @returns void
+   */
+  closeDrawer(): void {
+    // Remove the open class from the drawer and add the close class
+    this.clickArea.classList.remove('drawer-open');
+    this.navigationDrawer.classList.add('close');
+    setTimeout(() => {
+      // Remove the open class form the drawer
+      this.navigationDrawer.classList.remove('open');
+
+      // Change the boolean
+      this.isDrawerOpen = false;
+    }, 250);
+  }
+
+  /**
+   * Perform a search of the blog.
+   * @param query the search query
+   * @retunrs void
+   */
+  search(query: string): void {
+    console.log(query);
+  }
+
+  /**
+   * Gives focus to the search input
+   * @returns void
+   */
+  focusSearch(): void {
+    // Find the input
+    const input = document.getElementById('search-input') as HTMLInputElement;
+
+    // Set the input as focused
+    input.focus();
   }
 
   ngOnDestroy(): void {

@@ -1,17 +1,31 @@
 <nav class="navigation">
-  <ul>
-    <li><a routerLink="" routerLinkActive="active" [class.activated]="currentRoute ===''">Home</a></li>
-    <li><a routerLink="blog" routerLinkActive="active" [class.activated]="currentRoute === 'blog'">Blog</a></li>
-    <li><a routerLink="portfolio" routerLinkActive="active"
-        [class.activated]="currentRoute === 'portfolio'">Portfolio</a></li>
-    <li><a routerLink="contact" routerLinkActive="active" [class.activated]="currentRoute==='contact'">Contact</a></li>
+  <div class="small-nav">
+    <button class="drawer-button" (click)="openDrawer()"><i class="material-icons md-36">menu</i></button>
+  </div>
+
+  <ul #navigationDrawer>
+    <li class="home-icon"><a routerLink="" routerLinkActive="active"><img src="/assets/icons/icon-512x512px.svg"
+          alt="Home" /></a>
+    </li>
+    <li class="search-li">
+      <div class="search-box" (click)="focusSearch()"><button class="search-btn" alt="Search" aria-label="Search"
+          (click)="focusSearch()"><i class="material-icons md-36">search</i></button><input id="search-input"
+          type="text" (input)="search($event.target.value)" placeholder="Search" />
+      </div>
+    </li>
+    <li [class.activated]="currentRoute ===''"><a routerLink="" routerLinkActive="active">Home</a></li>
+    <li [class.activated]="currentRoute === 'blog'"><a routerLink="blog" routerLinkActive="active">Blog</a></li>
+    <li [class.activated]="currentRoute === 'portfolio'"><a routerLink="portfolio"
+        routerLinkActive="active">Portfolio</a></li>
+    <li [class.activated]="currentRoute==='contact'"><a routerLink="contact" routerLinkActive="active">Contact</a></li>
     <li *ngIf="this.auth.user$ | async; then dashboard else login"></li>
     <ng-template #dashboard>
-      <li><a routerLink="dashboard" routerLinkActive="active"
-          [class.activated]="currentRoute === 'dashboard'">Dashboard</a></li>
+      <li [class.activated]="currentRoute === 'dashboard'"><a routerLink="dashboard"
+          routerLinkActive="active">Dashboard</a></li>
     </ng-template>
     <ng-template #login>
-      <li><a routerLink="login" routerLinkActive="active" [class.activated]="currentRoute === 'login'">Login</a></li>
+      <li [class.activated]="currentRoute === 'login'"><a routerLink="login" routerLinkActive="active">Login</a></li>
     </ng-template>
   </ul>
+  <div #clickArea class="click-area" (click)="closeDrawer()"></div>
 </nav>
