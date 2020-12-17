@@ -9,11 +9,14 @@ import {
 import {
   ActivatedRoute,
   NavigationEnd,
+  NavigationStart,
   Router,
   RouterEvent,
 } from '@angular/router';
+import { EventEmitter } from 'events';
 import { Subscription } from 'rxjs';
-import { filter, map, mergeMap } from 'rxjs/operators';
+import { filter, map, mergeMap, tap } from 'rxjs/operators';
+import { RouterLoaderComponent } from '../core/router-loader/router-loader.component';
 import { AuthService } from '../core/services/auth.service';
 import { MetaService } from '../core/services/meta.service';
 
@@ -37,6 +40,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   // The clickable area to close the navigation drawer
   @ViewChild('clickArea', { static: true }) clickAreaRef: ElementRef;
   clickArea: HTMLElement;
+
+  // The router loading animator
+  @ViewChild('loader', { static: true })
+  private navLoaderRef: RouterLoaderComponent;
 
   // The subscription to the url
   routeSubscription: Subscription;
@@ -69,6 +76,24 @@ export class HeaderComponent implements OnInit, OnDestroy {
   classSubscribe(): Subscription {
     return this.router.events
       .pipe(
+        filter(
+          (event) =>
+            // Filter to get the navigation end and start events
+            event instanceof NavigationEnd || event instanceof NavigationStart
+        ),
+        // Tap into the events so that we can start and stop the loading indicator
+        tap((event) => {
+          // Check if the event is navigation start
+          if (event instanceof NavigationStart) {
+            // Start the loading animation
+            this.navLoaderRef.startLoading();
+          } else if (event instanceof NavigationEnd) {
+            // Stop the loading animation
+            this.navLoaderRef.stopLoading();
+          }
+          return event;
+        }),
+        // Filter the events only to navigation end
         filter((event) => event instanceof NavigationEnd),
         map(() => this.route),
         map((route) => {
@@ -106,6 +131,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     // Add the class to clickable area
     this.clickArea.classList.add('drawer-open');
 
+    // Change the body to stop scrolling
+    document.body.style.overflow = 'hidden';
+
     // Change the drawer boolean
     this.isDrawerOpen = true;
   }
@@ -121,6 +149,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       // Remove the open class form the drawer
       this.navigationDrawer.classList.remove('open');
+
+      // Change the body to stop scrolling
+      document.body.style.overflow = 'auto';
 
       // Change the boolean
       this.isDrawerOpen = false;

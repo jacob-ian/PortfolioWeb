@@ -1,5 +1,13 @@
 .navigation
   background: var(--color-primary)
+  position: relative
+
+  .app-router-loader
+    position: absolute
+    top: 0
+    left: 0
+    width: 100%
+    overflow: hidden
 
   .click-area
     display: none
@@ -209,6 +217,7 @@
       background: rgba(0,0,0,0.3)
       animation: fadeIn ease-in-out 300ms
       margin: 0
+      scroll-behavior: none
 
     ul
       margin: 0
