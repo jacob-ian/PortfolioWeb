@@ -23,6 +23,17 @@ export class AppComponent implements OnInit, OnDestroy {
       // Listen for messages
       this.messageSubscription = this.notifications.listen();
     }
+
+    // Set the vh measure
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+
+    // Listen to the window resize event and update the vh style
+    window.addEventListener('resize', () => {
+      // We execute the same script as before
+      let vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    });
   }
 
   ngOnDestroy(): void {
