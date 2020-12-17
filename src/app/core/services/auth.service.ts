@@ -1,12 +1,13 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Observable, of, Subscription } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { first, switchMap } from 'rxjs/operators';
 import { User, UserMetadata } from '@functions/users/users.models';
+import { query } from '@angular/animations';
 
 export { User, UserMetadata };
 
@@ -23,10 +24,14 @@ export class AuthService implements OnDestroy {
   // The subscription to OAuth redirects
   redirectSubscription: Subscription;
 
+  // The query params subscription
+  querySub: Subscription;
+
   constructor(
     private afs: AngularFirestore,
     private afAuth: AngularFireAuth,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     // Fetch the firestore document from the auth state and bind it to the user
     // observable
@@ -46,6 +51,9 @@ export class AuthService implements OnDestroy {
           // Return the firestore document
           return this.afs.doc<User>(`/users/${user.uid}`).valueChanges();
         } else {
+          // Unsubscribe to the metadata document
+          this.metaSubscription.unsubscribe();
+
           // We aren't logged in, return null
           return of(null);
         }
@@ -56,45 +64,24 @@ export class AuthService implements OnDestroy {
     this.redirectSubscription = this.afAuth.authState.subscribe(async () => {
       // Get the redirect result
       try {
-        var redirectResult = await this.afAuth.getRedirectResult();
+        return this.afAuth.getRedirectResult().then(async (result) => {
+          // Check for a user
+          if (result.user) {
+            // Update the user details
+            return await this.updateUserDetails(result.user);
+          }
+        });
       } catch (err) {
         // Get the error message and code
-        const code = err.code;
+        const error = err.error;
         const message = err.message;
 
         // Redirect the user to the login page with errors
         return await this.router.navigate(['/login'], {
-          queryParams: { error: code, error_description: message },
+          queryParams: { error: error, error_description: message },
         });
       }
-
-      // Check if this was a redirect
-      if (redirectResult.user) {
-        // Check if this is the first signup
-        if (redirectResult.additionalUserInfo.isNewUser) {
-          // We can redirect to the setup page
-          return await this.router.navigate(['/register']);
-        } else {
-          // Update the user's details
-          return this.updateUserDetails(redirectResult.user).then(() => {
-            // Redirect to the dashboard
-            return this.router.navigate(['/dashboard']);
-          });
-        }
-      }
     });
-  }
-
-  ngOnDestroy(): void {
-    // Unsubscribe from the user metadata
-    if (this.metaSubscription) {
-      this.metaSubscription.unsubscribe();
-    }
-
-    // Unsubscribe from the redirect service
-    if (this.redirectSubscription) {
-      this.redirectSubscription.unsubscribe();
-    }
   }
 
   /**
@@ -130,7 +117,7 @@ export class AuthService implements OnDestroy {
 
     // Navigate back to the home page
     await this.router.navigate(['/']);
-    return;
+    return window.location.reload();
   }
 
   /**
@@ -140,14 +127,31 @@ export class AuthService implements OnDestroy {
   private async signInWithOidc(
     providerId: 'google.com' | 'apple.com'
   ): Promise<void> {
-    // Create the provider
-    const provider = new firebase.auth.OAuthProvider(providerId);
+    // Get the current query parameters
+    return this.route.queryParams
+      .pipe(first())
+      .toPromise()
+      .then(async (queryParams) => {
+        return this.router
+          .navigate([], {
+            queryParams: {
+              ...queryParams,
+              error: undefined,
+              error_description: undefined,
+              method: providerId,
+            },
+          })
+          .then(async () => {
+            // Create the provider
+            const provider = new firebase.auth.OAuthProvider(providerId);
 
-    // Add the profile scope so we can get their picture
-    provider.addScope('profile');
+            // Add the profile scope so we can get their picture
+            provider.addScope('profile');
 
-    // Get the credentials from the user
-    return await this.afAuth.signInWithRedirect(provider);
+            // Get the credentials from the user
+            return await this.afAuth.signInWithRedirect(provider);
+          });
+      });
   }
 
   /**
@@ -189,6 +193,22 @@ export class AuthService implements OnDestroy {
       } catch (err) {
         throw err;
       }
+    }
+  }
+
+  ngOnDestroy(): void {
+    // Unsubscribe from the user metadata
+    if (this.metaSubscription) {
+      this.metaSubscription.unsubscribe();
+    }
+
+    // Unsubscribe from the redirect service
+    if (this.redirectSubscription) {
+      this.redirectSubscription.unsubscribe();
+    }
+
+    if (this.querySub) {
+      this.querySub.unsubscribe();
     }
   }
 }

@@ -1,3 +1,7 @@
+p
+  font-size: 0.9rem
+  margin-bottom: 25px
+
 .buttons-container
   flex-grow: 2
   display: flex
@@ -32,6 +36,7 @@
 
   button:disabled
     filter: brightness(0.7)
+    cursor: progress
 
   button:disabled:hover
     cursor: default
@@ -64,3 +69,15 @@
     background-position: center
     background-color: black
     background-image: url("https://appleid.cdn-apple.com/appleid/button?height=48&width=224&scale=2")
+
+app-error-message
+    margin-top: 15px
+    max-width: 90%
+
+@media screen and (max-width: 290px)
+  .buttons-container
+    button
+      width: 180px
+    .google-signin
+      img
+        margin-right: 6px

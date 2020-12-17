@@ -1,9 +1,13 @@
-<h1>Login</h1>
-<div class="buttons-container">
-  <button class="google-signin" (click)='signIn($event)' value="google" [disabled]="disable"><img
-      src="assets/google/g-logo.png" alt="Google" />Sign in with
-    Google</button>
-  or
-  <button class="apple-signin" (click)='signIn($event)' value="apple" [disabled]='disable'></button>
-  <div class="error" *ngIf="error"><i class="material-icons md-36">error</i>{{error}}</div>
-</div>
+<app-smart-box>
+  <h1>Log In</h1>
+  <div class="buttons-container" *ngIf="!loading">
+    <p>Please log in to continue:</p>
+    <button class="google-signin" (click)='signIn($event)' value="google" [disabled]="disable"><img
+        src="assets/google/g-logo.png" alt="Google" />Sign in with
+      Google</button>
+    or
+    <button class="apple-signin" (click)='signIn($event)' value="apple" [disabled]='disable'></button>
+    <app-error-message *ngIf="error" [error]="error" standalone='true'></app-error-message>
+  </div>
+  <app-loader *ngIf="loading" standalone=true></app-loader>
+</app-smart-box>
