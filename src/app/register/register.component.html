@@ -1,7 +1,21 @@
-<div class="register-container">
-  <h1>User Setup</h1>
-
-  <form [formGroup]="registerForm">
-
+<app-smart-box>
+  <h1>Register</h1>
+  <form [formGroup]="registerForm" *ngIf="user$ | async as user; else loading">
+    <h2>Account Details</h2>
+    <div class="user-details">
+      <button class="user-image">
+        <img [src]="user.imageUrl ? user.imageUrl : '/assets/svg/person'" />
+      </button>
+      <div class="user-name">{{user.name}}</div>
+      <div class="user-email">{{user.email}}</div>
+    </div>
+    <h2>Notification Preferences</h2>
+    <label for="emails">Subscribe to Email Newsletter?:</label>
+    <input type="checkbox" formControlName="emailSubscribe" [checked]="user.notifications.email" />
+    <label for="push">Enable Push Notifications?:</label>
+    <input type="checkbox" formControlName="notificationsSubscribe" />
   </form>
-</div>
+  <ng-template #loading>
+    <app-loader standalone="true"></app-loader>
+  </ng-template>
+</app-smart-box>

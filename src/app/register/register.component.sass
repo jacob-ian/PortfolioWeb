@@ -1,0 +1,48 @@
+h1
+  margin-bottom: 15px
+
+h2
+  font-size: 1.2rem
+  padding-bottom: 10px
+  border-bottom: 1px solid black
+  width: 100%
+  text-align: center
+  margin-bottom: 30px
+
+form
+  flex-grow: 2
+  align-items: center
+  justify-content: flex-start
+  display: flex
+  flex-direction: column
+  padding: 0 5px
+
+  .user-details
+    display: flex
+    flex-direction: column
+    align-items: center
+    margin-bottom: 15px
+
+    *
+      margin-bottom: 10px
+
+    .user-image
+      background: none
+      outline: none
+      border: none
+      appearance: none
+      -webkit-appearance: none
+      margin-right: 5px
+
+      img
+        border-radius: 50%
+        width: 96px
+        height: 96px
+
+    .user-image:hover
+      cursor: pointer
+      filter: brightness(0.5)
+
+    .user-name
+      font-weight: 600
+      position: relative
