@@ -16,6 +16,7 @@
     "allowSyntheticDefaultImports": true,
     "paths": {
       "@functions/*": ["functions/src/*"]
-    }
+    },
+    "resolveJsonModule": true
   }
 }
