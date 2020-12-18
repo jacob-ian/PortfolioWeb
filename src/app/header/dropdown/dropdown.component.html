@@ -1,3 +1,17 @@
-<ng-content>
-
-</ng-content>
+<button alt="Show More" aria-label="Show More" (click)="toggleDropdown()" [class.clicked]="isExpanded"
+  class="nav-dropdown">
+  <i class="material-icons nav-dropdown" [style.transform]="isExpanded ? 'rotateZ(90deg)' : 'none'">settings</i>
+</button>
+<ul [@dropdownAnim] *ngIf="isExpanded">
+  <li *ngIf="this.auth.user$ | async; then dashboard else login"></li>
+  <ng-template #dashboard>
+    <li *ngIf="this.auth.user$ | async as user"><a routerLink="dashboard" routerLinkActive="active"><img
+          [src]="user.imageUrl">Dashboard</a></li>
+    <li><a (click)="signOut()"><i class="material-icons">logout</i>Sign Out</a></li>
+  </ng-template>
+  <ng-template #login>
+    <li><a routerLink="login" routerLinkActive="active"><i class="material-icons">login</i>Login</a>
+    </li>
+  </ng-template>
+  <li class="version">Version: {{version}}</li>
+</ul>

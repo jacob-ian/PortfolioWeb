@@ -1,0 +1,105 @@
+button
+  background: none
+  border: none
+  border-radius: 50%
+  outline: none
+  display: flex
+  align-items: center
+  justify-content: center
+  appearance: none
+  -webkit-appearance: none
+  color: white
+  padding: 15px
+  transition: all ease-in-out 200ms
+
+  i
+    transition: transform ease-in-out 300ms
+
+button:hover
+  cursor: pointer
+  background: rgba(255,255,255,0.3)
+
+ul
+  position: absolute
+  top: 100px
+  right: 30px
+  background: var(--background-primary)
+  display: flex
+  flex-direction: column
+  border-radius: 20px
+  overflow: hidden
+  min-width: 250px
+  padding: 0
+  -webkit-box-shadow: 0px 2px 15px 0px rgba(50, 50, 50, 0.75)
+  -moz-box-shadow: 0px 2px 15px 0px rgba(50, 50, 50, 0.75)
+  box-shadow: 0px 2px 15px 0px rgba(50, 50, 50, 0.75)
+
+li:hover, li:focus
+  cursor: pointer
+  background-color: rgba(0,0,0,0.1)
+
+li:last-child
+  border-bottom: none
+
+li
+  list-style: none
+  padding: 0
+  width: 100%
+  border-bottom: 1px solid rgba(0,0,0,0.3)
+  transition: all ease-in-out 200ms
+  min-height: 65px
+  display: flex
+  flex-direction: row
+  align-items: center
+
+  a
+    flex-grow: 1
+    width: 100%
+    padding: 20px 20px
+    color: var(--font-color-primary)
+    font-size: 1rem
+    text-transform: capitalize
+    display: flex
+    flex-direction: row
+    align-items: center
+    justify-content: flex-start
+    -webkit-tap-highlight-color: transparent
+
+    img
+      width: 36px
+      height: 36px
+      margin-right: 20px
+      border-radius: 50%
+
+    i
+      font-size: 36px
+      margin-right: 20px
+
+  a:focus, a:active
+    background-color: rgba(0,0,0,0.2)
+
+.version
+  font-size: 0.8rem
+  height: 65px
+  display: flex
+  flex-direction: column
+  align-items: center
+  justify-content: center
+
+.version:hover
+  cursor: default
+
+@media screen and (max-width: 830px)
+  ul
+    top: 55px
+
+    li
+      a
+        padding: 15px 20px
+
+        i
+          font-size: 24px
+
+        img
+          height: 24px
+          width: 24px

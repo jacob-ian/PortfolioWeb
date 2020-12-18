@@ -1,7 +1,5 @@
 <nav class="navigation">
-  <div class="small-nav">
-    <button class="drawer-button" (click)="openDrawer()"><i class="material-icons md-36">menu</i></button>
-  </div>
+  <button class="drawer-button" (click)="openDrawer()"><i class="material-icons md-36">menu</i></button>
   <ul #navigationDrawer>
     <li class="home-icon"><a routerLink="" routerLinkActive="active"><img src="/assets/icons/icon-512x512px.svg"
           alt="Home" /></a>
@@ -17,25 +15,8 @@
     <li [class.activated]="currentRoute === 'portfolio'"><a routerLink="portfolio"
         routerLinkActive="active">Portfolio</a></li>
     <li [class.activated]="currentRoute==='contact'"><a routerLink="contact" routerLinkActive="active">Contact</a></li>
-    <li class="navigation-expand" id="nav-dropdown-li">
-      <button alt="Show More" aria-label="Show More" (click)="toggleDropdown()"><i class="material-icons"
-          id="nav-dropdown-btn">more_vert</i></button>
-      <ul [@dropdownAnim] *ngIf="isExpanded" id="nav-dropdown">
-        <li *ngIf="this.auth.user$ | async; then dashboard else login"></li>
-        <ng-template #dashboard>
-          <li *ngIf="this.auth.user$ | async as user" [class.activated]="currentRoute === 'dashboard'"><a
-              routerLink="dashboard" routerLinkActive="active"><img [src]="user.imageUrl">Dashboard</a></li>
-          <li><a (click)="signOut()"><i class="material-icons">logout</i>Sign Out</a></li>
-        </ng-template>
-        <ng-template #login>
-          <li [class.activated]="currentRoute === 'login'"><a routerLink="login" routerLinkActive="active"><i
-                class="material-icons">login</i>Login</a>
-          </li>
-        </ng-template>
-        <li class="version">Version: {{version}}</li>
-      </ul>
-    </li>
   </ul>
+  <app-dropdown></app-dropdown>
   <div #clickArea class="click-area" (click)="closeDrawer()"></div>
   <app-router-loader class="app-router-loader" #loader></app-router-loader>
 </nav>
