@@ -1,6 +1,8 @@
+import { animate, style, transition, trigger } from '@angular/animations';
 import {
   Component,
   ElementRef,
+  HostListener,
   Input,
   OnDestroy,
   OnInit,
@@ -16,6 +18,7 @@ import {
 import { EventEmitter } from 'events';
 import { Subscription } from 'rxjs';
 import { filter, map, mergeMap, tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { RouterLoaderComponent } from '../core/router-loader/router-loader.component';
 import { AuthService } from '../core/services/auth.service';
 import { MetaService } from '../core/services/meta.service';
@@ -24,6 +27,32 @@ import { MetaService } from '../core/services/meta.service';
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.sass'],
+  animations: [
+    trigger('dropdownAnim', [
+      transition(':enter', [
+        style({
+          opacity: 0,
+          transform: 'scaleY(0)',
+          'transform-origin': '0% 0%',
+        }),
+        animate(
+          '150ms ease-in-out',
+          style({ opacity: 1, transform: 'scaleY(1)' })
+        ),
+      ]),
+      transition(':leave', [
+        style({
+          opacity: 1,
+          transform: 'scaleY(1)',
+          'transform-origin': '0% 0%',
+        }),
+        animate(
+          '100ms ease-in-out',
+          style({ opacity: 0, transform: 'scaleY(0)' })
+        ),
+      ]),
+    ]),
+  ],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   constructor(
@@ -45,6 +74,20 @@ export class HeaderComponent implements OnInit, OnDestroy {
   @ViewChild('loader', { static: true })
   private navLoaderRef: RouterLoaderComponent;
 
+  // Create an on click listener
+  @HostListener('window:click', ['$event']) onClick(event) {
+    // Check if the name is the dropdown menu
+    const id: string = event.target.id;
+
+    if (!id.includes('nav-dropdown')) {
+      // Close the navigation drop down
+      this.isExpanded = false;
+    }
+  }
+
+  // The app version
+  @Input() version = environment.appVersion;
+
   // The subscription to the url
   routeSubscription: Subscription;
 
@@ -53,6 +96,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   // The currently navigated route
   @Input() currentRoute: string;
+
+  // Whether or not to expand the extras draw
+  @Input() isExpanded: boolean = false;
 
   // The boolean to show an open drawer
   isDrawerOpen: boolean;
@@ -156,6 +202,22 @@ export class HeaderComponent implements OnInit, OnDestroy {
       // Change the boolean
       this.isDrawerOpen = false;
     }, 250);
+  }
+
+  /**
+   * Expand the additional navigation options
+   * @returns void
+   */
+  toggleDropdown(): void {
+    // Toggle the dropdown
+    this.isExpanded = !this.isExpanded;
+  }
+
+  /**
+   * Sign out the current user
+   */
+  signOut(): void {
+    this.auth.signOut();
   }
 
   /**

@@ -49,6 +49,7 @@ import { AuthGuard } from './core/guards/auth.guard';
 import { RouterLoaderComponent } from './core/router-loader/router-loader.component';
 import { LoginGuard } from './core/guards/login.guard';
 import { RegisteredGuard } from './core/guards/registered.guard';
+import { DropdownComponent } from './header/dropdown/dropdown.component';
 
 @NgModule({
   declarations: [
@@ -77,6 +78,7 @@ import { RegisteredGuard } from './core/guards/registered.guard';
     RssFeedComponent,
     SmartBoxComponent,
     RouterLoaderComponent,
+    DropdownComponent,
   ],
   imports: [
     BrowserModule,
