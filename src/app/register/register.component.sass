@@ -33,6 +33,9 @@ form
       appearance: none
       -webkit-appearance: none
       margin-right: 5px
+      position: relative
+      z-index: 1
+      transition: all ease-in-out 200ms
 
       img
         border-radius: 50%
@@ -42,6 +45,14 @@ form
     .user-image:hover
       cursor: pointer
       filter: brightness(0.5)
+
+    .user-image:hover ::before
+      position: absolute
+      display: block
+      content: url('/assets/svg/add_a_photo-24px.svg')
+      height: 24px
+      width: 24px
+      z-index: 2
 
     .user-name
       font-weight: 600
