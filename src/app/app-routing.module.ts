@@ -18,6 +18,7 @@ import { UnsubscribeComponent } from './unsubscribe/unsubscribe.component';
 import { AuthService } from './core/services/auth.service';
 import { LoginGuard } from './core/guards/login.guard';
 import { RegisteredGuard } from './core/guards/registered.guard';
+import { SearchComponent } from './search/search.component';
 
 const routes: Routes = [
   {
@@ -149,6 +150,18 @@ const routes: Routes = [
       title: 'Unsubscribe | Jacob Ian Matthews',
       description:
         'Unsubscribe an email address from the mailing list at jacobianmatthews.com.',
+      og: {
+        type: 'website',
+        image: 'https://jacobianmatthews.com/assets/icons/icon-512x512.png',
+      },
+    },
+  },
+  {
+    path: 'search',
+    component: SearchComponent,
+    data: {
+      title: 'Search | Jacob Ian Matthews',
+      description: 'Search the posts on the blog.',
       og: {
         type: 'website',
         image: 'https://jacobianmatthews.com/assets/icons/icon-512x512.png',
