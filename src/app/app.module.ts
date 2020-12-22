@@ -50,6 +50,8 @@ import { RouterLoaderComponent } from './core/router-loader/router-loader.compon
 import { LoginGuard } from './core/guards/login.guard';
 import { RegisteredGuard } from './core/guards/registered.guard';
 import { DropdownComponent } from './header/dropdown/dropdown.component';
+import { SearchBoxComponent } from './header/search-box/search-box.component';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
   declarations: [
@@ -79,6 +81,8 @@ import { DropdownComponent } from './header/dropdown/dropdown.component';
     SmartBoxComponent,
     RouterLoaderComponent,
     DropdownComponent,
+    SearchBoxComponent,
+    SearchComponent,
   ],
   imports: [
     BrowserModule,
