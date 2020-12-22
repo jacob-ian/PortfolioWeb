@@ -5,26 +5,12 @@
   <ul #navigationDrawer>
     <li class="home-icon">
       <a routerLink="" routerLinkActive="active">
-        <img src="/assets/icons/icon-512x512px.svg" alt="Jacob Ian Matthews" />
+        <img src="/assets/icons/icon-512x512px.svg" />
         <h1 class="title">Jacob Ian Matthews</h1>
       </a>
     </li>
     <li class="search-li">
-      <div class="search-box" (click)="focusSearch()">
-        <button
-          class="search-btn"
-          alt="Search"
-          aria-label="Search"
-          (click)="focusSearch()"
-        >
-          <i class="material-icons md-36">search</i></button
-        ><input
-          id="search-input"
-          type="text"
-          (input)="search($event.target.value)"
-          placeholder="Search"
-        />
-      </div>
+      <app-search-box class="app-search-box"></app-search-box>
     </li>
     <li [class.activated]="currentRoute === ''">
       <a routerLink="" routerLinkActive="active">Home</a>

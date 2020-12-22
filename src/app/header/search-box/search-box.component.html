@@ -1,0 +1,18 @@
+<button #searchButton id="search-box-btn" (click)="this.open()">
+  <i id="search-box-btn-icon" class="material-icons">search</i>
+</button>
+<div
+  #searchBox
+  id="search-box"
+  class="search-box"
+  [class.show-box]="isSearchOpen"
+>
+  <i class="material-icons">search</i>
+  <input
+    #searchInput
+    type="text"
+    (input)="search($event.target.value)"
+    placeholder="Search..."
+    id="search-box-input"
+  />
+</div>

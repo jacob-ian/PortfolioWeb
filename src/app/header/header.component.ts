@@ -1,4 +1,3 @@
-import { animate, style, transition, trigger } from '@angular/animations';
 import {
   Component,
   ElementRef,
@@ -15,10 +14,9 @@ import {
   Router,
   RouterEvent,
 } from '@angular/router';
-import { EventEmitter } from 'events';
+
 import { Subscription } from 'rxjs';
 import { filter, map, mergeMap, tap } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
 import { RouterLoaderComponent } from '../core/router-loader/router-loader.component';
 import { AuthService } from '../core/services/auth.service';
 import { MetaService } from '../core/services/meta.service';

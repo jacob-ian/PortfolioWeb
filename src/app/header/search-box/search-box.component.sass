@@ -1,0 +1,87 @@
+button
+  background: none
+  outline: none
+  border: none
+  color: white
+  border-radius: 50%
+  display: flex
+  align-items: center
+  justify-content: center
+  appearance: none
+  -webkit-appearance: none
+  padding: 15px
+  transition: all ease-in-out 200ms
+
+button:hover
+  cursor: pointer
+  background: rgba(255,255,255,0.3)
+
+button:disabled:hover
+  cursor: default
+  background: none
+
+.search-box
+  display: none
+  min-width: 350px
+  position: absolute
+  top: 0
+  left: 0
+  border-radius: 30px
+  transform-origin: left
+  background: white
+  flex-direction: row
+  align-items: center
+  padding-left: 15px
+  -webkit-box-shadow: 0px 2px 15px 0px rgba(50, 50, 50, 0.75)
+  -moz-box-shadow: 0px 2px 15px 0px rgba(50, 50, 50, 0.75)
+  box-shadow: 0px 2px 15px 0px rgba(50, 50, 50, 0.75)
+
+  i
+    color: rgba(0,0,0,0.8)
+    pointer-events: none
+
+  input
+    font: inherit
+    border: none
+    background: transparent
+    padding: 15px
+    outline: none
+    min-width: 300px
+    flex-grow: 1
+    border-top-right-radius: 30px
+    border-bottom-right-radius: 30px
+
+@keyframes show
+  from
+    opacity: 0
+    transform: scaleX(0)
+  to
+    opacity: 1
+    transform: scaleX(1)
+
+@keyframes fadeBox
+  from
+    opacity: 1
+  to
+    opacity: 0
+
+.show-box
+  display: flex
+  animation: show ease-in-out 100ms
+
+.hide-box
+  opacity: 0
+  animation: fadeBox ease-in-out 150ms
+
+@media screen and (max-width: 830px)
+  button
+    display: none
+
+  .search-box
+    display: flex !important
+    position: relative
+    min-width: 0
+    opacity: 1
+
+    input
+      min-width: 20%
