@@ -12,7 +12,7 @@ import { environment } from 'src/environments/environment';
       transition(':enter', [
         style({
           opacity: 0,
-          transform: 'scaleY(0)',
+          transform: 'scaleY(0.5)',
           'transform-origin': '0% 0%',
         }),
         animate(
@@ -28,7 +28,7 @@ import { environment } from 'src/environments/environment';
         }),
         animate(
           '100ms ease-in-out',
-          style({ opacity: 0, transform: 'scaleY(0)' })
+          style({ opacity: 0, transform: 'scaleY(0.5)' })
         ),
       ]),
     ]),
