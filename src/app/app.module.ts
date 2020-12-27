@@ -52,6 +52,8 @@ import { RegisteredGuard } from './core/guards/registered.guard';
 import { DropdownComponent } from './header/dropdown/dropdown.component';
 import { SearchBoxComponent } from './header/search-box/search-box.component';
 import { SearchComponent } from './search/search.component';
+import { ButtonMainComponent } from './core/button-main/button-main.component';
+import { SwitchComponent } from './core/switch/switch.component';
 
 @NgModule({
   declarations: [
@@ -83,6 +85,8 @@ import { SearchComponent } from './search/search.component';
     DropdownComponent,
     SearchBoxComponent,
     SearchComponent,
+    ButtonMainComponent,
+    SwitchComponent,
   ],
   imports: [
     BrowserModule,

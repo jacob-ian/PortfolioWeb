@@ -1,0 +1,43 @@
+.switch-container
+  display: flex
+  flex-direction: row
+  align-items: center
+  margin: 10px 0
+
+  .switch-label
+    flex-grow: 0
+    text-transform: uppercase
+    font-size: 0.8rem
+
+  input[type="range"]
+    flex-grow: 1
+    appearance: none
+    -webkit-appearance: none
+    border-radius: 25px
+    padding: 15px 10px
+    border: 1px solid rgba(0,0,0,0.2)
+    width: 90px
+    margin: 0 10px
+
+  input[type=range]::-webkit-slider-thumb
+    -webkit-appearance: none
+    width: 20px
+    height: 20px
+    border-radius: 50%
+    background: var(--color-accent)
+    transition: all ease-in-out 200ms
+    -webkit-box-shadow: 0px 2px 15px 0px rgba(50, 50, 50, 0.2)
+    -moz-box-shadow: 0px 2px 15px 0px rgba(50, 50, 50, 0.2)
+    box-shadow: 0px 2px 15px 0px rgba(50, 50, 50, 0.2)
+
+  input[type=range]:focus
+    outline: none
+
+  input[type=range]::-ms-track
+    width: 100%
+    cursor: pointer
+
+    /* Hides the slider so custom styles can be added */
+    background: transparent
+    border-color: transparent
+    color: transparent

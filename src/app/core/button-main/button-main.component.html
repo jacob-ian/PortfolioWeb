@@ -1,0 +1,4 @@
+<button #button [type]="type" [disabled]="isDisabled" (change)="onChange($event.target.value)"
+  (blur)="onTouched($event)">
+  <ng-content></ng-content>
+</button>
