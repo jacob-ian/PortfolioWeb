@@ -1,6 +1,7 @@
 import { trigger, transition, style, animate } from '@angular/animations';
 import { Component, HostListener, Input, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/core/services/auth.service';
+import { Observable } from 'rxjs';
+import { AuthService, User } from 'src/app/core/services/auth.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -35,6 +36,9 @@ import { environment } from 'src/environments/environment';
   ],
 })
 export class DropdownComponent implements OnInit {
+  // The user observable
+  user$: Observable<User>;
+
   // Create an expanded boolean
   @Input() isExpanded: boolean = false;
 
@@ -53,7 +57,10 @@ export class DropdownComponent implements OnInit {
 
   constructor(private auth: AuthService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // Define the user from the auth service
+    this.user$ = this.auth.user$;
+  }
 
   /**
    * Expand the additional navigation options
