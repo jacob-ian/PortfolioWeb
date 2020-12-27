@@ -4,13 +4,29 @@ import {
   AngularFireUploadTask,
 } from '@angular/fire/storage';
 import { AuthService } from './auth.service';
-import { ImageServiceError } from '@functions/images/images.models';
+import {
+  ImageServiceError,
+  ImageUploadTask,
+} from '@functions/images/images.models';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ImageService {
   constructor(private storage: AngularFireStorage, private auth: AuthService) {}
+
+  /**
+   * Create an image uploading dialog
+   * @param uploadPath the path to upload the image to
+   * @param dimensions the dimensions required of the image
+   * @returns void
+   */
+  createDialog(
+    uploadPath: string,
+    dimensions: { ratio: '1:1' }
+  ): AngularFireUploadTask {
+    return null;
+  }
 
   /**
    * Upload an image to the Firebase Storage Bucket.
