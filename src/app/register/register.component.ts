@@ -5,8 +5,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../core/services/auth.service';
 import { User } from '@functions/users/users.models';
 import { Observable, Subscription } from 'rxjs';
-import { first, switchMap, take, tap } from 'rxjs/operators';
+import { finalize, first, switchMap, take, tap } from 'rxjs/operators';
 import { NotificationsService } from '../core/notifications/notifications.service';
+import { ImageService } from '../core/services/image.service';
+import {
+  AngularFireStorage,
+  AngularFireUploadTask,
+} from '@angular/fire/storage';
 
 @Component({
   selector: 'app-register',
@@ -16,8 +21,10 @@ import { NotificationsService } from '../core/notifications/notifications.servic
 export class RegisterComponent implements OnInit, OnDestroy {
   // The registration form
   registerForm = this.fb.group({
+    imageUrl: ['', [Validators.required]],
     emailSubscribe: [true, Validators.required],
-    notificationsSubscribe: [true, Validators.required],
+    pushNotifications: [true, Validators.required],
+    termsAndConditions: [false, Validators.requiredTrue],
   });
 
   // The subscription to the registered state
@@ -26,8 +33,14 @@ export class RegisterComponent implements OnInit, OnDestroy {
   // The user observable
   user$: Observable<User>;
 
+  // The user's Id
+  userId: string;
+
   // The error object
   @Input() error: string;
+
+  // The image percentage upload
+  @Input() imagePercentage: Observable<number>;
 
   constructor(
     private fb: FormBuilder,
@@ -35,12 +48,69 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private afs: AngularFirestore,
-    private notifications: NotificationsService
+    private storage: AngularFireStorage,
+    private notifications: NotificationsService,
+    private images: ImageService
   ) {}
 
   ngOnInit(): void {
     // Get the user observable
-    this.user$ = this.auth.user$;
+    this.user$ = this.auth.user$.pipe(
+      tap((user) => {
+        // Grab the user ID
+        this.userId = user.uid;
+
+        // Check for an image URL
+        if (user.imageUrl) {
+          // Update the form with the image URL
+          this.registerForm.controls['imageUrl'].setValue(user.imageUrl);
+        }
+
+        return user;
+      })
+    );
+  }
+
+  /**
+   * Update the user image.
+   * @returns void
+   */
+  async editImage(): Promise<void> {
+    // Create the image dialog
+    const res = this.images.createDialog(`/users/${this.userId}/images`, {
+      ratio: '1:1',
+    });
+
+    // Get the file reference
+    const ref = (await res).ref;
+
+    // Set the percentage observable
+    this.imagePercentage = res.percentageChanges();
+
+    // Subscribe to the snapshot changes
+    const sub = res
+      .snapshotChanges()
+      .pipe(
+        finalize(async () => {
+          // Set the download URL
+          this.registerForm.setValue({
+            userImage: {
+              imageUrl: await ref.getDownloadURL(),
+            },
+          });
+        })
+      )
+      .subscribe(
+        () => {},
+        (error) => {
+          // Get the error
+          this.error = error.message;
+        },
+        () => {
+          // Unsubscribe
+          sub.unsubscribe();
+        }
+      );
   }
 
   /**

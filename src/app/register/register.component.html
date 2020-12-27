@@ -3,16 +3,30 @@
   <form [formGroup]="registerForm">
     <h2>Account Details</h2>
     <div class="user-details">
-      <button class="user-image">
-        <img [src]="user.imageUrl ? user.imageUrl : '/assets/svg/person'" />
+      <div class="user-name detail">{{ user.name }}</div>
+      <div class="user-email detail">{{ user.email }}</div>
+      <button class="detail user-image" alt="Edit Image" aria-label="Edit Image" (click)="editImage()">
+        <div class="user-image-container">
+          <img [src]="
+              user.imageUrl
+                ? user.imageUrl
+                : '/assets/svg/account_circle-24px.svg'
+            " />
+          <i class="material-icons">add_a_photo</i>
+        </div>
+        <div>Edit</div>
       </button>
-      <div class="user-name">{{user.name}}</div>
-      <div class="user-email">{{user.email}}</div>
+
     </div>
     <h2>Notification Preferences</h2>
-    <label for="emails">Subscribe to Email Newsletter?:</label>
-    <input type="checkbox" formControlName="emailSubscribe" [checked]="user.notifications.email" />
-    <label for="push">Enable Push Notifications?:</label>
-    <input type="checkbox" formControlName="notificationsSubscribe" />
+    <label for="emails">Subscribe to the Email Newsletter?:</label>
+    <app-switch formControlName="emailSubscribe" off="No" on="yes"></app-switch>
+    <label for="push">Turn on Push Notifications?:</label>
+    <app-switch formControlName="pushNotifications" off="Off" on="On"></app-switch>
+    <h2>Terms & Conditions</h2>
+    <label for="terms" class="label-required">Do you agree to the <a routerLink="/terms" target="_blank">Terms &
+        Conditions?</a></label>
+    <input type="checkbox" formControlName="termsAndConditions" required />
+    <app-button-main [disabled]="registerForm.invalid">Register</app-button-main>
   </form>
 </app-smart-box>

@@ -7,6 +7,7 @@ h2
   border-bottom: 1px solid black
   width: 100%
   text-align: center
+  margin-top: 40px
   margin-bottom: 30px
 
 form
@@ -17,43 +18,76 @@ form
   flex-direction: column
   padding: 0 5px
 
+  .label-required
+    position: relative
+
+  .label-required::after
+    content: "*"
+    color: red
+    font: inherit
+
   .user-details
     display: flex
     flex-direction: column
     align-items: center
-    margin-bottom: 15px
 
-    *
+    .detail
       margin-bottom: 10px
 
+    .detail:last-child
+      margin-bottom: 0
+
     .user-image
+      margin-top: 10px
+      display: flex
+      flex-direction: column
+      align-items: center
+      justify-content: center
       background: none
       outline: none
       border: none
       appearance: none
       -webkit-appearance: none
-      margin-right: 5px
-      position: relative
       z-index: 1
       transition: all ease-in-out 200ms
+      color: var(--color-accent-second)
+      font-weight: 600
+      -webkit-tap-highlight-color: transparent
 
-      img
-        border-radius: 50%
-        width: 96px
-        height: 96px
+      .user-image-container
+        position: relative
+        margin-bottom: 0
+
+        img
+          border-radius: 50%
+          width: 96px
+          height: 96px
+          transition: all ease-in-out 200ms
+
+        i
+          opacity: 0
+          color: white
+          position: absolute
+          top: 50%
+          left: 50%
+          transform: translateY(-50%) translateX(-50%)
+          transition: all ease-in-out 200ms
+          z-index: 2
 
     .user-image:hover
       cursor: pointer
-      filter: brightness(0.5)
 
-    .user-image:hover ::before
-      position: absolute
-      display: block
-      content: url('/assets/svg/add_a_photo-24px.svg')
-      height: 24px
-      width: 24px
-      z-index: 2
+      img
+        filter: brightness(0.7)
+
+      i
+        opacity: 1 !important
 
     .user-name
       font-weight: 600
       position: relative
+
+  app-button-main
+      margin-top: 30px
+
+@media screen and (max-width: 830px)
