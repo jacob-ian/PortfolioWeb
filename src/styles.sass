@@ -8,6 +8,7 @@ $color-accent-2: #c0998b
 
 :root
   --color-primary: #{$color-primary}
+  --color-secondary: #8a8e98
   --color-accent: #{$color-accent}
   --color-accent-second: #{$color-accent-2}
   --background-primary: white
@@ -24,6 +25,7 @@ body, html
   font-smoothing: auto
   -wekbkit-font-smoothing: antialiased
   -moz-osx-font-smoothing: antialiased
+  scroll-behavior: smooth
 
 body
   padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)
@@ -86,6 +88,19 @@ a:hover
   flex-direction: column
   flex-grow: 2
   justify-content: center
+
+.col
+  display: flex
+  flex-direction: column
+  flex-grow: 1
+  justify-content: flex-start
+  align-items: center
+
+  label
+    text-align: center
+
+.col.full
+  width: 100%
 
 @supports (-webkit-touch-callout: none)
   /* CSS specific to iOS devices */ 
