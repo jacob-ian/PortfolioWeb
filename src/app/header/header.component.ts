@@ -34,6 +34,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private metaService: MetaService
   ) {}
 
+  // The keypress listener for the search box
+  @HostListener('document:keydown.escape', ['$event']) onKeyDownHandler() {
+    // Check if the search is open
+    if (this.isDrawerOpen) {
+      // We can close the search box
+      this.closeDrawer();
+    }
+  }
+
   // The navigation drawer
   @ViewChild('navigationDrawer', { static: true }) drawerRef: ElementRef;
   navigationDrawer: HTMLElement;
