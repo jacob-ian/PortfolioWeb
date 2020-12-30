@@ -4,6 +4,7 @@ import {
   forwardRef,
   Input,
   OnInit,
+  Output,
   ViewChild,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -28,9 +29,15 @@ export class SwitchComponent implements OnInit, ControlValueAccessor {
   // The disabled status
   @Input('disabled') disabled: boolean;
 
+  // The required status
+  @Input('required') required: boolean;
+
   // The on and off labels
   @Input('off') offLabel: string;
   @Input('on') onLabel: string;
+
+  // The value of the component
+  @Output('value') value: boolean;
 
   constructor() {}
 
@@ -40,7 +47,15 @@ export class SwitchComponent implements OnInit, ControlValueAccessor {
 
   writeValue(value: boolean): void {
     // Write the value
-    this.range.value = value ? '1' : '0';
+    if (value) {
+      // Set the value of the range to the true position
+      this.range.value = '1';
+    } else {
+      this.range.value = '0';
+    }
+
+    // Set the other value attribute
+    this.value = !value;
   }
   registerOnChange(fn: any): void {
     this.onChange = fn;

@@ -1,6 +1,7 @@
-<div class="switch-container">
-  <div *ngIf="offLabel" class="switch-label">{{offLabel}}</div>
-  <input #range type="range" [disabled]="disabled" (change)="onChange($event.target.value === '1' ? true : false)"
-    (blur)="onTouched($event)" aria-valuemax="1" aria-valuemin="0" min="0" max="1" />
-  <div *ngIf="onLabel" class="switch-label">{{onLabel}}</div>
+<div class="switch-container" [class.switch-activated]="!value && !disabled" [class.disabled]="disabled">
+  <div *ngIf="onLabel" class="switch-label" [class.label-active]="!value">{{onLabel}}</div>
+  <input #range type="range" [disabled]="disabled" (change)="value = $event.target.value === '0' ? true : false "
+    (change)="onChange($event.target.value === '1' ? true : false)" (blur)="onTouched($event)" aria-valuemax="1"
+    aria-valuemin="0" min="0" max="1" [required]="required" />
+  <div *ngIf="offLabel" class="switch-label" [class.label-active]="value">{{offLabel}}</div>
 </div>

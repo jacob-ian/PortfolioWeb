@@ -2,33 +2,88 @@
   display: flex
   flex-direction: row
   align-items: center
-  margin: 10px 0
+  margin: 15px 0
+  border-radius: 25px
+  padding: 5px
+  position: relative
+  transition: all ease-in-out 200ms
+  background-color: var(--color-secondary)
 
   .switch-label
     flex-grow: 0
     text-transform: uppercase
-    font-size: 0.8rem
+    font-size: 0.7rem
+    font-weight: 700
+    position: absolute
+    top: 50%
+    transform: translateY(-50%)
+    z-index: 1
+    opacity: 0
+    transition: opacity ease-in-out 100ms
+    color: white
+
+  .switch-label:first-child
+    left: 15px
+
+  .switch-label:last-child
+    right: 15px
+
+  .label-active
+    opacity: 1
 
   input[type="range"]
     flex-grow: 1
     appearance: none
     -webkit-appearance: none
-    border-radius: 25px
-    padding: 15px 10px
-    border: 1px solid rgba(0,0,0,0.2)
-    width: 90px
-    margin: 0 10px
+    background: none
+    z-index: 20
+    padding: 0
+    width: 85px
 
   input[type=range]::-webkit-slider-thumb
+    appearance: none
     -webkit-appearance: none
-    width: 20px
-    height: 20px
+    width: 32px
+    height: 32px
     border-radius: 50%
-    background: var(--color-accent)
+    background: white
     transition: all ease-in-out 200ms
-    -webkit-box-shadow: 0px 2px 15px 0px rgba(50, 50, 50, 0.2)
-    -moz-box-shadow: 0px 2px 15px 0px rgba(50, 50, 50, 0.2)
-    box-shadow: 0px 2px 15px 0px rgba(50, 50, 50, 0.2)
+    z-index: 50
+    position: relative
+    margin-top: 0
+    box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.5)
+    -webkit-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.5)
+    -moz-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.5)
+
+  input[type=range]::-moz-range-thumb
+    appearance: none
+    -webkit-appearance: none
+    width: 32px
+    height: 32px
+    border-radius: 50%
+    background: white
+    transition: all ease-in-out 200ms
+    z-index: 50
+    position: relative
+    margin-top: 0
+    box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.5)
+    -webkit-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.5)
+    -moz-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.5)
+
+  input[type=range]::-ms-thumb
+    appearance: none
+    -webkit-appearance: none
+    width: 32px
+    height: 32px
+    border-radius: 50%
+    background: white
+    transition: all ease-in-out 200ms
+    z-index: 50
+    position: relative
+    margin-top: 0
+    box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.5)
+    -webkit-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.5)
+    -moz-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.5)
 
   input[type=range]:focus
     outline: none
@@ -41,3 +96,14 @@
     background: transparent
     border-color: transparent
     color: transparent
+
+.switch-activated
+  background-color: var(--color-accent)
+
+.disabled
+  background-color: rgba(0,0,0,0.2)
+
+  input[type=range]::-webkit-slider-thumb
+    box-shadow: none
+    -webkit-box-shadow: none
+    -moz-box-shadow: none
