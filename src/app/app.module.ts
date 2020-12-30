@@ -54,6 +54,8 @@ import { SearchBoxComponent } from './header/search-box/search-box.component';
 import { SearchComponent } from './search/search.component';
 import { ButtonMainComponent } from './core/button-main/button-main.component';
 import { SwitchComponent } from './core/switch/switch.component';
+import { CheckboxComponent } from './core/checkbox/checkbox.component';
+import { UpButtonComponent } from './core/up-button/up-button.component';
 
 @NgModule({
   declarations: [
@@ -87,6 +89,8 @@ import { SwitchComponent } from './core/switch/switch.component';
     SearchComponent,
     ButtonMainComponent,
     SwitchComponent,
+    CheckboxComponent,
+    UpButtonComponent,
   ],
   imports: [
     BrowserModule,
