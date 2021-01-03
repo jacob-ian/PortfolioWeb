@@ -181,8 +181,8 @@ export class AuthService implements OnDestroy, Resolve<User> {
       // Destructure the firebase user details
       const { email, photoURL, displayName } = user;
 
-      // Check if there is an image provided
-      if (photoURL) {
+      // Check if there is an image provided and that it won't be overwriting a custom image
+      if (photoURL && !data.isImageCustom) {
         // Update the image
         data.imageUrl = photoURL;
       }
