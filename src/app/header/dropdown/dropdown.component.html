@@ -1,6 +1,6 @@
 <button alt="Show More" aria-label="Show More" (click)="toggleDropdown()" [class.clicked]="isExpanded"
   class="nav-dropdown">
-  <i class="material-icons nav-dropdown" [style.transform]="isExpanded ? 'rotateZ(90deg)' : 'none'">settings</i>
+  <i class="material-icons nav-dropdown">more_vert</i>
 </button>
 <ul [@dropdownAnim] *ngIf="isExpanded">
   <li *ngIf="this.user$ | async; then dashboard; else login"></li>

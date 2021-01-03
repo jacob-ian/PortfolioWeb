@@ -55,6 +55,14 @@ export class DropdownComponent implements OnInit {
     }
   }
 
+  // The escape key listener to close the dropdown
+  @HostListener('document:keydown.escape', ['$event']) onKeyDownHandler() {
+    // Check if the dropdown is open
+    if (this.isExpanded) {
+      this.toggleDropdown();
+    }
+  }
+
   constructor(private auth: AuthService) {}
 
   ngOnInit(): void {
