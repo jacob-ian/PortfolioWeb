@@ -56,6 +56,8 @@ import { ButtonMainComponent } from './core/button-main/button-main.component';
 import { SwitchComponent } from './core/switch/switch.component';
 import { CheckboxComponent } from './core/checkbox/checkbox.component';
 import { UpButtonComponent } from './core/up-button/up-button.component';
+import { EmailComponent } from './email/email.component';
+import { DialogComponent } from './core/dialog/dialog.component';
 
 @NgModule({
   declarations: [
@@ -91,6 +93,8 @@ import { UpButtonComponent } from './core/up-button/up-button.component';
     SwitchComponent,
     CheckboxComponent,
     UpButtonComponent,
+    EmailComponent,
+    DialogComponent,
   ],
   imports: [
     BrowserModule,
