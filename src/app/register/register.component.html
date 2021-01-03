@@ -29,7 +29,7 @@
     </div>
     <div class="col full">
       <h2>Terms & Conditions</h2>
-      <label for="terms" class="label-required">Do you agree to the <a routerLink="/terms" target="_blank">Terms &
+      <label for="terms" class="label-required">Do you agree to the <a (click)="showTerms()">Terms &
           Conditions?</a></label>
       <app-switch formControlName="termsAndConditions" off="No" on="Yes" required></app-switch>
 

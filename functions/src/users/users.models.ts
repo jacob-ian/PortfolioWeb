@@ -18,6 +18,7 @@ export interface User {
     email: boolean; // if the user is subscribed to post notifications
   };
   isRegistered: boolean; // Check if the user has been through the registration flow
+  isImageCustom: boolean; // Check if the user has a custom uploaded image
 }
 
 /**

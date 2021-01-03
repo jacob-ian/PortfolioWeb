@@ -12,6 +12,8 @@ import {
   AngularFireStorage,
   AngularFireUploadTask,
 } from '@angular/fire/storage';
+import { DialogService } from '../core/dialog/dialog.service';
+import { TermsConditionsComponent } from '../terms-conditions/terms-conditions.component';
 
 @Component({
   selector: 'app-register',
@@ -48,9 +50,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private afs: AngularFirestore,
-    private storage: AngularFireStorage,
     private notifications: NotificationsService,
-    private images: ImageService
+    private images: ImageService,
+    private dialogService: DialogService
   ) {}
 
   ngOnInit(): void {
@@ -114,6 +116,16 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * Show the terms and conditions dialog.
+   * @returns void
+   */
+  showTerms(): void {
+    return this.dialogService.create({
+      component: TermsConditionsComponent,
+    });
+  }
+
+  /**
    * Registers a user with their notification preferences
    */
   async register(): Promise<void> {
@@ -160,6 +172,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       .doc<User>(`/users/${uid}`)
       .update({
         notifications: { email: emailSubscribe },
+        isRegistered: true,
       })
       .then(async () => {
         // Fetch the query parameters for the page

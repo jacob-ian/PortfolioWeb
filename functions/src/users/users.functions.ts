@@ -88,6 +88,7 @@ export const createUser = functions.auth
         email: false,
       },
       isRegistered: false, // we need to send the user through the registration flow
+      isImageCustom: false,
     };
 
     // Add the document to the database
