@@ -19,6 +19,7 @@ import { AuthService } from './core/services/auth.service';
 import { LoginGuard } from './core/guards/login.guard';
 import { RegisteredGuard } from './core/guards/registered.guard';
 import { SearchComponent } from './search/search.component';
+import { EmailComponent } from './email/email.component';
 
 const routes: Routes = [
   {
@@ -137,6 +138,18 @@ const routes: Routes = [
     data: {
       title: 'Register | Jacob Ian Matthews',
       description: 'Register an account at jacobianmatthews.com.',
+      og: {
+        type: 'website',
+        image: 'https://jacobianmatthews.com/assets/icons/icon-512x512.png',
+      },
+    },
+  },
+  {
+    path: 'email',
+    component: EmailComponent,
+    data: {
+      title: 'Subscribe with Email | Jacob Ian Matthews',
+      description: 'Subscribe to the email newsletter at jacobianmatthews.com.',
       og: {
         type: 'website',
         image: 'https://jacobianmatthews.com/assets/icons/icon-512x512.png',
