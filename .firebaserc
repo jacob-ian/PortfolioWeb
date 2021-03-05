@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "jacobianmatthews-portfolio": {
+      "hosting": {
+        "PortfolioWeb": [
+          "jacobianmatthews-portfolio"
+        ]
+      }
+    }
+  }
+}
