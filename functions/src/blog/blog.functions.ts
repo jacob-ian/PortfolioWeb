@@ -1,43 +1,38 @@
 /**
  * This file contains the blog-related back-end functions.
  *
- * @author Jacob Ian Matthews
+ * @copyright 2021 Jacob Ian Matthews
  */
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
-
 import { Post } from './blog.models';
 
 const firestore = admin.firestore();
 
-/**
- * Create a new Snippet from a blog Post
- */
-export const createSnippet = functions.firestore
+export const createSnippetOnPost = functions.firestore
   .document(`/posts/{postId}`)
   .onCreate(async (snap) => {
-    // Grab the document from the snapshot
-    const { id, href, title, author, description, thumbnail, dateCreated } = <
-      Post
-    >snap.data();
-
-    // Create the snippet
-    try {
-      return await firestore.doc(`/snippets/${id}`).set({
-        postId: id,
-        href,
-        title,
-        author,
-        description,
-        thumbnail,
-        dateCreated,
-        commentCount: 0,
-      });
-    } catch (err) {
-      // Log the error
-      return console.error(`Couldn't create Snippet: ${id}. Error: ${err}`);
-    }
+    const post = <Post>snap.data();
+    const snippet = new Snippet();
   });
+
+async function createSnippetFromPost(post: Post): Promise<any> {
+  try {
+    return await firestore.doc(`/snippets/${id}`).set({
+      postId: id,
+      href,
+      title,
+      author,
+      description,
+      thumbnail,
+      dateCreated,
+      commentCount: 0,
+    });
+  } catch (err) {
+    // Log the error
+    return console.error(`Couldn't create Snippet: ${id}. Error: ${err}`);
+  }
+}
 
 /**
  * Update a Snippet from a blog Post

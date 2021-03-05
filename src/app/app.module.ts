@@ -58,6 +58,8 @@ import { CheckboxComponent } from './core/checkbox/checkbox.component';
 import { UpButtonComponent } from './core/up-button/up-button.component';
 import { EmailComponent } from './email/email.component';
 import { DialogComponent } from './core/dialog/dialog.component';
+import { ImageDialogComponent } from './core/dialog/image-dialog/image-dialog.component';
+import { ImageInputComponent } from './core/image-input/image-input.component';
 
 @NgModule({
   declarations: [
@@ -95,6 +97,8 @@ import { DialogComponent } from './core/dialog/dialog.component';
     UpButtonComponent,
     EmailComponent,
     DialogComponent,
+    ImageDialogComponent,
+    ImageInputComponent,
   ],
   imports: [
     BrowserModule,

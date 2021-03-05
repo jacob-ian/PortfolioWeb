@@ -29,6 +29,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
     termsAndConditions: [false, Validators.requiredTrue],
   });
 
+  // The custom image boolean
+  isImageCustom: boolean = false;
+
   // The subscription to the registered state
   registeredSub: Subscription;
 
@@ -74,45 +77,28 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Update the user image.
+   * Opens the image uploading dialog
    * @returns void
    */
-  async editImage(): Promise<void> {
-    // Create the image dialog
-    const res = this.images.createDialog(`/users/${this.userId}/images`, {
-      ratio: '1:1',
-    });
+  openImageUpload(): void {
+    // Open the image dialog
+    return this.images.createDialog(
+      { fn: this.updateImage, buttonContent: 'Update' },
+      `/users/${this.userId}/images`
+    );
+  }
 
-    // Get the file reference
-    const ref = (await res).ref;
+  /**
+   * Update the image's URL in the form.
+   * @param imageUrl the URL of the uploaded image
+   * @returns void
+   */
+  updateImage(imageUrl: string): void {
+    // Set the form control with the new imageUrl
+    this.registerForm.controls['imageUrl'].setValue(imageUrl);
 
-    // Set the percentage observable
-    this.imagePercentage = res.percentageChanges();
-
-    // Subscribe to the snapshot changes
-    const sub = res
-      .snapshotChanges()
-      .pipe(
-        finalize(async () => {
-          // Set the download URL
-          this.registerForm.setValue({
-            userImage: {
-              imageUrl: await ref.getDownloadURL(),
-            },
-          });
-        })
-      )
-      .subscribe(
-        () => {},
-        (error) => {
-          // Get the error
-          this.error = error.message;
-        },
-        () => {
-          // Unsubscribe
-          sub.unsubscribe();
-        }
-      );
+    // Update the custom image boolean
+    this.isImageCustom = true;
   }
 
   /**
@@ -128,7 +114,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
   /**
    * Registers a user with their notification preferences
    */
-  async register(): Promise<void> {
+  async register(event: Event): Promise<void> {
+    // Prevent the default action
+    event.preventDefault();
+
     // Get the form data
     const data = this.registerForm.value;
 

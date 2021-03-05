@@ -1,0 +1,50 @@
+.input-container
+  display: flex
+  flex-direction: column
+  align-items: center
+  justify-content: center
+
+  .round
+    border-radius: 50%
+
+  .image-container
+    position: relative
+    height: 96px
+    width: 96px
+
+    .uploading
+      filter: brightness(0.2)
+
+    img
+      cursor: pointer
+      transition: all ease-in-out 200ms
+      width: 96px
+      height: 96px
+
+    img:hover
+      filter: brightness(0.8)
+
+    .upload-progress
+      display: flex
+      flex-direction: column
+      align-content: center
+      position: absolute
+      top: 0
+      left: 0
+      width: 96px
+      height: 96px
+      font-size: 2rem
+
+  app-button-main
+      margin-top: 5px
+
+  input
+    display: none
+
+.disabled
+
+  img
+    cursor: default
+
+  img:hover
+    filter: none

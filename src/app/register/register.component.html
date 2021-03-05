@@ -1,23 +1,13 @@
 <app-smart-box *ngIf="user$ | async as user">
   <h1>Register</h1>
-  <form [formGroup]="registerForm">
+  <form [formGroup]="registerForm" (submit)="register($event)">
     <div class="col">
       <h2>Account Details</h2>
       <div class="user-details">
         <div class="user-name detail">{{ user.name }}</div>
         <div class="user-email detail">{{ user.email }}</div>
-        <button class="detail user-image" alt="Edit Image" aria-label="Edit Image" (click)="editImage()">
-          <div class="user-image-container">
-            <img [src]="
-              user.imageUrl
-                ? user.imageUrl
-                : '/assets/svg/account_circle-24px.svg'
-            " />
-            <i class="material-icons">add_a_photo</i>
-          </div>
-          <div>Edit</div>
-        </button>
-
+        <app-image-input formControlName="imageUrl" alt="Profile Image" shape="round" buttonName="Change">
+        </app-image-input>
       </div>
     </div>
     <div class="col">
@@ -33,7 +23,7 @@
           Conditions?</a></label>
       <app-switch formControlName="termsAndConditions" off="No" on="Yes" required></app-switch>
 
-      <app-button-main [disabled]="registerForm.invalid">Register</app-button-main>
+      <app-button-main [disabled]="registerForm.invalid" type="submit">Register</app-button-main>
     </div>
   </form>
 </app-smart-box>

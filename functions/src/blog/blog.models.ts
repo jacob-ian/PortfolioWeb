@@ -1,62 +1,32 @@
 /**
- * An interface for a Blog Post object
+ * A Blog Post
  */
 export interface Post {
-  id: string; // the ID of the post
-  title: string; // the post's title
-  name: string; // the relative URL of the post (url-safe name)
-  href: string; // the URL of the blog post
-  thumbnail: {
-    type: 'image/jpeg' | 'image/gif' | 'image/png' | 'image/svg'; // the image type of the thumbnail
-    href: string; // the URL to the thumbnail image
-  };
-  // the author of the post
+  id: string;
+  title: string;
+  relativeUrl: string;
+  url: string;
+  description: string;
+  category: 'technology' | 'science' | 'business' | 'lifestyle';
+  thumbnailUrl: string;
   author: Author;
-  description: string; // the description of the blog post
-  content: string; // the Markdown string content
-  tags: Tags; // the tags associated with the post
-  dateCreated: number; // the created date and time
-  dateUpdated?: number; // the date of last edit
+  markdownContent: string;
+  tags: Tags;
+  dateCreated: number;
+  dateUpdated?: number;
   commentCount: number;
-  section: string; // The overarching category of the post
 }
 
 /**
- * An object with data for a new post to be created.
- */
-export interface PostRequest {
-  id: string; // the ID of the post
-  title: string; // the name of the post
-  name: string; // the url-safe name of the post
-  description: string; // the description for the post
-  content: string; // the Markdown/HTML content for the post
-  tags: Tags; // the tags associated with the post
-  thumbnail: {
-    type: 'image/jpeg' | 'image/gif' | 'image/png' | 'image/svg';
-    href: string; // the URL to the thumbnail image
-  };
-  section: 'technology' | 'science' | 'business' | 'lifestyle'; // the overarching category of the post
-}
-
-/**
- *  An object to show the deletion of a Post
- */
-export interface PostDeleted {
-  postId: string; // the ID of the deleted post
-}
-
-/**
- * A database model for a draft Post
+ * A Draft Post
  */
 export interface Draft {
-  id: string; // the Draft/Post ID
+  id: string;
   title: string;
   description?: string;
-  content?: string;
+  markdownContent?: string;
   tags?: Tags;
-  thumbnail?: {
-    href: string;
-  };
+  thumbnailUrl?: string;
   dateCreated: number;
   dateUpdated?: number;
 }
@@ -65,17 +35,16 @@ export interface Draft {
  * A snippet of a post
  */
 export interface Snippet {
-  postId: string; // the ID of the full post
-  href: string; // the HREF of the full post
-  title: string; // the post's title
-  author: Author; // the post's author
-  description: string; // the post's description
-  dateCreated: number; // the time of creation of the post
-  dateUpdated: number;
-  thumbnail: {
-    href: string; // the location of the thumbnail
-  };
-  commentCount: number; // the number of comments
+  id: string; // Same as the Post's ID
+  title: string;
+  author: Author;
+  description: string;
+  dateCreated: number;
+  dateUpdated?: number;
+  thumbnailUrl: string;
+  relativeUrl: string;
+  url: string;
+  commentCount: number;
 }
 
 /**
@@ -90,7 +59,7 @@ export interface SnippetQuery {
 }
 
 /**
- * An interface for the tags available for querying
+ * Tags available for querying.
  */
 export interface Tags {
   finance: boolean;
@@ -102,53 +71,38 @@ export interface Tags {
 }
 
 /**
- * An interface for the Author of a post
+ * A post Author
  */
 export interface Author {
-  uid: string; // the UID of the post's author
-  name: string; // the name of the author
-  image: {
-    href: string; // the location of the author's image
-  };
+  userId: string;
+  name: string;
+  imageUrl: string;
 }
 
 /**
- * A comment interface
+ * A Comment
  */
 export interface Comment {
-  id: string; // the ID of the comment
-  content: string; // the content of the comment
-  author: Author; // the author of the comment
-  dateCreated: number; // The date/time of creation
+  id: string;
+  htmlContent: string;
+  author: Author;
+  dateCreated: number;
 }
 
 /**
- * A new comment
+ * The OpenGraph Meta Tags
  */
-export interface NewComment {
-  content: string; // the content of the comment
-  postId: string; // the id of the post to comment on
-}
-
-export interface DeletedComment {
-  id: string; // the ID of the comment that was deleted
-  message: string; // the confirmation message
-}
-
-/**
- * An object containing open graph details
- */
-export interface MetaTags {
-  title: string; // the page title
-  description: string; // the page description
-  image?: string; // the image URL of the page
+export interface OGMetaTags {
+  title: string;
+  description: string;
+  imageUrl?: string;
   type?: 'article' | 'website';
   article?: {
     published_time: string; // ISO8601 date time
     modified_time?: string; // ISO8601 date time
-    author: string; // the author's name
-    section: string; // the overarching category
-    tag: string[]; // keywords for the article
+    author: string;
+    category: string; //TODO: Rename category to section in the Meta Tags Service
+    keywords: string[]; //TODO: Rename to to "tag"
   };
 }
 

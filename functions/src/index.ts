@@ -1,21 +1,18 @@
 /**
- *
  * FIREBASE FUNCTIONS FOR THE CONTENT AND USER MANAGEMENT SYSTEMS OF JACOBIANMATTHEWS.COM.
  *
- * @author Jacob Ian Matthews
  * @copyright 2020 Jacob Ian Matthews
  * @license Apache-2.0
  */
 
 import * as admin from 'firebase-admin';
 
-// Initiliaze Firebase
 admin.initializeApp({
   storageBucket: 'jacobianmatthews-portfolio.appspot.com',
 });
 
 /**
- * USER-RELATED FUNCTIONS
+ * User Management Functions
  */
 export {
   createUser,
@@ -26,7 +23,7 @@ export {
 } from './users/users.functions';
 
 /**
- * BLOG-RELATED FUNCTIONS
+ * Content Management Functions
  */
 export {
   createSnippet,
@@ -38,6 +35,6 @@ export {
 } from './blog/blog.functions';
 
 /**
- * EMAIL-RELATED FUNCTIONS
+ * Email Functions
  */
 export { notifyNewPost } from './emails/emails.functions';

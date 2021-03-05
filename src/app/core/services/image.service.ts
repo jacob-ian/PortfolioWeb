@@ -8,33 +8,47 @@ import {
   ImageServiceError,
   ImageUploadTask,
 } from '@functions/images/images.models';
+import { DialogService } from '../dialog/dialog.service';
+import { DialogAction, DialogOptions } from '@functions/misc/services.models';
+import { ImageDialogComponent } from '../dialog/image-dialog/image-dialog.component';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ImageService {
-  constructor(private storage: AngularFireStorage, private auth: AuthService) {}
+  constructor(
+    private storage: AngularFireStorage,
+    private auth: AuthService,
+    private dialogService: DialogService
+  ) {}
 
   /**
-   * Create an image uploading dialog
+   * Create an image uploading dialog.
+   * @param action the action button of the dialog
    * @param uploadPath the path to upload the image to
    * @param dimensions the dimensions required of the image
    * @returns void
    */
-  createDialog(
-    uploadPath: string,
-    dimensions: { ratio: '1:1' }
-  ): AngularFireUploadTask {
-    return null;
+  createDialog(action: DialogAction, uploadPath: string): void {
+    // Create the uploading dialog
+    return this.dialogService.create({
+      action,
+      component: ImageDialogComponent,
+    });
   }
 
   /**
-   * Upload an image to the Firebase Storage Bucket.
-   * @param event the form submission event
+   * Upload a profile image to the Firebase Storage Bucket.
+   * @param base64 the base64 image string
+   * @param filename the name of the image
    * @returns an upload task for tracking upload percentage
    * @throws ImageServiceError
    */
-  async uploadImage(event: any): Promise<AngularFireUploadTask> {
+  async uploadProfileImage(
+    base64: string,
+    filename: string
+  ): Promise<AngularFireUploadTask> {
     // Get the current user
     try {
       var user = await this.auth.getSignedInUser();
@@ -56,23 +70,13 @@ export class ImageService {
     // Get the user ID
     const userId = user.uid;
 
-    // Get the file from the event
-    const file = event.target.files[0];
-
-    // Get the file name
-    const fileName = file.name;
-
-    // Create the filepath
-    const filePath = `/users/${userId}/images/${fileName}`;
-
     // Create the file reference
-    const ref = this.storage.ref(filePath);
+    const ref = this.storage.ref(`/users/${userId}/images/${filename}`);
 
     // Start the upload task
-    const task = ref.put(file);
+    const task = ref.putString(base64, 'base64', { contentType: 'image/png' });
 
-    // Return the upload task
-    return task;
+    return { ...task };
   }
 
   /**

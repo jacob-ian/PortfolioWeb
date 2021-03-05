@@ -2,7 +2,9 @@
   <div class="dialog-background" (click)="closeDialog()" @fadeIn *ngIf="showAll"></div>
   <div class="dialog-card" @slideUp *ngIf="showAll">
     <a class="dialog-close" (click)="closeDialog()"><i class="material-icons">close</i></a>
-    <div #viewContainer class="dialog-content" [innerHTML]="innerHTML"></div>
+    <div class="dialog-content" [innerHTML]="innerHTML">
+      <div #viewContainer class="dialog-component"></div>
+    </div>
     <div class="dialog-action" *ngIf="actionButtonContent">
       <app-button-main (click)="dialogAction()">{{actionButtonContent}}</app-button-main>
     </div>

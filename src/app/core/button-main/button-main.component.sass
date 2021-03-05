@@ -7,11 +7,21 @@ button
   font-weight: 600
   border-radius: 25px
   transition: all ease-in-out 200ms
+  -webkit-tap-highlight-color: transparent
   --disabled: rgba(0,0,0,0.2)
+  display: flex
+  flex-direction: row
+  align-items: center
+
+  i
+    margin-right: 10px
 
 button:hover
   cursor: pointer
   background: var(--color-accent-second)
+
+button:focus
+  outline: none
 
 button:disabled
   background: var(--disabled)
@@ -19,3 +29,10 @@ button:disabled
 button:disabled:hover
   cursor: default
   background: var(--disabled)
+
+.small
+  padding: 10px 15px
+  font-size: 0.8rem
+
+  i
+    font-size: small

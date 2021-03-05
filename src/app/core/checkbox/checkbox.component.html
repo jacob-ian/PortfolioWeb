@@ -1,0 +1,6 @@
+<label class="checkbox-container">
+  <ng-content></ng-content> <!-- The Label -->
+  <input #checkbox type="checkbox" (change)="onChange($event.target.checked)" (blur)="onTouched($event)"
+    [disabled]="disabled" [required]="required" [checked]="checked" />
+  <span class="checkmark"></span>
+</label>

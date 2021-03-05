@@ -1,4 +1,4 @@
 <button #button [type]="type" [disabled]="isDisabled" (change)="onChange($event.target.value)"
-  (blur)="onTouched($event)">
+  (blur)="onTouched($event)" [class.small]="size === 'small'">
   <ng-content></ng-content>
 </button>

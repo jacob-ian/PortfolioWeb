@@ -28,6 +28,9 @@ export class ButtonMainComponent implements OnInit, ControlValueAccessor {
   // The button type input
   @Input('type') type: 'menu' | 'reset' | 'submit';
 
+  // The button size
+  @Input('size') size: 'small' | 'regular';
+
   // The disabled input
   @Input('disabled') isDisabled: boolean;
 

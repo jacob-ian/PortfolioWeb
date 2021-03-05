@@ -24,7 +24,7 @@ export class RegisteredGuard implements CanActivate {
     | boolean
     | UrlTree {
     return this.auth.user$.pipe(
-      map((user) => user.isRegistered),
+      map((user) => !!!user.isRegistered),
       tap((registered) => {
         // Check if the user is registered
         if (!registered) {

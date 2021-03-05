@@ -1,0 +1,14 @@
+<div class="input-container" [class.disabled]='disabled'>
+  <div class="image-container">
+    <img *ngIf="src" [src]="src" [alt]="alt" [class.round]="shape === 'round' ? true : false"
+      [class.uploading]="uploadPercentage" (click)="input.click()">
+    <div class="upload-progress" *ngIf="uploadPercentage | async as percent">
+      <div>{{percent}}%</div>
+    </div>
+  </div>
+  <app-button-main (click)="input.click()" size="small" type="menu" [disabled]="disabled">{{buttonName}}
+  </app-button-main>
+  <input #input type="file" name="image" accept="image/*" (change)="cropImage($event)" [disabled]="disabled">
+
+
+</div>

@@ -5,9 +5,13 @@
 export interface DialogOptions {
   innerHtml?: string; // the inner HTML of the dialog
   component?: any; // an Angular component to show
-  action?: {
-    // the dialog's action button
-    buttonContent: string; // the content of the action button
-    fn: () => void; // the action of the button
-  };
+  action?: DialogAction; // the Dialog's action button config
+}
+
+/**
+ * A dialog action button.
+ */
+export interface DialogAction {
+  buttonContent: string; // the content of the action button
+  fn: (param?: any) => void; // the button's action.
 }
