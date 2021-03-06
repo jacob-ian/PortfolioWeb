@@ -11,6 +11,9 @@ import { WindowComponent } from './window/window.component';
 import { NavigationBarComponent } from './window/navigation-bar/navigation-bar.component';
 import { NavItemComponent } from './window/navigation-bar/nav-item/nav-item.component';
 import { ContentBoxComponent } from './window/content-box/content-box.component';
+import { FooterComponent } from './window/footer/footer.component';
+import { PrivacyComponent } from './privacy/privacy.component';
+import { TermsComponent } from './terms/terms.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +26,9 @@ import { ContentBoxComponent } from './window/content-box/content-box.component'
     NavigationBarComponent,
     NavItemComponent,
     ContentBoxComponent,
+    FooterComponent,
+    PrivacyComponent,
+    TermsComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
