@@ -1,1 +1,7 @@
-<p>nav-item works!</p>
+<li>
+  <a [routerLink]="'/' + getRoute()" [routerLinkActive]="isRouterLinkActive()" class="nav-item"
+    [class.activated]="isButtonActive()" [style.justify-content]="getIconUrl() ? 'flex-start' : 'center'">
+    <img *ngIf="getIconUrl() !== ''" [src]="getIconUrl()" />
+    <ng-content></ng-content>
+  </a>
+</li>

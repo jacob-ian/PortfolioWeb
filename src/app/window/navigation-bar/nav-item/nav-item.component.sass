@@ -1,0 +1,30 @@
+:host
+  flex-grow: 1
+  flex-basis: 90px
+  min-width: 90px
+  max-width: 200px
+  padding: 35px 0 
+  
+li
+  list-style: none
+  text-transform: lowercase
+  font-size: 1.1rem
+
+  a
+    display: flex
+    flex-direction: row
+    align-items: center
+    justify-content: center
+    text-decoration: none
+    color: var(--font-color-default)
+    transition: var(--default-transition)
+    font-weight: 400
+
+    img
+      height: 64px
+
+  a:hover
+    color: var(--font-color-accent)
+
+  .activated
+    color: var(--font-color-accent)
