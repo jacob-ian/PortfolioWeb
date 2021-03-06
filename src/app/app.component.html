@@ -1,5 +1,8 @@
 <app-window>
   <app-navigation-bar>
+    <app-nav-item icon="assets/icons/icon-512x512.png" updateWhenActive="false" class="app-title" route="">
+    </app-nav-item>
+    <app-nav-item class="spacer" updateWhenActive="false" routerLinkActive="false"></app-nav-item>
     <app-nav-item route="">Home</app-nav-item>
     <app-nav-item route="about">About</app-nav-item>
     <app-nav-item route="projects">Projects</app-nav-item>
@@ -7,4 +10,5 @@
   <app-content-box>
     <router-outlet></router-outlet>
   </app-content-box>
+  <app-footer></app-footer>
 </app-window>
