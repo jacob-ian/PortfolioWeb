@@ -1,9 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Data, NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
-
-const EMPTY_OBJECT = {};
 
 export interface AbstractRouteDataService {
   setRouteData(data: RouteData): void;

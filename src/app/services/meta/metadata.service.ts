@@ -1,9 +1,9 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
-import { PageTagFactory } from './meta/abstract-tag-factory';
-import { MetaTagFactory } from './meta/meta-tag-factory';
-import { OpenGraphTagFactory } from './meta/open-graph-tag-factory';
+import { PageTagFactory } from './abstract-tag-factory';
+import { MetaTagFactory } from './meta-tag-factory';
+import { OpenGraphTagFactory } from './open-graph-tag-factory';
 import {
   RouteData,
   RouteDataService,

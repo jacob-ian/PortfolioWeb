@@ -1,9 +1,8 @@
 import { TestBed } from '@angular/core/testing';
-import { ActivatedRoute, Data, Router } from '@angular/router';
+import { Data, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Observable } from 'rxjs';
-import { take } from 'rxjs/operators';
-import { HomeComponent } from '../home/home.component';
+import { HomeComponent } from '../../home/home.component';
 
 import { RouteData, RouteDataService } from './route-data.service';
 
