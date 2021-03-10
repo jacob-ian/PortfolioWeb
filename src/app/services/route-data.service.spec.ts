@@ -5,28 +5,43 @@ import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { HomeComponent } from '../home/home.component';
 
-import { RouteDataService } from './route-data.service';
+import { RouteData, RouteDataService } from './route-data.service';
 
 describe('RouteDataService', () => {
   let service: RouteDataService;
   let router: Router;
 
-  let testRouteData1: Data = {
+  let testRouteData1: RouteData = {
     title: 'Page1',
-    description: 'Test Page 1',
-    og: {
-      image: 'test.jpg',
-    },
+    meta: [
+      {
+        name: 'description',
+        content: 'Test Page 1',
+      },
+    ],
+    og: [
+      {
+        name: 'image',
+        content: 'test1.jpg',
+      },
+    ],
   };
 
-  let testRouteData2: Data = {
+  let testRouteData2: RouteData = {
     title: 'Page2',
-    description: 'Test Page 2',
-    og: {
-      image: 'test2.jpg',
-    },
+    meta: [
+      {
+        name: 'description',
+        content: 'Test Page 2',
+      },
+    ],
+    og: [
+      {
+        name: 'image',
+        content: 'test2.jpg',
+      },
+    ],
   };
-
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [RouteDataService],

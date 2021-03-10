@@ -5,13 +5,30 @@ import { filter } from 'rxjs/operators';
 
 const EMPTY_OBJECT = {};
 
+export interface AbstractRouteDataService {
+  setRouteData(data: RouteData): void;
+  getRouteData(): RouteData;
+  getRouteDataObservable(): Observable<RouteData>;
+}
+
+export interface RouteData {
+  title: string;
+  meta: RouteDataTag[];
+  og: RouteDataTag[];
+}
+
+export interface RouteDataTag {
+  name: string;
+  content: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
-export class RouteDataService implements OnDestroy {
+export class RouteDataService implements AbstractRouteDataService, OnDestroy {
   private subscriptionToRouterEvents: Subscription;
-  private routeDataObservable: BehaviorSubject<Data> = new BehaviorSubject(
-    EMPTY_OBJECT
+  private routeDataObservable: BehaviorSubject<RouteData> = new BehaviorSubject(
+    null
   );
 
   constructor(private route: ActivatedRoute, private router: Router) {
@@ -27,19 +44,24 @@ export class RouteDataService implements OnDestroy {
   }
 
   private updateRouteData(): void {
-    let routeData = this.route.snapshot.firstChild.data;
+    let snapshotData = this.route.snapshot.firstChild.data;
+    let routeData: RouteData = {
+      title: snapshotData.title,
+      meta: snapshotData.meta,
+      og: snapshotData.og,
+    };
     return this.setRouteData(routeData);
   }
 
-  public setRouteData(data: Data): void {
+  public setRouteData(data: RouteData): void {
     return this.routeDataObservable.next(data);
   }
 
-  public getRouteData(): Data {
+  public getRouteData(): RouteData {
     return this.routeDataObservable.value;
   }
 
-  public getRouteDataObservable(): Observable<Data> {
+  public getRouteDataObservable(): Observable<RouteData> {
     return this.routeDataObservable.asObservable();
   }
 
