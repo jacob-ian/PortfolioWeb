@@ -15,7 +15,11 @@ export class RouteDataService implements OnDestroy {
   );
 
   constructor(private route: ActivatedRoute, private router: Router) {
-    this.subscriptionToRouterEvents = this.router.events
+    this.subscriptionToRouterEvents = this.subscribeToNavigationEndEvents();
+  }
+
+  private subscribeToNavigationEndEvents(): Subscription {
+    return this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
         this.updateRouteData();
