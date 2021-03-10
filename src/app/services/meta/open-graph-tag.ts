@@ -24,6 +24,6 @@ export class OpenGraphTag extends PageTag {
   }
 
   private tagExists(): boolean {
-    return !!this.meta.getTag(`property='${this.name}`);
+    return !!this.meta.getTag(`property='${this.name}'`);
   }
 }
