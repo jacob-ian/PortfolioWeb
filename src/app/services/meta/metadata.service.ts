@@ -27,10 +27,12 @@ export class MetadataService implements OnDestroy {
   }
 
   private updatePageMetaData(data: RouteData): void {
-    let { title, meta, og } = data;
-    this.setPageTitle(title);
-    this.setPageTags(PageTagType.Meta, meta);
-    this.setPageTags(PageTagType.OpenGraph, og);
+    if (data) {
+      let { title, meta, og } = data;
+      this.setPageTitle(title);
+      this.setPageTags(PageTagType.Meta, meta);
+      this.setPageTags(PageTagType.OpenGraph, og);
+    }
   }
 
   private setPageTitle(title: string): void {

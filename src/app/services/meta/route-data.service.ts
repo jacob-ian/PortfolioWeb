@@ -42,13 +42,15 @@ export class RouteDataService implements AbstractRouteDataService, OnDestroy {
   }
 
   private updateRouteData(): void {
-    let snapshotData = this.route.snapshot.firstChild.data;
-    let routeData: RouteData = {
-      title: snapshotData.title,
-      meta: snapshotData.meta,
-      og: snapshotData.og,
-    };
-    return this.setRouteData(routeData);
+    let snapshotData = this.route.snapshot.firstChild?.data;
+    if (snapshotData) {
+      let routeData: RouteData = {
+        title: snapshotData.title,
+        meta: snapshotData.meta,
+        og: snapshotData.og,
+      };
+      return this.setRouteData(routeData);
+    }
   }
 
   public setRouteData(data: RouteData): void {
