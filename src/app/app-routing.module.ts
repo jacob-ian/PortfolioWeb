@@ -6,23 +6,6 @@ import { ProjectsComponent } from './projects/projects.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { TermsComponent } from './terms/terms.component';
-import { RouteData } from './services/meta/route-data.service';
-
-const defaultRouteData: RouteData = {
-  title: 'Jacob Ian Matthews',
-  meta: [
-    {
-      name: 'description',
-      content: 'The portfolio of the software engineer, Jacob Ian Matthews.',
-    },
-  ],
-  og: [
-    {
-      name: 'image',
-      content: '/assets/icons/icon-512x512.png',
-    },
-  ],
-};
 
 export const routes: Routes = [
   {
@@ -33,8 +16,23 @@ export const routes: Routes = [
       meta: [
         {
           name: 'description',
-          content: 'The home page of Jacob Ian Matthews.com.',
+          content: 'The home page of Jacob the software engineer!',
         },
+      ],
+      og: [
+        {
+          name: 'image',
+          content: 'https://jacobianmatthews.com/assets/icons/icon-512x512.png',
+        },
+        {
+          name: 'type',
+          content: 'website',
+        },
+        {
+          name: 'url',
+          content: 'https://jacobianmatthews.com',
+        },
+        { name: 'title', content: 'Home | Jacob Ian Matthews' },
       ],
     },
   },
@@ -43,30 +41,135 @@ export const routes: Routes = [
     component: AboutComponent,
     data: {
       title: 'About | Jacob Ian Matthews',
-      meta: [
-        { name: 'description', content: 'Learn more about Jacob Ian Matthews' },
+      meta: [{ name: 'description', content: 'Who am I?' }],
+      og: [
+        {
+          name: 'image',
+          content: 'https://jacobianmatthews.com/assets/icons/icon-512x512.png',
+        },
+        {
+          name: 'type',
+          content: 'profile',
+        },
+        {
+          name: 'profile:first_name',
+          content: 'Jacob',
+        },
+        {
+          name: 'profile:last_name',
+          content: 'Matthews',
+        },
+        { name: 'profile:username', content: 'jacob-ian' },
+        { name: 'profile:gender', content: 'male' },
+        {
+          name: 'url',
+          content: 'https://jacobianmatthews.com/about',
+        },
+        { name: 'title', content: 'About | Jacob Ian Matthews' },
       ],
     },
   },
   {
     path: 'projects',
     component: ProjectsComponent,
-    data: { title: 'Projects | Jacob Ian Matthews' },
+    data: {
+      title: 'Projects | Jacob Ian Matthews',
+      meta: [{ name: 'description', content: 'What have I been up to?' }],
+      og: [
+        {
+          name: 'image',
+          content: 'https://jacobianmatthews.com/assets/icons/icon-512x512.png',
+        },
+        {
+          name: 'type',
+          content: 'website',
+        },
+        {
+          name: 'url',
+          content: 'https://jacobianmatthews.com/projects',
+        },
+        { name: 'title', content: 'Projects | Jacob Ian Matthews' },
+      ],
+    },
   },
   {
     path: 'privacy',
     component: PrivacyComponent,
-    data: { title: 'Privacy Policy | Jacob Ian Matthews' },
+    data: {
+      title: 'Privacy Policy | Jacob Ian Matthews',
+      meta: [
+        {
+          name: 'description',
+          content: 'The Privacy Policy for jacobianmatthews.com',
+        },
+      ],
+      og: [
+        {
+          name: 'image',
+          content: 'https://jacobianmatthews.com/assets/icons/icon-512x512.png',
+        },
+        {
+          name: 'type',
+          content: 'website',
+        },
+        {
+          name: 'url',
+          content: 'https://jacobianmatthews.com/privacy',
+        },
+        { name: 'title', content: 'Privacy Policy | Jacob Ian Matthews' },
+      ],
+    },
   },
   {
     path: 'terms',
     component: TermsComponent,
-    data: { title: 'Terms and Conditions | Jacob Ian Matthews' },
+    data: {
+      title: 'Terms and Conditions | Jacob Ian Matthews',
+      meta: [
+        {
+          name: 'description',
+          content: 'The Terms and Conditions of use of jacobianmatthews.com',
+        },
+      ],
+      og: [
+        {
+          name: 'image',
+          content: 'https://jacobianmatthews.com/assets/icons/icon-512x512.png',
+        },
+        {
+          name: 'type',
+          content: 'website',
+        },
+        {
+          name: 'url',
+          content: 'https://jacobianmatthews.com/terms',
+        },
+        { name: 'title', content: 'Terms and Conditions | Jacob Ian Matthews' },
+      ],
+    },
   },
   {
     path: '404',
     component: NotFoundComponent,
-    data: { title: 'Page Not Found | Jacob Ian Matthews' },
+    data: {
+      title: 'Page Not Found | Jacob Ian Matthews',
+      meta: [{ name: 'description', content: 'The page could not be found.' }],
+      og: [
+        {
+          name: 'image',
+          content: 'https://jacobianmatthews.com/assets/icons/icon-512x512.png',
+        },
+        {
+          name: 'type',
+          content: 'website',
+        },
+        {
+          name: 'url',
+          content: 'https://jacobianmatthews.com/404',
+        },
+        { name: 'title', content: 'Page Not Found | Jacob Ian Matthews' },
+      ],
+    },
   },
   { path: '**', redirectTo: '404' },
 ];
