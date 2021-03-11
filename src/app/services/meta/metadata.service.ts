@@ -104,9 +104,9 @@ export class MetadataService implements OnDestroy {
   }
 
   private addTagToPage(pageTag: AbstractPageTag): void {
-    let tagSelector = pageTag.getSelector();
     let tagMetaDefinition = pageTag.getMetaDefinition();
-    if (this.tagExists(tagSelector)) {
+
+    if (this.tagExists(pageTag)) {
       this.meta.updateTag(tagMetaDefinition);
     } else {
       this.meta.addTag(tagMetaDefinition);
@@ -114,7 +114,8 @@ export class MetadataService implements OnDestroy {
     return this.saveTagToList(pageTag);
   }
 
-  private tagExists(selector: string): boolean {
+  private tagExists(pageTag: AbstractPageTag): boolean {
+    let selector = pageTag.getSelector();
     return !!this.meta.getTag(selector);
   }
 
