@@ -5,25 +5,19 @@ export interface PageTagFactory {
 }
 
 export interface AbstractPageTag {
-  addToPage(): void;
   getName(): string;
   getContent(): string;
   getMetaDefinition(): MetaDefinition;
+  getSelector(): string;
 }
 
 export class PageTag implements AbstractPageTag {
   protected name: string;
   protected content: string;
-  protected meta: Meta;
 
   constructor(name: string, content: string) {
     this.name = name;
     this.content = content;
-    this.meta = new Meta(document);
-  }
-
-  public addToPage(): void {
-    return;
   }
 
   public getName(): string {
@@ -37,11 +31,7 @@ export class PageTag implements AbstractPageTag {
     return null;
   }
 
-  protected updateExistingTag(tagDefinition: MetaDefinition): void {
-    this.meta.updateTag(tagDefinition);
-  }
-
-  protected addNewTag(tagDefinition: MetaDefinition): void {
-    this.meta.addTag(tagDefinition);
+  public getSelector(): string {
+    return null;
   }
 }

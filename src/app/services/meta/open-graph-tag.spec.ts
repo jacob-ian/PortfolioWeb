@@ -19,17 +19,6 @@ describe('OpenGraphTag', () => {
     expect(openGraphTag).toBeTruthy();
   });
 
-  describe('Test adding the tag to the document', () => {
-    beforeAll(() => {
-      openGraphTag.addToPage();
-    });
-
-    it('Should have a open graph meta tag on the page', () => {
-      let tagExists = meta.getTag(`property='og:${ogProperty}'`);
-      expect(tagExists).toBeTruthy();
-    });
-  });
-
   describe('Test getting the MetaDefinition', () => {
     let metaDef: MetaDefinition;
 
@@ -59,6 +48,13 @@ describe('OpenGraphTag', () => {
     it('Should return the content', () => {
       let content = openGraphTag.getContent();
       expect(content).toBe(ogContent);
+    });
+  });
+
+  describe('Test getting the OG tag selector', () => {
+    it('Should return the selector', () => {
+      let selector = openGraphTag.getSelector();
+      expect(selector).toBe(`property="og:${ogProperty}"`);
     });
   });
 });

@@ -22,17 +22,6 @@ describe('MetaTag', () => {
     expect(metaTag).toBeTruthy();
   });
 
-  describe('Test adding the tag to the document.', () => {
-    beforeAll(() => {
-      metaTag.addToPage();
-    });
-
-    it('Should have a meta tag on the page', () => {
-      let tagExists = !!meta.getTag(`name='${metaName}'`);
-      expect(tagExists).toBeTruthy();
-    });
-  });
-
   describe('Test getting the MetaDefinition', () => {
     let metaDefinition: MetaDefinition;
 
@@ -62,6 +51,13 @@ describe('MetaTag', () => {
     it('Should return a content string', () => {
       let content = metaTag.getContent();
       expect(content).toBe(metaContent);
+    });
+  });
+
+  describe('Test getting the Meta tag selector', () => {
+    it('Should return the selector', () => {
+      let selector = metaTag.getSelector();
+      expect(selector).toBe(`name="${metaName}"`);
     });
   });
 });

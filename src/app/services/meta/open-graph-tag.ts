@@ -6,15 +6,6 @@ export class OpenGraphTag extends PageTag {
     super(`og:${property}`, content);
   }
 
-  public addToPage(): void {
-    let tagDefinition = this.getMetaDefinition();
-    if (this.tagExists()) {
-      this.updateExistingTag(tagDefinition);
-    } else {
-      this.addNewTag(tagDefinition);
-    }
-  }
-
   public getMetaDefinition(): MetaDefinition {
     let definition: MetaDefinition = {
       property: this.name,
@@ -23,7 +14,7 @@ export class OpenGraphTag extends PageTag {
     return definition;
   }
 
-  private tagExists(): boolean {
-    return !!this.meta.getTag(`property='${this.name}'`);
+  public getSelector(): string {
+    return `property="${this.name}"`;
   }
 }
