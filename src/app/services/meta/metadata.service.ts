@@ -1,11 +1,8 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
-import {
-  AbstractPageTag,
-  PageTag,
-  PageTagFactory,
-} from './abstract-tag-factory';
+import { environment } from 'src/environments/environment';
+import { AbstractPageTag, PageTagFactory } from './abstract-tag-factory';
 import { MetaTagFactory } from './meta-tag-factory';
 import { OpenGraphTagFactory } from './open-graph-tag-factory';
 import {
@@ -18,8 +15,11 @@ import {
   providedIn: 'root',
 })
 export class MetadataService implements OnDestroy {
+  private defaultTitle: string = environment.websiteName;
   private subscriptionToRouteData: Subscription;
   private pageTagFactory: PageTagFactory;
+  private currentPageTags: AbstractPageTag[] = [];
+  private currentRouteData: RouteData = null;
 
   constructor(
     private routeData: RouteDataService,
@@ -35,20 +35,47 @@ export class MetadataService implements OnDestroy {
   }
 
   private updatePageMetaData(data: RouteData): void {
-    if (data) {
-      let { title, meta, og } = data;
-      this.setPageTitle(title);
-      if (meta) {
-        this.setPageTags(PageTagType.Meta, meta);
-      }
-      if (og) {
-        this.setPageTags(PageTagType.OpenGraph, og);
-      }
+    this.currentRouteData = data;
+    this.deleteCurrentMetaTags();
+
+    this.updatePageTitle();
+    this.updateMetaTags();
+    this.updateOpenGraphTags();
+  }
+
+  private deleteCurrentMetaTags(): void {
+    this.currentPageTags.forEach((pageTag) => this.deleteTag(pageTag));
+  }
+
+  private deleteTag(pageTag: AbstractPageTag): void {
+    let tagSelector = pageTag.getSelector();
+    this.meta.removeTag(tagSelector);
+  }
+
+  private updatePageTitle(): void {
+    let title = this.currentRouteData?.title;
+    if (!title) {
+      title = this.defaultTitle;
     }
+    this.setPageTitle(title);
   }
 
   private setPageTitle(title: string): void {
     return this.title.setTitle(title);
+  }
+
+  private updateMetaTags(): void {
+    let metaData = this.currentRouteData?.meta;
+    if (metaData) {
+      this.setPageTags(PageTagType.Meta, metaData);
+    }
+  }
+
+  private updateOpenGraphTags(): void {
+    let openGraphData = this.currentRouteData?.og;
+    if (openGraphData) {
+      this.setPageTags(PageTagType.OpenGraph, openGraphData);
+    }
   }
 
   private setPageTags(type: PageTagType, tags: RouteDataTag[]): void {
@@ -84,10 +111,15 @@ export class MetadataService implements OnDestroy {
     } else {
       this.meta.addTag(tagMetaDefinition);
     }
+    return this.saveTagToList(pageTag);
   }
 
   private tagExists(selector: string): boolean {
     return !!this.meta.getTag(selector);
+  }
+
+  private saveTagToList(pageTag: AbstractPageTag): void {
+    this.currentPageTags.push(pageTag);
   }
 
   public setPageMetaData(data: RouteData): void {
