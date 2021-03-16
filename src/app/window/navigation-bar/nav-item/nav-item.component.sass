@@ -1,14 +1,18 @@
 :host
   flex-grow: 1
   flex-basis: 90px
+  min-height: 50px
   min-width: 90px
   max-width: 200px
-  padding: 35px 0 
+  padding: 15px 0 
+  display: flex
+  flex-direction: column
+  justify-content: center
   
 li
   list-style: none
   text-transform: lowercase
-  font-size: 1.1rem
+  font-size: 0.9rem
 
   a
     display: flex
@@ -18,10 +22,10 @@ li
     text-decoration: none
     color: var(--font-color-default)
     transition: var(--default-transition)
-    font-weight: 400
+    font-weight: 300
 
     img
-      height: 64px
+      height: 40px
 
   a:hover
     color: var(--font-color-accent)
