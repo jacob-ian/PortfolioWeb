@@ -9,15 +9,27 @@ body, html
 
 body 
   font-family: Comfortaa, Arial, Helvetica, sans-serif
-  --font-color-default: black
+  --font-color-default: white
   --font-color-accent: #d7b0a1
   --font-family-display: Yeseva One, serif
   --color-primary: #515c6b
   --color-accent: #d7b0a1
+  --color-secondary: #495361
+  --color-tertiary: #3e4754
 
   --default-transition: all ease-in-out 200ms
+
+  color: var(--font-color-default)
+  font-weight: 300
 
 a
   color: var(--font-color-accent)
   font-weight: 600
   text-decoration: none
+  transition: var(--default-transition)
+
+a:hover 
+  filter: brightness(0.8)
+
+.accent
+  color: var(--font-color-accent)
