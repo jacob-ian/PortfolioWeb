@@ -14,6 +14,7 @@ import { ContentBoxComponent } from './window/content-box/content-box.component'
 import { FooterComponent } from './window/footer/footer.component';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { TermsComponent } from './terms/terms.component';
+import { DisplayButtonComponent } from './home/display-button/display-button.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { TermsComponent } from './terms/terms.component';
     FooterComponent,
     PrivacyComponent,
     TermsComponent,
+    DisplayButtonComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
