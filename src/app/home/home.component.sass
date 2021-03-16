@@ -59,3 +59,35 @@
 
 .small-font
   font-size: 0.9rem
+
+@media screen and ( max-width: 750px )
+  .row
+    flex-direction: column
+
+  .item
+    flex-direction: column
+
+  .top-room
+    margin-top: 30px
+
+  .larger
+    flex: 1
+
+  .first
+    margin-left: 0
+    margin-bottom: 65px
+
+  .third
+    margin-right: 0
+    margin-top: 25px
+    font-size: 1.4rem
+
+@media screen and ( max-width: 250px )
+  :host
+    font-size: 1rem
+
+  .display
+    font-size: 2.5rem
+  
+  .third
+    font-size: 1.2rem
