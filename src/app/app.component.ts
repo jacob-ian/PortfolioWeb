@@ -7,7 +7,7 @@ import { MetadataService } from './services/meta/metadata.service';
   styleUrls: ['./app.component.sass'],
 })
 export class AppComponent {
-  title = 'PortfolioWeb';
+  title = 'Jacob Ian Matthews';
 
   constructor(private metaDataService: MetadataService) {}
 }
