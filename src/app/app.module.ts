@@ -17,6 +17,10 @@ import { TermsComponent } from './terms/terms.component';
 import { DisplayButtonComponent } from './home/display-button/display-button.component';
 import { FlexContainerComponent } from './window/flex-container/flex-container.component';
 import { SocialLinksComponent } from './window/social-links/social-links.component';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -39,6 +43,9 @@ import { SocialLinksComponent } from './window/social-links/social-links.compone
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
+    AngularFireAnalyticsModule,
   ],
   providers: [Meta],
   bootstrap: [AppComponent],
