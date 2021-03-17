@@ -40,12 +40,12 @@ export const routes: Routes = [
     path: 'about',
     component: AboutComponent,
     data: {
-      title: 'About | Jacob Ian Matthews',
+      title: 'About Me | Jacob Ian Matthews',
       meta: [{ name: 'description', content: 'Who am I?' }],
       og: [
         {
           name: 'image',
-          content: 'https://jacobianmatthews.com/assets/icons/icon-512x512.png',
+          content: 'https://jacobianmatthews.com/assets/res/profile.jpeg',
         },
         {
           name: 'type',
@@ -65,7 +65,7 @@ export const routes: Routes = [
           name: 'url',
           content: 'https://jacobianmatthews.com/about',
         },
-        { name: 'title', content: 'About | Jacob Ian Matthews' },
+        { name: 'title', content: 'About Me | Jacob Ian Matthews' },
       ],
     },
   },
