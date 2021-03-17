@@ -16,6 +16,7 @@ import { PrivacyComponent } from './privacy/privacy.component';
 import { TermsComponent } from './terms/terms.component';
 import { DisplayButtonComponent } from './home/display-button/display-button.component';
 import { FlexContainerComponent } from './window/flex-container/flex-container.component';
+import { SocialLinksComponent } from './window/social-links/social-links.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { FlexContainerComponent } from './window/flex-container/flex-container.c
     TermsComponent,
     DisplayButtonComponent,
     FlexContainerComponent,
+    SocialLinksComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
