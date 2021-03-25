@@ -25,13 +25,6 @@
       <meta itemprop="educationalLevel" [content]="getEducationLevel()" />
       <div *ngIf="getDescription() as description" class="qualification-description"><span
           itemprop="comment">{{description}}</span></div>
-      <!--
-    <div *ngIf="hasSubjects() | async" class="subjects-container">
-     
-      <app-subject *ngFor="let subject of getSubjects() | async" [subject]="subject"></app-subject>
-          
-    </div>
--->
     </div>
 
   </div>
