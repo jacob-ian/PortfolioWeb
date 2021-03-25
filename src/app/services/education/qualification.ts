@@ -13,13 +13,16 @@ export interface QualificationDocument {
   dateEnd: number;
   handbookUrl: string;
   institution: Institution;
+  credentialCategory: 'degree' | 'diploma' | 'certificate';
+  educationLevel: 'beginner' | 'intermediate' | 'advanced';
 }
 
-interface Institution {
+export interface Institution {
   name: string;
   location: string;
   url: string;
   imageUrl: string;
+  type: 'CollegeOrUniversity' | 'HighSchool' | 'MiddleSchool';
 }
 
 export class Qualification extends DatabaseObject {
@@ -30,6 +33,8 @@ export class Qualification extends DatabaseObject {
   private dateEnd: number;
   private handbookUrl: string;
   private institution: Institution;
+  private credentialCategory: 'degree' | 'diploma' | 'certificate';
+  private educationLevel: 'beginner' | 'intermediate' | 'advanced';
 
   constructor(firestore: AngularFirestore);
   constructor(firestore: AngularFirestore, documentId: string);
@@ -46,6 +51,8 @@ export class Qualification extends DatabaseObject {
     this.dateEnd = null;
     this.handbookUrl = null;
     this.institution = null;
+    this.credentialCategory = null;
+    this.educationLevel = null;
 
     if (!idOrDocument) {
       this.id = this.createId();
@@ -65,6 +72,8 @@ export class Qualification extends DatabaseObject {
       this.dateEnd = idOrDocument.dateEnd;
       this.handbookUrl = idOrDocument.handbookUrl;
       this.institution = idOrDocument.institution;
+      this.credentialCategory = idOrDocument.credentialCategory;
+      this.educationLevel = idOrDocument.educationLevel;
 
       this.validateData();
       return;
@@ -233,5 +242,25 @@ export class Qualification extends DatabaseObject {
     }
     this.subcollectionFactory = new SubjectFactory(this.firestore, this.id);
     return super.getSubcollection() as Observable<Subject[]>;
+  }
+
+  public getCredentialCateogry(): string {
+    if (!this.credentialCategory) {
+      throw new EducationException(
+        'invalid-input',
+        'The Qualification Credential Category is undefined'
+      );
+    }
+    return this.credentialCategory;
+  }
+
+  public getEducationLevel(): string {
+    if (!this.educationLevel) {
+      throw new EducationException(
+        'invalid-input',
+        'The Qualification education level is undefined.'
+      );
+    }
+    return this.educationLevel;
   }
 }

@@ -16,7 +16,10 @@ const TEST_DOCUMENT: QualificationDocument = {
     location: 'Perth, WA',
     url: 'http://test.example.com',
     imageUrl: 'http://google.com/logo.png',
+    type: 'CollegeOrUniversity',
   },
+  credentialCategory: 'degree',
+  educationLevel: 'intermediate',
 };
 
 const TEST_DOCUMENT_FUTURE_END: QualificationDocument = {
@@ -112,6 +115,28 @@ describe('Education -> Qualification', () => {
             expect(institution).toBe(TEST_DOCUMENT.institution);
           } catch (err) {
             throw err.getMessage();
+          }
+        });
+      });
+
+      describe('Test getCredentialCategory()', () => {
+        it('Should return the category', () => {
+          try {
+            let category = qualification.getCredentialCateogry();
+            expect(category).toBe(TEST_DOCUMENT.credentialCategory);
+          } catch (error) {
+            throw error.getMessage();
+          }
+        });
+      });
+
+      describe('Test getEducationLevel()', () => {
+        it('Should return the education level', () => {
+          try {
+            let level = qualification.getEducationLevel();
+            expect(level).toBe(TEST_DOCUMENT.educationLevel);
+          } catch (error) {
+            throw error.getMessage();
           }
         });
       });
@@ -348,6 +373,26 @@ describe('Education -> Qualification', () => {
         });
       });
     });
+
+    describe('Test getCredentialCategory()', () => {
+      it('Should throw an exception', () => {
+        try {
+          qualification.getCredentialCateogry();
+        } catch (err) {
+          expect(err).toBeInstanceOf(EducationException);
+        }
+      });
+    });
+
+    describe('Test getEducationLevel()', () => {
+      it('Should throw an exception', () => {
+        try {
+          qualification.getEducationLevel();
+        } catch (err) {
+          expect(err).toBeInstanceOf(EducationException);
+        }
+      });
+    });
   });
 
   describe('Test without document instantiation.', () => {
@@ -432,6 +477,25 @@ describe('Education -> Qualification', () => {
     describe('Test getSubjects()', () => {
       it('Should throw an exception', () => {
         expect(qualification.getSubjects).toThrowError();
+      });
+    });
+    describe('Test getCredentialCategory()', () => {
+      it('Should throw an exception', () => {
+        try {
+          qualification.getCredentialCateogry();
+        } catch (err) {
+          expect(err).toBeInstanceOf(EducationException);
+        }
+      });
+    });
+
+    describe('Test getEducationLevel()', () => {
+      it('Should throw an exception', () => {
+        try {
+          qualification.getEducationLevel();
+        } catch (err) {
+          expect(err).toBeInstanceOf(EducationException);
+        }
       });
     });
   });

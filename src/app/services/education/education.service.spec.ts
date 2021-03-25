@@ -18,7 +18,10 @@ const TEST_QUALIFICATION_DOCS: QualificationDocument[] = [
       location: 'Perth, WA',
       url: 'http://test.example.com',
       imageUrl: 'http://google.com/logo.png',
+      type: 'CollegeOrUniversity',
     },
+    credentialCategory: 'degree',
+    educationLevel: 'intermediate',
   },
   {
     id: '2',
@@ -32,7 +35,10 @@ const TEST_QUALIFICATION_DOCS: QualificationDocument[] = [
       location: 'Perth2, WA',
       url: 'http://test2.example.com',
       imageUrl: 'http://google.com2/logo.png',
+      type: 'CollegeOrUniversity',
     },
+    credentialCategory: 'degree',
+    educationLevel: 'intermediate',
   },
 ];
 
