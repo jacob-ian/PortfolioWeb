@@ -24,7 +24,6 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
 import { environment } from 'src/environments/environment';
 import { QualificationComponent } from './about/qualification/qualification.component';
-import { SubjectComponent } from './about/qualification/subject/subject.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +43,6 @@ import { SubjectComponent } from './about/qualification/subject/subject.componen
     FlexContainerComponent,
     SocialLinksComponent,
     QualificationComponent,
-    SubjectComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
