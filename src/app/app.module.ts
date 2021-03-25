@@ -1,6 +1,8 @@
 import { BrowserModule, Meta } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+import { USE_EMULATOR as USE_FIRESTORE_EMULATOR } from '@angular/fire/firestore';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -21,6 +23,8 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
 import { environment } from 'src/environments/environment';
+import { QualificationComponent } from './about/qualification/qualification.component';
+import { SubjectComponent } from './about/qualification/subject/subject.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +43,8 @@ import { environment } from 'src/environments/environment';
     DisplayButtonComponent,
     FlexContainerComponent,
     SocialLinksComponent,
+    QualificationComponent,
+    SubjectComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -47,7 +53,13 @@ import { environment } from 'src/environments/environment';
     AngularFirestoreModule,
     AngularFireAnalyticsModule,
   ],
-  providers: [Meta],
+  providers: [
+    Meta,
+    {
+      provide: USE_FIRESTORE_EMULATOR,
+      useValue: environment.useEmulators ? ['localhost', 8080] : undefined,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

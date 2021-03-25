@@ -1,27 +1,36 @@
-<app-flex-container>
+<app-flex-container itemscope itemtype="https://schema.org/Person">
   <div class="row">
     <h1>About Me</h1>
   </div>
 
-  <div class="row top-room">
+  <div class="row">
     <div class="row">
       <div class="item larger">
         <h2>Who am I?</h2>
-        <p>I am a professional software developer who loves making web applications! I like to bring business ideas to
-          life and I plan on starting my own Software-as-a-service company in the Financial Technology (FinTech)
-          industry. I am also a multi-instrumentalist musician, an avid investor and reader, a follower of Stoicism, and
-          a
-          coffee enthusiast! </p>
+        <p><span class="hide" itemprop="name">Jacob Ian Matthews</span>I am a <span
+            itemprop="disambiguatingDescription">professional software developer</span> who loves
+          making web applications! <span itemprop="description">I like to bring business ideas to
+            life and I plan on starting my own Software-as-a-service company in the Financial Technology (FinTech)
+            industry. I am also a multi-instrumentalist musician, an avid investor and reader, a follower of Stoicism,
+            and
+            a
+            coffee enthusiast! </span></p>
       </div>
       <div class="item">
-        <img class="profile-image" src="assets/res/profile.jpeg" alt="Jacob Ian Matthews" />
+        <img class="profile-image" src="assets/res/profile.jpeg" alt="Jacob Ian Matthews" itemprop="image" />
       </div>
     </div>
   </div>
 
-  <div class="row larger">
+  <div class="row">
     <div class="item">
       <h2>Education</h2>
+      <div class="education-container">
+        <div class="education-timeline"></div>
+        <app-qualification *ngFor="let qualification of getQualifications() | async" [qualification]="qualification">
+        </app-qualification>
+      </div>
+
     </div>
   </div>
 

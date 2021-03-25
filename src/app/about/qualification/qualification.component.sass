@@ -1,0 +1,85 @@
+:host
+  display: flex
+  flex-direction: column
+  align-items: center
+  justify-content: flex-start
+  z-index: 100
+  margin-bottom: 30px
+
+:host:last-child
+  margin-bottom: 0
+  
+.date
+  text-transform: uppercase
+  font-size: 0.7rem
+  color: var(--font-color-subtitle)
+  font-weight: 700
+  background-color: var(--color-primary)
+  padding: 7px 0
+  border-radius: 50%
+
+
+.qualification-container
+  display: flex
+  flex-direction: row
+  align-items: center
+  background: var(--color-tertiary)
+  border-radius: 25px
+  padding: 15px
+  text-align: left
+
+.qualification-image
+  flex: 0
+  min-width: 80px
+  display: flex
+  flex-direction: row
+  align-items: center
+  margin-right: 20px
+
+  a
+    flex: 1
+    display: flex
+    flex-direction: row
+    align-content: center
+    justify-content: center
+    img
+      flex: 0
+      border-radius: 5px
+      height: 80px
+
+.qualification-details
+  flex: 2
+  display: flex
+  flex-direction: column
+  align-items: flex-start
+  justify-content: flex-start
+  
+  .institution
+    margin-bottom: 5px
+    font-size: 0.9rem
+    a
+      color: var(--font-color-subtitle)
+      font-weight: 300
+
+  .qualification
+    .qualification-name
+      font-size: 1.2rem
+      margin-bottom: 5px
+
+    .qualification-description
+      text-align: left
+      color: var(--font-color-subtitle)
+      font-size: 0.9rem
+
+@media screen and ( max-width: 480px )
+  .qualification-details
+    .institution
+      margin-bottom: 7px
+
+    .qualification
+      .qualification-name
+        font-size: 1rem
+        margin-bottom: 7px
+
+  .date
+    font-size: 0.8rem
