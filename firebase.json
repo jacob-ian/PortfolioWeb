@@ -27,5 +27,13 @@
   ],
   "functions": {
     "source": "dist/PortfolioWeb"
+  },
+  "emulators": {
+    "firestore": {
+      "port": 8080
+    },
+    "ui": {
+      "enabled": true
+    }
   }
 }
