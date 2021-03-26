@@ -146,4 +146,11 @@ export class QualificationComponent implements OnInit {
       console.error(error);
     }
   }
+
+  /**
+   * TESTING ONLY
+   */
+  public setQualification(qualification: Qualification): void {
+    this.qualification = qualification;
+  }
 }
