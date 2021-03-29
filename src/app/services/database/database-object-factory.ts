@@ -1,7 +1,9 @@
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { EMPTY, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DatabaseObject } from './database-object';
+
+const EMPTY_ARRAY: DatabaseObject[] = [];
 
 export abstract class DatabaseObjectFactory {
   protected firestore: AngularFirestore;
@@ -20,7 +22,14 @@ export abstract class DatabaseObjectFactory {
   }
 
   protected createDatabaseObjectsFromDocs(docs: any[]): DatabaseObject[] {
-    return docs.map((doc) => this.createDatabaseObject(doc));
+    if (this.docsExist(docs)) {
+      return docs.map((doc) => this.createDatabaseObject(doc));
+    }
+    return EMPTY_ARRAY;
+  }
+
+  private docsExist(docs: any[]): boolean {
+    return docs.length > 0;
   }
 
   protected abstract createDatabaseObject(document: any): DatabaseObject;
