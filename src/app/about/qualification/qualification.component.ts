@@ -5,6 +5,9 @@ import {
   Qualification,
 } from 'src/app/services/education/qualification';
 import { Subject } from 'src/app/services/education/subject';
+import { Exception } from 'src/app/services/exception';
+import { LoggerService } from 'src/app/services/logger.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-qualification',
@@ -14,7 +17,7 @@ import { Subject } from 'src/app/services/education/subject';
 export class QualificationComponent implements OnInit {
   @Input('qualification') private qualification: Qualification;
 
-  constructor() {}
+  constructor(private logger: LoggerService) {}
 
   ngOnInit(): void {}
 
@@ -22,7 +25,7 @@ export class QualificationComponent implements OnInit {
     try {
       return this.qualification.getName();
     } catch (err) {
-      console.error(err);
+      this.logger.error(err);
     }
   }
 
@@ -30,7 +33,7 @@ export class QualificationComponent implements OnInit {
     try {
       return this.qualification.getDescription();
     } catch (error) {
-      console.error(error);
+      this.logger.error(error);
     }
   }
 
@@ -38,7 +41,7 @@ export class QualificationComponent implements OnInit {
     try {
       return this.qualification.getUrl();
     } catch (error) {
-      console.error(error);
+      this.logger.error(error);
     }
   }
 
@@ -46,7 +49,7 @@ export class QualificationComponent implements OnInit {
     try {
       return this.qualification.getInstitution();
     } catch (error) {
-      console.error(error);
+      this.logger.error(error);
     }
   }
 
@@ -55,7 +58,7 @@ export class QualificationComponent implements OnInit {
       let institution = this.getInstitution();
       return institution.imageUrl;
     } catch (error) {
-      console.error(error);
+      this.logger.error(error);
     }
   }
 
@@ -64,7 +67,7 @@ export class QualificationComponent implements OnInit {
       let institution = this.getInstitution();
       return institution.name;
     } catch (error) {
-      console.error(error);
+      this.logger.error(error);
     }
   }
 
@@ -73,7 +76,7 @@ export class QualificationComponent implements OnInit {
       let instution = this.getInstitution();
       return instution.url;
     } catch (error) {
-      console.error(error);
+      this.logger.error(error);
     }
   }
 
@@ -82,7 +85,7 @@ export class QualificationComponent implements OnInit {
       let institution = this.getInstitution();
       return institution.location;
     } catch (error) {
-      console.error(error);
+      this.logger.error(error);
     }
   }
 
@@ -95,7 +98,7 @@ export class QualificationComponent implements OnInit {
       }
       return type;
     } catch (err) {
-      console.error(err);
+      this.logger.error(err);
     }
   }
 
@@ -103,7 +106,7 @@ export class QualificationComponent implements OnInit {
     try {
       return this.qualification.getDateStart();
     } catch (error) {
-      console.error(error);
+      this.logger.error(error);
     }
   }
 
@@ -111,7 +114,7 @@ export class QualificationComponent implements OnInit {
     try {
       return this.qualification.getDateEnd();
     } catch (error) {
-      console.error(error);
+      this.logger.error(error);
     }
   }
 
@@ -119,7 +122,7 @@ export class QualificationComponent implements OnInit {
     try {
       return this.qualification.getSubjects();
     } catch (err) {
-      console.error(err);
+      this.logger.error(err);
     }
   }
 
@@ -127,7 +130,7 @@ export class QualificationComponent implements OnInit {
     try {
       return (await this.getSubjects().toPromise()).length > 0;
     } catch (error) {
-      console.error(error);
+      this.logger.error(error);
     }
   }
 
@@ -135,7 +138,7 @@ export class QualificationComponent implements OnInit {
     try {
       return this.qualification.getCredentialCateogry();
     } catch (error) {
-      console.error(error);
+      this.logger.error(error);
     }
   }
 
@@ -143,7 +146,7 @@ export class QualificationComponent implements OnInit {
     try {
       return this.qualification.getEducationLevel();
     } catch (error) {
-      console.error(error);
+      this.logger.error(error);
     }
   }
 
@@ -151,6 +154,17 @@ export class QualificationComponent implements OnInit {
    * TESTING ONLY
    */
   public setQualification(qualification: Qualification): void {
+    if (this.isProductionEnv()) {
+      throw new Exception(
+        'QUALCOMP',
+        'internal-error',
+        'This method should not be used in production.'
+      );
+    }
     this.qualification = qualification;
+  }
+
+  private isProductionEnv(): boolean {
+    return environment.production;
   }
 }
