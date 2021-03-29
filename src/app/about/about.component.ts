@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { EducationService } from '../services/education/education.service';
 import { Qualification } from '../services/education/qualification';
+import { LoggerService } from '../services/logger.service';
 
 @Component({
   selector: 'app-about',
@@ -10,7 +11,7 @@ import { Qualification } from '../services/education/qualification';
   styleUrls: ['./about.component.sass'],
 })
 export class AboutComponent implements OnInit {
-  private qualifications: Observable<Qualification[]> = null;
+  private qualifications: Observable<Qualification[]>;
 
   constructor(private educationService: EducationService) {}
 
@@ -19,6 +20,7 @@ export class AboutComponent implements OnInit {
   public getQualifications(): Observable<Qualification[]> {
     if (!this.qualifications) {
       this.qualifications = this.educationService.getQualifications();
+
       this.sortQualificationsByEndDate();
     }
     return this.qualifications;

@@ -22,17 +22,18 @@
     </div>
   </div>
 
-  <div class="row">
-    <div class="item">
-      <h2>Education</h2>
-      <div class="education-container">
-        <div class="education-timeline"></div>
-        <app-qualification *ngFor="let qualification of getQualifications() | async" [qualification]="qualification">
-        </app-qualification>
+  <ng-container *ngIf="getQualifications() | async; let qualifications;">
+    <div class="row" *ngIf="qualifications.length > 0">
+      <div class="item">
+        <h2>Education</h2>
+        <div class="education-container">
+          <div class="education-timeline"></div>
+          <app-qualification *ngFor="let qualification of qualifications" [qualification]="qualification">
+          </app-qualification>
+        </div>
       </div>
-
     </div>
-  </div>
+  </ng-container>
 
   <div class="row">
     <div class="item">
