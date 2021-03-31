@@ -4,4 +4,15 @@ service cloud.firestore {
     match /{document=**} {
       allow read, write: if false 
     }
+
+    match /qualifications/{qualificationId} {
+      allow read: if true
+      allow write: if false
+    }
+
+    match /qualifications/{qualificationId}/subjects/{subjectId} {
+      allow read: if true
+      allow write: if false
+    }
+  }
 }
