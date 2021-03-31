@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { MockFirestore } from '../database/mock-firestore';
 import { Project, ProjectDocument } from './project';
 import { ProjectService } from './project.service';
+import { TechnologyDocument } from './technology';
 
 const TEST_PROJECT_DOCS: ProjectDocument[] = [
   {
@@ -26,59 +27,119 @@ const TEST_PROJECT_DOCS: ProjectDocument[] = [
   },
 ];
 
+const TEST_TECH_DOCS: TechnologyDocument[] = [
+  { id: '1', name: 'angular' },
+  { id: '2', name: 'react' },
+];
+
 const TEST_DOCS_EMPTY = [];
 
 describe('ProjectService', () => {
   let service: ProjectService;
   let mockFirestore: any;
 
-  describe('Test getting existing Project documents', () => {
-    beforeEach(() => {
-      mockFirestore = new MockFirestore(TEST_PROJECT_DOCS);
-      TestBed.configureTestingModule({
-        providers: [{ provide: AngularFirestore, useValue: mockFirestore }],
+  describe('Test getting Projects', () => {
+    describe('Test getting existing Project documents', () => {
+      beforeEach(() => {
+        mockFirestore = new MockFirestore(TEST_PROJECT_DOCS);
+        TestBed.configureTestingModule({
+          providers: [{ provide: AngularFirestore, useValue: mockFirestore }],
+        });
+        service = TestBed.inject(ProjectService);
       });
-      service = TestBed.inject(ProjectService);
-    });
 
-    it('Should return an observable', () => {
-      let observable = service.getProjects();
-      expect(observable).toBeInstanceOf(Observable);
-    });
+      it('Should return an observable', () => {
+        let observable = service.getProjects();
+        expect(observable).toBeInstanceOf(Observable);
+      });
 
-    it('Should return a non empty array inside the observable', () => {
-      let observable = service.getProjects();
-      observable.subscribe((projects) => {
-        expect(projects.length).toBeTruthy();
+      it('Should return a non empty array inside the observable', () => {
+        let observable = service.getProjects();
+        observable.subscribe((projects) => {
+          expect(projects.length).toBeTruthy();
+        });
+      });
+
+      it('Should have Projects inside the array', () => {
+        let observable = service.getProjects();
+        observable.subscribe((projects) => {
+          expect(projects[0]).toBeInstanceOf(Project);
+        });
       });
     });
 
-    it('Should have Projects inside the array', () => {
-      let observable = service.getProjects();
-      observable.subscribe((projects) => {
-        expect(projects[0]).toBeInstanceOf(Project);
+    describe('Test without existing documents', () => {
+      let observable: Observable<Project[]>;
+      beforeEach(() => {
+        mockFirestore = new MockFirestore(TEST_DOCS_EMPTY);
+        TestBed.configureTestingModule({
+          providers: [{ provide: AngularFirestore, useValue: mockFirestore }],
+        });
+        service = TestBed.inject(ProjectService);
+        observable = service.getProjects();
+      });
+
+      it('Should return an observable', () => {
+        expect(observable).toBeInstanceOf(Observable);
+      });
+
+      it('Should return an empty array in the observable', () => {
+        observable.subscribe((projects) => {
+          expect(projects.length).toBeFalsy();
+        });
       });
     });
   });
 
-  describe('Test without existing documents', () => {
-    let observable: Observable<Project[]>;
-    beforeEach(() => {
-      mockFirestore = new MockFirestore(TEST_DOCS_EMPTY);
-      TestBed.configureTestingModule({
-        providers: [{ provide: AngularFirestore, useValue: mockFirestore }],
+  describe('Test getting Technologies', () => {
+    describe('Test with existing Technology documents', () => {
+      beforeEach(() => {
+        mockFirestore = new MockFirestore(TEST_TECH_DOCS);
+        TestBed.configureTestingModule({
+          providers: [{ provide: AngularFirestore, useValue: mockFirestore }],
+        });
+        service = TestBed.inject(ProjectService);
       });
-      service = TestBed.inject(ProjectService);
-      observable = service.getProjects();
+
+      it('Should return an observable', () => {
+        let observable = service.getTechnologies();
+        expect(observable).toBeInstanceOf(Observable);
+      });
+
+      it('Should return a non empty array inside the observable', () => {
+        let observable = service.getTechnologies();
+        observable.subscribe((technologies) => {
+          expect(technologies.length).toBeTruthy();
+        });
+      });
+
+      it('Should have strings inside the array', () => {
+        let observable = service.getTechnologies();
+        observable.subscribe((technologies) => {
+          expect(technologies[0]).toBe('angular');
+        });
+      });
     });
 
-    it('Should return an observable', () => {
-      expect(observable).toBeInstanceOf(Observable);
-    });
+    describe('Test without existing documents', () => {
+      let observable: Observable<string[]>;
+      beforeEach(() => {
+        mockFirestore = new MockFirestore(TEST_DOCS_EMPTY);
+        TestBed.configureTestingModule({
+          providers: [{ provide: AngularFirestore, useValue: mockFirestore }],
+        });
+        service = TestBed.inject(ProjectService);
+        observable = service.getTechnologies();
+      });
 
-    it('Should return an empty array in the observable', () => {
-      observable.subscribe((projects) => {
-        expect(projects.length).toBeFalsy();
+      it('Should return an observable', () => {
+        expect(observable).toBeInstanceOf(Observable);
+      });
+
+      it('Should return an empty array in the observable', () => {
+        observable.subscribe((technologies) => {
+          expect(technologies.length).toBeFalsy();
+        });
       });
     });
   });
