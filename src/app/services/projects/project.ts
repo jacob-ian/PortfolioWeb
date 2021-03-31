@@ -176,24 +176,37 @@ export class Project extends DatabaseObject {
   }
 
   public usesTechnologies(technologies: string[]): boolean {
-    if (this.checkNotNeeded(technologies)) {
+    if (this.techQueryEmpty(technologies)) {
       return true;
     }
 
-    technologies.forEach((technology) => {
-      if (this.notUsed(technology)) {
-        return false;
-      }
-    });
-
-    return true;
+    return this.areTechnologiesUsed(technologies);
   }
 
-  private checkNotNeeded(technologies: string[]): boolean {
+  private techQueryEmpty(technologies: string[]): boolean {
     return technologies.length === 0;
   }
 
+  private areTechnologiesUsed(technologies: string[]): boolean {
+    const itemCount = technologies.length;
+    let usedTechnologies = 0;
+    let item = 0;
+    let compare = true;
+
+    while (compare && item < itemCount) {
+      let technology = technologies[item];
+      if (this.notUsed(technology)) {
+        return false;
+      }
+      usedTechnologies++;
+      item++;
+    }
+
+    let allAreUsed = usedTechnologies === item;
+    return allAreUsed;
+  }
+
   private notUsed(technology: string): boolean {
-    return this.technologies.includes(technology);
+    return !this.technologies.includes(technology);
   }
 }
