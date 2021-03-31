@@ -6,6 +6,21 @@ import { ProjectFactory } from './project-factory';
 const TEST_PROJECT_DOCS: ProjectDocument[] = [
   {
     id: '1',
+    name: 'website1',
+    description: 'another website',
+    technologies: ['angular', 'javascript', 'typescript'],
+    repoUrl: 'https://github.com',
+    dateStart: new Date('01 Mar 2021').getTime(),
+    status: 'ongoing',
+  },
+  {
+    id: '2',
+    name: 'website2',
+    description: 'another website',
+    technologies: ['angular', 'javascript', 'typescript'],
+    repoUrl: 'https://github.com',
+    dateStart: new Date('01 Mar 2021').getTime(),
+    status: 'ongoing',
   },
 ];
 const TEST_EMPTY_DOCS: ProjectDocument[] = [];
