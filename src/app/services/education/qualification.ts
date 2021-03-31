@@ -4,6 +4,7 @@ import { DatabaseObject } from 'src/app/services/database/database-object';
 import { Subject } from './subject';
 import { Observable } from 'rxjs';
 import { SubjectFactory } from './subject-factory';
+import { Utils } from '../utils';
 
 export interface QualificationDocument {
   id: string;
@@ -143,7 +144,7 @@ export class Qualification extends DatabaseObject {
 
   public getDateStart(): string {
     if (this.dateStart) {
-      return this.formatDateToMonthYear(this.dateStart);
+      return Utils.formatTimeMsToMMMYYYY(this.dateStart);
     }
     throw new EducationException(
       'invalid-input',
@@ -151,46 +152,12 @@ export class Qualification extends DatabaseObject {
     );
   }
 
-  private formatDateToMonthYear(dateMilliseconds: number): string {
-    let date = new Date(dateMilliseconds);
-    let monthNum = date.getMonth();
-    let month = this.convertMonthNumToLetters(monthNum);
-    let year = date.getFullYear();
-    return `${month} ${year}`;
-  }
-
-  private convertMonthNumToLetters(monthNumber: number): string {
-    if (monthNumber < 0 || monthNumber > 11) {
-      throw new EducationException(
-        'invalid-input',
-        'Date month number out of range.'
-      );
-    }
-
-    let months = {
-      0: 'jan',
-      1: 'feb',
-      2: 'mar',
-      3: 'apr',
-      4: 'may',
-      5: 'jun',
-      6: 'jul',
-      7: 'aug',
-      8: 'sep',
-      9: 'oct',
-      10: 'nov',
-      11: 'dec',
-    };
-
-    return months[monthNumber];
-  }
-
   public getDateEnd(): string {
     if (this.dateEnd) {
       if (this.endDateIsInFuture()) {
         return 'now';
       } else {
-        return this.formatDateToMonthYear(this.dateEnd);
+        return Utils.formatTimeMsToMMMYYYY(this.dateEnd);
       }
     }
     throw new EducationException(
@@ -243,7 +210,7 @@ export class Qualification extends DatabaseObject {
     this.subcollectionFactory = new SubjectFactory(this.firestore, this.id);
     return super.getSubcollection() as Observable<Subject[]>;
   }
-
+  d;
   public getCredentialCateogry(): string {
     if (!this.credentialCategory) {
       throw new EducationException(
