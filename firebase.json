@@ -3,9 +3,7 @@
     {
       "target": "PortfolioWeb",
       "public": "dist/PortfolioWeb/dist/PortfolioWeb/browser",
-      "ignore": [
-        "**/.*"
-      ],
+      "ignore": ["**/.*"],
       "headers": [
         {
           "source": "*.[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f].+(css|js)",
@@ -28,6 +26,11 @@
   "functions": {
     "source": "dist/PortfolioWeb"
   },
+
+  "firestore": {
+    "rules": "firestore.rules"
+  },
+
   "emulators": {
     "firestore": {
       "port": 8080
