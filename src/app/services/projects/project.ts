@@ -50,10 +50,6 @@ export class Project extends DatabaseObject {
     this.dateStart = null;
   }
 
-  private createId(): string {
-    return this.firestore.createId();
-  }
-
   private isDocument(document: ProjectDocument): document is ProjectDocument {
     if (!document) {
       throw new ProjectException(

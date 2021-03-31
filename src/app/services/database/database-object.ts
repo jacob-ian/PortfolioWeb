@@ -11,6 +11,10 @@ export abstract class DatabaseObject {
     this.subcollectionFactory = null;
   }
 
+  protected createId(): string {
+    return this.firestore.createId();
+  }
+
   protected getSubcollection(): Observable<DatabaseObject[]> {
     return this.subcollectionFactory.createFromCollection();
   }

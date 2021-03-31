@@ -81,10 +81,6 @@ export class Qualification extends DatabaseObject {
     }
   }
 
-  private createId(): string {
-    return this.firestore.createId();
-  }
-
   private inputIsId(input: string | QualificationDocument): input is string {
     return typeof input === 'string';
   }
