@@ -134,7 +134,7 @@ export class Project extends DatabaseObject {
     return Utils.formatTimeMsToMMMYYYY(this.dateStart);
   }
 
-  public getDateStartMilliseconds(): number {
+  public getDateStartMs(): number {
     if (!this.dateStart) {
       throw new ProjectException(
         'invalid-input',
