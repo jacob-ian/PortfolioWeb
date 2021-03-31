@@ -11,7 +11,8 @@
     "dev:ssr": "ng run PortfolioWeb:serve-ssr",
     "serve:ssr": "node dist/PortfolioWeb/server/main.js",
     "build:ssr": "ng build --prod && ng run PortfolioWeb:server:production",
-    "prerender": "ng run PortfolioWeb:prerender"
+    "prerender": "ng run PortfolioWeb:prerender",
+    "emulate": "firebase emulators:start --only firestore --export-on-exit=./data --import=./data"
   },
   "private": true,
   "dependencies": {
