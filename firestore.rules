@@ -14,5 +14,15 @@ service cloud.firestore {
       allow read: if true
       allow write: if false
     }
+
+    match /projects/{projectId} {
+      allow read: if true
+      allow write: if false
+    }
+
+    match /technologies/{technologyId} {
+      allow read: if true
+      allow write: if false
+    }
   }
 }
