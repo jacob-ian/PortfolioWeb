@@ -24,7 +24,7 @@ export class Technology extends DatabaseObject {
   }
 
   private isDocument(doc: TechnologyDocument): doc is TechnologyDocument {
-    if (!document) {
+    if (!doc) {
       return false;
     }
     return !!(doc.id && doc.name);
