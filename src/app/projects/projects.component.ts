@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { LoggerService } from '../services/logger.service';
 import { Project } from '../services/projects/project';
 import { ProjectService } from '../services/projects/project.service';
@@ -10,30 +11,78 @@ import { ProjectService } from '../services/projects/project.service';
   styleUrls: ['./projects.component.sass'],
 })
 export class ProjectsComponent implements OnInit {
-  private projects: Observable<Project[]>;
+  private filter: BehaviorSubject<string[]>;
 
   constructor(
     private projectService: ProjectService,
     private logger: LoggerService
   ) {}
 
-  ngOnInit(): void {}
-
-  public getProjects(): Observable<Project[]> {
-    if (!this.projects) {
-      this.fetchProjectsFromService();
-      this.sortProjects();
-    }
-    return this.projects;
+  ngOnInit(): void {
+    this.filter = new BehaviorSubject([]);
   }
 
-  private fetchProjectsFromService(): void {
+  public onFilter(filter: string[]): void {
+    this.filter.next(filter);
+  }
+
+  public getFilteredProjects(): Observable<Project[]> {
+    let combinedObservable = this.createFilteredProjectsObservable();
+    return combinedObservable;
+  }
+
+  private createFilteredProjectsObservable(): Observable<Project[]> {
+    return combineLatest([
+      this.getProjectsObservable(),
+      this.getFilterObservable(),
+    ]).pipe(
+      map(([projects, technologies]) =>
+        this.mergeProjectsTechnologies(projects, technologies)
+      )
+    );
+  }
+
+  private getProjectsObservable(): Observable<Project[]> {
     try {
-      this.projects = this.projectService.getProjects();
+      return this.projectService.getProjects();
     } catch (error) {
       this.logger.error(error);
     }
   }
 
-  private sortProjects(): void {}
+  private getFilterObservable(): Observable<string[]> {
+    return this.filter.asObservable();
+  }
+
+  private mergeProjectsTechnologies(
+    projects: Project[],
+    technologies: string[]
+  ): Project[] {
+    if (this.noProjects(projects) || this.noTechnologies(technologies)) {
+      return projects;
+    }
+
+    return this.filterProjectsWithTechnologies(projects, technologies);
+  }
+
+  private noProjects(projects: Project[]) {
+    return projects.length === 0;
+  }
+
+  private noTechnologies(technologies: string[]) {
+    return technologies.length === 0;
+  }
+
+  private filterProjectsWithTechnologies(
+    projects: Project[],
+    technologies: string[]
+  ): Project[] {
+    let filteredProjects = [];
+    projects.forEach((project) => {
+      if (project.usesTechnologies(technologies)) {
+        filteredProjects.push(project);
+      }
+    });
+    return filteredProjects;
+  }
 }
