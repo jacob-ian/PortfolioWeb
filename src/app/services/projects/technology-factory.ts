@@ -5,10 +5,10 @@ import { Technology } from './technology';
 
 export class TechnologyFactory extends DatabaseObjectFactory {
   constructor(firestore: AngularFirestore) {
-    super(firestore, 'technologies');
+    super(firestore, '/technologies');
   }
 
-  protected createDatabaseObject(document: any): DatabaseObject {
-    return new Technology(this.firestore, document);
+  protected createDatabaseObject(doc: any): DatabaseObject {
+    return new Technology(this.firestore, doc);
   }
 }
