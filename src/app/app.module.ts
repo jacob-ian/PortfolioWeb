@@ -24,6 +24,11 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
 import { environment } from 'src/environments/environment';
 import { QualificationComponent } from './about/qualification/qualification.component';
+import { IconDefaultComponent } from './projects/project/icon-default/icon-default.component';
+import { ProjectComponent } from './projects/project/project.component';
+import { ProjectsFilterComponent } from './projects/projects-filter/projects-filter.component';
+import { MultiSelectComponent } from './core/multi-select/multi-select.component';
+import { MultiSelectOptionComponent } from './core/multi-select/multi-select-option/multi-select-option.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +48,11 @@ import { QualificationComponent } from './about/qualification/qualification.comp
     FlexContainerComponent,
     SocialLinksComponent,
     QualificationComponent,
+    IconDefaultComponent,
+    ProjectComponent,
+    ProjectsFilterComponent,
+    MultiSelectComponent,
+    MultiSelectOptionComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
