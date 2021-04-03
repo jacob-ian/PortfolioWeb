@@ -18,4 +18,18 @@ describe('Utils', () => {
       expect(formatted).toBe('dec 2149');
     });
   });
+
+  describe('Test sorting strings alphabetically', () => {
+    it('Should return array in alphabetical order', () => {
+      let unsorted = ['d', 'a', 'c', 'b'];
+      let sorted = Utils.sortStringsAlphabetically(unsorted);
+      expect(sorted).toEqual(['a', 'b', 'c', 'd']);
+    });
+
+    it('Should return word array in alphabetical order', () => {
+      let unsorted = ['zappy', 'jacob', 'molten'];
+      let sorted = Utils.sortStringsAlphabetically(unsorted);
+      expect(sorted).toEqual(['jacob', 'molten', 'zappy']);
+    });
+  });
 });
