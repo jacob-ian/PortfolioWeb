@@ -8,7 +8,7 @@ export class ProjectFactory extends DatabaseObjectFactory {
     super(firestore, '/projects');
   }
 
-  protected createDatabaseObject(doc: any): DatabaseObject {
-    return new Project(this.firestore, doc);
+  protected createDatabaseObject(document: any): DatabaseObject {
+    return new Project(this.firestore, document);
   }
 }
