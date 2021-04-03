@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
+import { catchError, filter, map, take, timeout } from 'rxjs/operators';
 import { LoggerService } from '../services/logger.service';
 import { Project } from '../services/projects/project';
 import { ProjectService } from '../services/projects/project.service';
@@ -13,10 +13,7 @@ import { ProjectService } from '../services/projects/project.service';
 export class ProjectsComponent implements OnInit {
   private filter: BehaviorSubject<string[]>;
 
-  constructor(
-    private projectService: ProjectService,
-    private logger: LoggerService
-  ) {}
+  constructor(private projectService: ProjectService) {}
 
   ngOnInit(): void {
     this.filter = new BehaviorSubject([]);
@@ -36,6 +33,7 @@ export class ProjectsComponent implements OnInit {
       this.getProjectsObservable(),
       this.getFilterObservable(),
     ]).pipe(
+      filter(([projects, technologies]) => !!projects && !!technologies),
       map(([projects, technologies]) =>
         this.mergeProjectsTechnologies(projects, technologies)
       )
@@ -43,11 +41,7 @@ export class ProjectsComponent implements OnInit {
   }
 
   private getProjectsObservable(): Observable<Project[]> {
-    try {
-      return this.projectService.getProjects();
-    } catch (error) {
-      this.logger.error(error);
-    }
+    return this.projectService.getProjects();
   }
 
   private getFilterObservable(): Observable<string[]> {

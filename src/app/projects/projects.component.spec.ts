@@ -1,7 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { Observable, of } from 'rxjs';
 import { Project, ProjectDocument } from '../services/projects/project';
 import { ProjectService } from '../services/projects/project.service';
+import { ProjectComponent } from './project/project.component';
+import { ProjectsFilterComponent } from './projects-filter/projects-filter.component';
 import { ProjectsComponent } from './projects.component';
 
 const TEST_PROJECT_DOC_1: ProjectDocument = {
@@ -122,6 +125,40 @@ describe('ProjectsComponent', () => {
       filteredProjects.subscribe((projects) => {
         expect(projects.length).toBe(1);
       });
+    });
+  });
+
+  describe('Test rendering the filter component', () => {
+    let filter: ProjectsFilterComponent;
+    beforeEach(() => {
+      filter = fixture.debugElement.query(By.css('app-projects-filter'))
+        .nativeElement;
+    });
+
+    it('Should create it', () => {
+      expect(filter).toBeTruthy();
+    });
+  });
+
+  describe('Test rendering the projects', () => {
+    let projects: ProjectComponent[];
+    beforeEach(() => {
+      projects = fixture.debugElement
+        .queryAll(By.css('app-project'))
+        .map((project) => project.nativeElement);
+    });
+
+    it('Should have two projects', () => {
+      expect(projects.length).toBe(2);
+    });
+
+    it('Should have one project after filtering', () => {
+      component.onFilter(['react']);
+      fixture.detectChanges();
+      projects = fixture.debugElement
+        .queryAll(By.css('app-project'))
+        .map((project) => project.nativeElement);
+      expect(projects.length).toBe(1);
     });
   });
 });
