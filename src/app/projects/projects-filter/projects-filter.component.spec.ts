@@ -1,8 +1,5 @@
-import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
-import { MultiSelectComponent } from 'src/app/core/multi-select/multi-select.component';
 import { ProjectService } from 'src/app/services/projects/project.service';
 import { ProjectsFilterComponent } from './projects-filter.component';
 
@@ -13,9 +10,7 @@ describe('ProjectsFilterComponent', () => {
   let technologies: string[] = ['angular', 'react', 'typescript', 'tdd'];
 
   let fakeService = {
-    getTechnologies: () => {
-      return of(technologies);
-    },
+    getTechnologies: () => of(technologies),
   };
 
   beforeEach(async () => {
