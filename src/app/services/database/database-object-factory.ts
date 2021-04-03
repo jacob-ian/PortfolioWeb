@@ -1,6 +1,7 @@
 import { AngularFirestore } from '@angular/fire/firestore';
-import { EMPTY, Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { EMPTY, Observable, of, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { Exception } from '../exception';
 import { DatabaseObject } from './database-object';
 
 const EMPTY_ARRAY: DatabaseObject[] = [];
@@ -15,10 +16,19 @@ export abstract class DatabaseObjectFactory {
   }
 
   public createFromCollection(): Observable<DatabaseObject[]> {
-    return this.firestore
-      .collection(this.path)
-      .valueChanges()
-      .pipe(map((docs) => this.createDatabaseObjectsFromDocs(docs)));
+    try {
+      return this.firestore
+        .collection(this.path)
+        .valueChanges()
+        .pipe(map((docs) => this.createDatabaseObjectsFromDocs(docs)));
+    } catch (error) {
+      throw new Exception(
+        'DB',
+        'internal',
+        'Could not create from collection',
+        error
+      );
+    }
   }
 
   protected createDatabaseObjectsFromDocs(docs: any[]): DatabaseObject[] {
