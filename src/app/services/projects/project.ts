@@ -112,7 +112,7 @@ export class Project extends DatabaseObject {
     if (!this.links) {
       throw new ProjectException(
         'invalid-input',
-        'The Project Repo URL is undefined'
+        'There are no project links defined.'
       );
     }
     return this.links;
