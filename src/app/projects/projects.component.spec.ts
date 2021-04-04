@@ -30,11 +30,11 @@ const TEST_PROJECT_DOC_2: ProjectDocument = {
 describe('ProjectsComponent', () => {
   let component: ProjectsComponent;
   let fixture: ComponentFixture<ProjectsComponent>;
-  let mockFirestore: any = {};
+  let mockDatabase: any = {};
 
   const TEST_PROJECTS: Project[] = [
-    new Project(mockFirestore, TEST_PROJECT_DOC_1),
-    new Project(mockFirestore, TEST_PROJECT_DOC_2),
+    new Project(mockDatabase, TEST_PROJECT_DOC_1),
+    new Project(mockDatabase, TEST_PROJECT_DOC_2),
   ];
 
   let fakeService: any = {

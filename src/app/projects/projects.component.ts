@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
-import { catchError, filter, map, take, timeout } from 'rxjs/operators';
-import { LoggerService } from '../services/logger.service';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
 import { Project } from '../services/projects/project';
 import { ProjectService } from '../services/projects/project.service';
 
