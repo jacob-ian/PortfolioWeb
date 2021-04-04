@@ -1,4 +1,4 @@
-import { MockFirestore } from '../database/mock-firestore';
+import { MockDatabaseService } from '../database/mock-database-service';
 import { Subject, SubjectDocument } from './subject';
 
 export const TEST_SUBJECT_DOCUMENT: SubjectDocument = {
@@ -8,12 +8,12 @@ export const TEST_SUBJECT_DOCUMENT: SubjectDocument = {
 };
 
 describe('Education -> Subject', () => {
-  let mockFirestore: any = new MockFirestore([]);
+  let mockDatabase: any = new MockDatabaseService([]);
   let subject: Subject;
 
   describe('Test with document instantiation', () => {
     beforeEach(() => {
-      subject = new Subject(mockFirestore, TEST_SUBJECT_DOCUMENT);
+      subject = new Subject(mockDatabase, TEST_SUBJECT_DOCUMENT);
     });
 
     describe('Test getId()', () => {
@@ -37,7 +37,7 @@ describe('Education -> Subject', () => {
 
   describe('Test without document instantiation', () => {
     beforeEach(() => {
-      subject = new Subject(mockFirestore);
+      subject = new Subject(mockDatabase);
     });
 
     describe('Test getId()', () => {

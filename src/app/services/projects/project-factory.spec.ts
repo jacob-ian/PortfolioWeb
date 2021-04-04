@@ -1,5 +1,4 @@
-import { Observable } from 'rxjs';
-import { MockFirestore } from '../database/mock-firestore';
+import { Observable, of } from 'rxjs';
 import { Project, ProjectDocument } from './project';
 import { ProjectFactory } from './project-factory';
 
@@ -27,16 +26,15 @@ const TEST_EMPTY_DOCS: ProjectDocument[] = [];
 
 describe('ProjectFactory', () => {
   let factory: ProjectFactory;
-  let mockFirestore: any;
+  let mockDatabase: any = {};
 
   describe('Test creating Projects', () => {
     describe('Test with existing documents', () => {
       let observable: Observable<any[]>;
 
       beforeEach(() => {
-        mockFirestore = new MockFirestore(TEST_PROJECT_DOCS);
-        factory = new ProjectFactory(mockFirestore);
-        observable = factory.createFromCollection();
+        factory = new ProjectFactory(mockDatabase);
+        observable = factory.createFromCollection(of(TEST_PROJECT_DOCS));
       });
 
       it('Should return an observable', () => {
@@ -51,7 +49,7 @@ describe('ProjectFactory', () => {
 
       it('Should return a test Project in the array', () => {
         observable.subscribe((projects) => {
-          const testProj = new Project(mockFirestore, TEST_PROJECT_DOCS[0]);
+          const testProj = new Project(mockDatabase, TEST_PROJECT_DOCS[0]);
           expect(projects[0]).toEqual(testProj);
         });
       });
@@ -61,9 +59,8 @@ describe('ProjectFactory', () => {
       let observable: Observable<any[]>;
 
       beforeEach(() => {
-        mockFirestore = new MockFirestore(TEST_EMPTY_DOCS);
-        factory = new ProjectFactory(mockFirestore);
-        observable = factory.createFromCollection();
+        factory = new ProjectFactory(mockDatabase);
+        observable = factory.createFromCollection(of(TEST_EMPTY_DOCS));
       });
 
       it('Should return an observable', () => {

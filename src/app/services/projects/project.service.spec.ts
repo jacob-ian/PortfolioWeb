@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { MockFirestore } from '../database/mock-firestore';
+import { DatabaseService } from '../database/database.service';
+import { MockDatabaseService } from '../database/mock-database-service';
 import { Project, ProjectDocument } from './project';
 import { ProjectService } from './project.service';
 import { TechnologyDocument } from './technology';
@@ -36,14 +36,14 @@ const TEST_DOCS_EMPTY = [];
 
 describe('ProjectService', () => {
   let service: ProjectService;
-  let mockFirestore: any;
+  let mockDatabase: any;
 
   describe('Test getting Projects', () => {
     describe('Test getting existing Project documents', () => {
       beforeEach(() => {
-        mockFirestore = new MockFirestore(TEST_PROJECT_DOCS);
+        mockDatabase = new MockDatabaseService(TEST_PROJECT_DOCS);
         TestBed.configureTestingModule({
-          providers: [{ provide: AngularFirestore, useValue: mockFirestore }],
+          providers: [{ provide: DatabaseService, useValue: mockDatabase }],
         });
         service = TestBed.inject(ProjectService);
       });
@@ -71,9 +71,9 @@ describe('ProjectService', () => {
     describe('Test without existing documents', () => {
       let observable: Observable<Project[]>;
       beforeEach(() => {
-        mockFirestore = new MockFirestore(TEST_DOCS_EMPTY);
+        mockDatabase = new MockDatabaseService(TEST_DOCS_EMPTY);
         TestBed.configureTestingModule({
-          providers: [{ provide: AngularFirestore, useValue: mockFirestore }],
+          providers: [{ provide: DatabaseService, useValue: mockDatabase }],
         });
         service = TestBed.inject(ProjectService);
         observable = service.getProjects();
@@ -94,9 +94,9 @@ describe('ProjectService', () => {
   describe('Test getting Technologies', () => {
     describe('Test with existing Technology documents', () => {
       beforeEach(() => {
-        mockFirestore = new MockFirestore(TEST_TECH_DOCS);
+        mockDatabase = new MockDatabaseService(TEST_TECH_DOCS);
         TestBed.configureTestingModule({
-          providers: [{ provide: AngularFirestore, useValue: mockFirestore }],
+          providers: [{ provide: DatabaseService, useValue: mockDatabase }],
         });
         service = TestBed.inject(ProjectService);
       });
@@ -124,9 +124,9 @@ describe('ProjectService', () => {
     describe('Test without existing documents', () => {
       let observable: Observable<string[]>;
       beforeEach(() => {
-        mockFirestore = new MockFirestore(TEST_DOCS_EMPTY);
+        mockDatabase = new MockDatabaseService(TEST_DOCS_EMPTY);
         TestBed.configureTestingModule({
-          providers: [{ provide: AngularFirestore, useValue: mockFirestore }],
+          providers: [{ provide: DatabaseService, useValue: mockDatabase }],
         });
         service = TestBed.inject(ProjectService);
         observable = service.getTechnologies();

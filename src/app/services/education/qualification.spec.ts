@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { MockFirestore } from '../database/mock-firestore';
+import { MockDatabaseService } from '../database/mock-database-service';
 import { EducationException } from './education-exception';
 import { Qualification, QualificationDocument } from './qualification';
 import { Subject, SubjectDocument } from './subject';
@@ -48,12 +48,12 @@ export const TEST_SUBJECT_DOCS_1: SubjectDocument[] = [
 
 describe('Education -> Qualification', () => {
   let qualification: Qualification;
-  let mockFirestore: any = new MockFirestore(TEST_SUBJECT_DOCS_1);
+  let mockDatabase: any = new MockDatabaseService(TEST_SUBJECT_DOCS_1);
 
   describe('Test methods with document instantiation.', () => {
     describe('Test single branch getting methods.', () => {
       beforeEach(() => {
-        qualification = new Qualification(mockFirestore, TEST_DOCUMENT);
+        qualification = new Qualification(mockDatabase, TEST_DOCUMENT);
       });
       describe('Test getName()', () => {
         it('Should return the document name.', () => {
@@ -147,8 +147,8 @@ describe('Education -> Qualification', () => {
         describe('Test with existing subjects', () => {
           let observable: Observable<Subject[]>;
           beforeEach(() => {
-            mockFirestore = new MockFirestore(TEST_SUBJECT_DOCS_1);
-            qualification = new Qualification(mockFirestore, TEST_DOCUMENT);
+            mockDatabase = new MockDatabaseService(TEST_SUBJECT_DOCS_1);
+            qualification = new Qualification(mockDatabase, TEST_DOCUMENT);
             observable = qualification.getSubjects();
           });
           it('Should return an observable', () => {
@@ -168,7 +168,7 @@ describe('Education -> Qualification', () => {
           });
 
           it('Should return the test Subject object', () => {
-            const testObj = new Subject(mockFirestore, TEST_SUBJECT_DOCS_1[0]);
+            const testObj = new Subject(mockDatabase, TEST_SUBJECT_DOCS_1[0]);
             observable.subscribe((subjects) => {
               expect(subjects).toContain(testObj);
             });
@@ -178,8 +178,8 @@ describe('Education -> Qualification', () => {
         describe('Test without existing subjects', () => {
           let observable: Observable<Subject[]>;
           beforeEach(() => {
-            mockFirestore = new MockFirestore([]);
-            qualification = new Qualification(mockFirestore, TEST_DOCUMENT);
+            mockDatabase = new MockDatabaseService([]);
+            qualification = new Qualification(mockDatabase, TEST_DOCUMENT);
             observable = qualification.getSubjects();
           });
 
@@ -198,7 +198,7 @@ describe('Education -> Qualification', () => {
       describe('Test with anachronous dates.', () => {
         it('Should throw an exception', () => {
           try {
-            new Qualification(mockFirestore, TEST_DOCUMENT_INVALID_DATES);
+            new Qualification(mockDatabase, TEST_DOCUMENT_INVALID_DATES);
           } catch (err) {
             expect(err).toBeInstanceOf(EducationException);
           }
@@ -208,7 +208,7 @@ describe('Education -> Qualification', () => {
       describe('Test getDateEnd()', () => {
         describe('Test with date in the past', () => {
           beforeEach(() => {
-            qualification = new Qualification(mockFirestore, TEST_DOCUMENT);
+            qualification = new Qualification(mockDatabase, TEST_DOCUMENT);
           });
 
           it('Should return feb 2021', () => {
@@ -224,7 +224,7 @@ describe('Education -> Qualification', () => {
         describe('Test with date in future.', () => {
           beforeEach(() => {
             qualification = new Qualification(
-              mockFirestore,
+              mockDatabase,
               TEST_DOCUMENT_FUTURE_END
             );
           });
@@ -244,7 +244,7 @@ describe('Education -> Qualification', () => {
 
   describe('Test with ID instantiation', () => {
     beforeEach(() => {
-      qualification = new Qualification(mockFirestore, 'test_id');
+      qualification = new Qualification(mockDatabase, 'test_id');
     });
 
     describe('Test getId()', () => {
@@ -326,8 +326,8 @@ describe('Education -> Qualification', () => {
       describe('Test with existing Subject documents', () => {
         let observable: Observable<Subject[]>;
         beforeEach(() => {
-          mockFirestore = new MockFirestore(TEST_SUBJECT_DOCS_1);
-          qualification = new Qualification(mockFirestore, TEST_DOCUMENT);
+          mockDatabase = new MockDatabaseService(TEST_SUBJECT_DOCS_1);
+          qualification = new Qualification(mockDatabase, TEST_DOCUMENT);
           observable = qualification.getSubjects();
         });
         it('Should return an observable', () => {
@@ -347,7 +347,7 @@ describe('Education -> Qualification', () => {
         });
 
         it('Should return the test Subject object', () => {
-          const testObj = new Subject(mockFirestore, TEST_SUBJECT_DOCS_1[0]);
+          const testObj = new Subject(mockDatabase, TEST_SUBJECT_DOCS_1[0]);
           observable.subscribe((subjects) => {
             expect(subjects).toContain(testObj);
           });
@@ -357,8 +357,8 @@ describe('Education -> Qualification', () => {
       describe('Test without existing subjects', () => {
         let observable: Observable<Subject[]>;
         beforeEach(() => {
-          mockFirestore = new MockFirestore([]);
-          qualification = new Qualification(mockFirestore, TEST_DOCUMENT);
+          mockDatabase = new MockDatabaseService([]);
+          qualification = new Qualification(mockDatabase, TEST_DOCUMENT);
           observable = qualification.getSubjects();
         });
 
@@ -397,7 +397,7 @@ describe('Education -> Qualification', () => {
 
   describe('Test without document instantiation.', () => {
     beforeEach(() => {
-      qualification = new Qualification(mockFirestore);
+      qualification = new Qualification(mockDatabase);
     });
     describe('Test getId()', () => {
       it('Should return a generated id', () => {

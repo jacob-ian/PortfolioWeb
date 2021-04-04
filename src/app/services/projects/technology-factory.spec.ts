@@ -1,5 +1,4 @@
-import { Observable } from 'rxjs';
-import { MockFirestore } from '../database/mock-firestore';
+import { Observable, of } from 'rxjs';
 import { Technology, TechnologyDocument } from './technology';
 import { TechnologyFactory } from './technology-factory';
 
@@ -12,16 +11,15 @@ const TEST_EMPTY_DOCS: TechnologyDocument[] = [];
 
 describe('TechnologyFactory', () => {
   let factory: TechnologyFactory;
-  let mockFirestore: any;
+  let mockDatabase: any = {};
 
   describe('Test creating Technologies', () => {
     describe('Test with existing documents', () => {
       let observable: Observable<any[]>;
 
       beforeEach(() => {
-        mockFirestore = new MockFirestore(TEST_TECH_DOCS);
-        factory = new TechnologyFactory(mockFirestore);
-        observable = factory.createFromCollection();
+        factory = new TechnologyFactory(mockDatabase);
+        observable = factory.createFromCollection(of(TEST_TECH_DOCS));
       });
 
       it('Should return an observable', () => {
@@ -36,7 +34,7 @@ describe('TechnologyFactory', () => {
 
       it('Should return a test Technology in the array', () => {
         observable.subscribe((technologies) => {
-          const testProj = new Technology(mockFirestore, TEST_TECH_DOCS[0]);
+          const testProj = new Technology(mockDatabase, TEST_TECH_DOCS[0]);
           expect(technologies[0]).toEqual(testProj);
         });
       });
@@ -46,9 +44,8 @@ describe('TechnologyFactory', () => {
       let observable: Observable<any[]>;
 
       beforeEach(() => {
-        mockFirestore = new MockFirestore(TEST_EMPTY_DOCS);
-        factory = new TechnologyFactory(mockFirestore);
-        observable = factory.createFromCollection();
+        factory = new TechnologyFactory(mockDatabase);
+        observable = factory.createFromCollection(of(TEST_EMPTY_DOCS));
       });
 
       it('Should return an observable', () => {

@@ -1,4 +1,4 @@
-import { MockFirestore } from '../database/mock-firestore';
+import { MockDatabaseService } from '../database/mock-database-service';
 import { Technology, TechnologyDocument } from './technology';
 
 const TEST_TECH_1: TechnologyDocument = {
@@ -7,12 +7,12 @@ const TEST_TECH_1: TechnologyDocument = {
 };
 
 describe('Technology', () => {
-  let mockFirestore: any = new MockFirestore([]);
+  let mockDatabase: any = new MockDatabaseService([]);
   let technology: Technology;
 
   describe('Test getId()', () => {
     it('Should return an ID with document instantiation', () => {
-      technology = new Technology(mockFirestore, TEST_TECH_1);
+      technology = new Technology(mockDatabase, TEST_TECH_1);
       let id = technology.getId();
       expect(id).toBe(TEST_TECH_1.id);
     });
@@ -20,7 +20,7 @@ describe('Technology', () => {
 
   describe('Test getName()', () => {
     it('Should return the name with doc instantiation', () => {
-      technology = new Technology(mockFirestore, TEST_TECH_1);
+      technology = new Technology(mockDatabase, TEST_TECH_1);
       let name = technology.getName();
       expect(name).toBe(TEST_TECH_1.name);
     });

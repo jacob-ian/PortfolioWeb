@@ -1,5 +1,5 @@
-import { AngularFirestore } from '@angular/fire/firestore';
 import { DatabaseObject } from '../database/database-object';
+import { DatabaseService } from '../database/database.service';
 import { EducationException } from './education-exception';
 
 export interface SubjectDocument {
@@ -13,10 +13,10 @@ export class Subject extends DatabaseObject {
   private name: string;
   private handbookUrl: string;
 
-  constructor(firestore: AngularFirestore);
-  constructor(firestore: AngularFirestore, document: SubjectDocument);
-  constructor(firestore: AngularFirestore, document?: SubjectDocument) {
-    super(firestore);
+  constructor(database: DatabaseService);
+  constructor(database: DatabaseService, document: SubjectDocument);
+  constructor(database: DatabaseService, document?: SubjectDocument) {
+    super(database);
     if (document) {
       this.id = document.id;
       this.name = document.name;

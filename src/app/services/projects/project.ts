@@ -1,5 +1,5 @@
-import { AngularFirestore } from '@angular/fire/firestore';
 import { DatabaseObject } from '../database/database-object';
+import { DatabaseService } from '../database/database.service';
 import { Utils } from '../utils';
 import { ProjectException } from './project-exception';
 
@@ -26,8 +26,8 @@ export class Project extends DatabaseObject {
   private dateEnd?: number;
   private iconUrl?: string;
 
-  constructor(firestore: AngularFirestore, document: ProjectDocument) {
-    super(firestore);
+  constructor(database: DatabaseService, document: ProjectDocument) {
+    super(database);
 
     if (this.isDocument(document)) {
       this.id = document.id;

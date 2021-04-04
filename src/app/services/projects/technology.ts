@@ -1,5 +1,5 @@
-import { AngularFirestore } from '@angular/fire/firestore';
 import { DatabaseObject } from '../database/database-object';
+import { DatabaseService } from '../database/database.service';
 import { ProjectException } from './project-exception';
 
 export interface TechnologyDocument {
@@ -11,8 +11,8 @@ export class Technology extends DatabaseObject {
   private id: string;
   private name: string;
 
-  constructor(firestore: AngularFirestore, document: TechnologyDocument) {
-    super(firestore);
+  constructor(database: DatabaseService, document: TechnologyDocument) {
+    super(database);
 
     if (this.isDocument(document)) {
       this.id = document.id;

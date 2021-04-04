@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { DatabaseObjectFactory } from 'src/app/services/database/database-object-factory';
-import { Qualification } from 'src/app/services/education/qualification';
+import {
+  Qualification,
+  QualificationDocument,
+} from 'src/app/services/education/qualification';
 import { QualificationFactory } from 'src/app/services/education/qualification-factory';
+import { DatabaseService } from '../database/database.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,13 +14,16 @@ import { QualificationFactory } from 'src/app/services/education/qualification-f
 export class EducationService {
   private qualificationFactory: DatabaseObjectFactory;
 
-  constructor(private firestore: AngularFirestore) {
-    this.qualificationFactory = new QualificationFactory(this.firestore);
+  constructor(private database: DatabaseService) {
+    this.qualificationFactory = new QualificationFactory(this.database);
   }
 
   public getQualifications(): Observable<Qualification[]> {
-    return this.qualificationFactory.createFromCollection() as Observable<
-      Qualification[]
-    >;
+    let collection = this.database.getCollection<QualificationDocument>(
+      'qualifications'
+    );
+    return this.qualificationFactory.createFromCollection(
+      collection
+    ) as Observable<Qualification[]>;
   }
 }

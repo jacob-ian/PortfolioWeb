@@ -1,10 +1,10 @@
 import { EducationException } from './education-exception';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { DatabaseObject } from 'src/app/services/database/database-object';
 import { Subject } from './subject';
 import { Observable } from 'rxjs';
 import { SubjectFactory } from './subject-factory';
 import { Utils } from '../utils';
+import { DatabaseService } from '../database/database.service';
 
 export interface QualificationDocument {
   id: string;
@@ -37,14 +37,14 @@ export class Qualification extends DatabaseObject {
   private credentialCategory: 'degree' | 'diploma' | 'certificate';
   private educationLevel: 'beginner' | 'intermediate' | 'advanced';
 
-  constructor(firestore: AngularFirestore);
-  constructor(firestore: AngularFirestore, documentId: string);
-  constructor(firestore: AngularFirestore, document: QualificationDocument);
+  constructor(database: DatabaseService);
+  constructor(database: DatabaseService, documentId: string);
+  constructor(database: DatabaseService, document: QualificationDocument);
   constructor(
-    firestore: AngularFirestore,
+    database: DatabaseService,
     idOrDocument?: string | QualificationDocument
   ) {
-    super(firestore);
+    super(database);
 
     this.name = null;
     this.description = null;
@@ -197,16 +197,15 @@ export class Qualification extends DatabaseObject {
   }
 
   public getSubjects(): Observable<Subject[]> {
-    if (!this.id) {
-      throw new EducationException(
-        'invalid-input',
-        'The Qualification ID is required to fetch its Subjects.'
-      );
-    }
-    this.subcollectionFactory = new SubjectFactory(this.firestore, this.id);
-    return super.getSubcollection() as Observable<Subject[]>;
+    this.subcollectionFactory = new SubjectFactory(this.database);
+    let path = this.createSubjectsPath();
+    return this.getSubcollection(path) as Observable<Subject[]>;
   }
-  d;
+
+  private createSubjectsPath(): string {
+    return `qualifications/${this.getId()}/subjects`;
+  }
+
   public getCredentialCateogry(): string {
     if (!this.credentialCategory) {
       throw new EducationException(

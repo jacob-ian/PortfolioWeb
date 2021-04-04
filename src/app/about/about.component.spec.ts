@@ -1,17 +1,23 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { MockFirestore } from '../services/database/mock-firestore';
+import { of } from 'rxjs';
+import { DatabaseService } from '../services/database/database.service';
+import { MockDatabaseService } from '../services/database/mock-database-service';
+import { EducationService } from '../services/education/education.service';
 
 import { AboutComponent } from './about.component';
 
 describe('AboutComponent', () => {
   let component: AboutComponent;
   let fixture: ComponentFixture<AboutComponent>;
-  let mockFirestore = new MockFirestore([]);
+  let mockService: any = {
+    getQualifications: () => {
+      return of([]);
+    },
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      providers: [{ provide: AngularFirestore, useValue: mockFirestore }],
+      providers: [{ provide: EducationService, useValue: mockService }],
       declarations: [AboutComponent],
     }).compileComponents();
   });

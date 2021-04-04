@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { MockFirestore } from '../database/mock-firestore';
+import { DatabaseService } from '../database/database.service';
+import { MockDatabaseService } from '../database/mock-database-service';
 import { EducationService } from './education.service';
 import { Qualification, QualificationDocument } from './qualification';
 
@@ -44,16 +44,16 @@ const TEST_QUALIFICATION_DOCS: QualificationDocument[] = [
 
 describe('EducationService', () => {
   let service: EducationService;
+  let mockDatabase: any;
 
   describe('Test getting the Qualifications', () => {
     describe('Test with existing qualification documents', () => {
       let observable: Observable<Qualification[]>;
-      let mockFirestore: any;
 
       beforeEach(() => {
-        mockFirestore = new MockFirestore(TEST_QUALIFICATION_DOCS);
+        mockDatabase = new MockDatabaseService(TEST_QUALIFICATION_DOCS);
         TestBed.configureTestingModule({
-          providers: [{ provide: AngularFirestore, useValue: mockFirestore }],
+          providers: [{ provide: DatabaseService, useValue: mockDatabase }],
         });
         service = TestBed.inject(EducationService);
         observable = service.getQualifications();
@@ -78,7 +78,7 @@ describe('EducationService', () => {
       it('Should return the test Qualification object inside the array', () => {
         observable.subscribe((quals) => {
           const testObj = new Qualification(
-            mockFirestore,
+            mockDatabase,
             TEST_QUALIFICATION_DOCS[0]
           );
           expect(quals[0]).toEqual(testObj);
@@ -89,9 +89,9 @@ describe('EducationService', () => {
       let observable: Observable<Qualification[]>;
 
       beforeEach(() => {
-        const mockFirestore = new MockFirestore([]);
+        mockDatabase = new MockDatabaseService([]);
         TestBed.configureTestingModule({
-          providers: [{ provide: AngularFirestore, useValue: mockFirestore }],
+          providers: [{ provide: DatabaseService, useValue: mockDatabase }],
         });
         service = TestBed.inject(EducationService);
         observable = service.getQualifications();

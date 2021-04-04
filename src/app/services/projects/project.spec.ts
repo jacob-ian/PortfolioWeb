@@ -1,4 +1,3 @@
-import { MockFirestore } from '../database/mock-firestore';
 import { Project, ProjectDocument } from './project';
 
 const TEST_DOCUMENT_FINISHED: ProjectDocument = {
@@ -28,17 +27,13 @@ const TEST_DOCUMENT_WITH_ICON: ProjectDocument = {
 };
 
 describe('Project', () => {
-  let mockFirestore: any;
+  let mockDatabase: any = {};
   let project: Project;
-
-  beforeEach(() => {
-    mockFirestore = new MockFirestore([]);
-  });
 
   describe('Test getId', () => {
     describe('Test with document instantiation', () => {
       beforeEach(() => {
-        project = new Project(mockFirestore, TEST_DOCUMENT_FINISHED);
+        project = new Project(mockDatabase, TEST_DOCUMENT_FINISHED);
       });
       it('Should return the ID', () => {
         let id = project.getId();
@@ -51,7 +46,7 @@ describe('Project', () => {
     describe('Test with document instantiation', () => {
       describe('Test with document instantiation', () => {
         beforeEach(() => {
-          project = new Project(mockFirestore, TEST_DOCUMENT_FINISHED);
+          project = new Project(mockDatabase, TEST_DOCUMENT_FINISHED);
         });
         it('Should return the name', () => {
           let name = project.getName();
@@ -64,7 +59,7 @@ describe('Project', () => {
   describe('Test getDescription', () => {
     describe('Test with document instantiation', () => {
       beforeEach(() => {
-        project = new Project(mockFirestore, TEST_DOCUMENT_FINISHED);
+        project = new Project(mockDatabase, TEST_DOCUMENT_FINISHED);
       });
       it('Should return the description', () => {
         let desc = project.getDescription();
@@ -76,7 +71,7 @@ describe('Project', () => {
   describe('Test getTechnologies', () => {
     describe('Test with document instantiation', () => {
       beforeEach(() => {
-        project = new Project(mockFirestore, TEST_DOCUMENT_FINISHED);
+        project = new Project(mockDatabase, TEST_DOCUMENT_FINISHED);
       });
       it('Should return the technologies', () => {
         let tech = project.getTechnologies();
@@ -88,7 +83,7 @@ describe('Project', () => {
   describe('Test getRepoUrl', () => {
     describe('Test with document instantiation', () => {
       beforeEach(() => {
-        project = new Project(mockFirestore, TEST_DOCUMENT_FINISHED);
+        project = new Project(mockDatabase, TEST_DOCUMENT_FINISHED);
       });
       it('Should return the repo URL', () => {
         let url = project.getRepoUrl();
@@ -100,7 +95,7 @@ describe('Project', () => {
   describe('Test getDateStart', () => {
     describe('Test with document instantiation', () => {
       beforeEach(() => {
-        project = new Project(mockFirestore, TEST_DOCUMENT_FINISHED);
+        project = new Project(mockDatabase, TEST_DOCUMENT_FINISHED);
       });
       it('Should return the date string', () => {
         let date = project.getDateStart();
@@ -112,7 +107,7 @@ describe('Project', () => {
   describe('Test getDateStartMs', () => {
     describe('Test with document instantiation', () => {
       beforeEach(() => {
-        project = new Project(mockFirestore, TEST_DOCUMENT_FINISHED);
+        project = new Project(mockDatabase, TEST_DOCUMENT_FINISHED);
       });
       it('Should return the milliseconds', () => {
         let ms = project.getDateStartMs();
@@ -124,7 +119,7 @@ describe('Project', () => {
   describe('Test getStatus', () => {
     describe('Test with document instantiation', () => {
       beforeEach(() => {
-        project = new Project(mockFirestore, TEST_DOCUMENT_FINISHED);
+        project = new Project(mockDatabase, TEST_DOCUMENT_FINISHED);
       });
       it('Should return the status', () => {
         let status = project.getStatus();
@@ -136,7 +131,7 @@ describe('Project', () => {
   describe('Test getDateEnd', () => {
     describe('Test with provided input', () => {
       beforeEach(() => {
-        project = new Project(mockFirestore, TEST_DOCUMENT_FINISHED);
+        project = new Project(mockDatabase, TEST_DOCUMENT_FINISHED);
       });
       it('Should return mar 2021', () => {
         let date = project.getDateEnd();
@@ -145,7 +140,7 @@ describe('Project', () => {
     });
     describe('Test without provided input', () => {
       beforeEach(() => {
-        project = new Project(mockFirestore, TEST_DOCUMENT_ONGOING);
+        project = new Project(mockDatabase, TEST_DOCUMENT_ONGOING);
       });
       it('Should return null', () => {
         let date = project.getDateEnd();
@@ -157,7 +152,7 @@ describe('Project', () => {
   describe('Test getDateEndMs', () => {
     describe('Test with provided input', () => {
       beforeEach(() => {
-        project = new Project(mockFirestore, TEST_DOCUMENT_FINISHED);
+        project = new Project(mockDatabase, TEST_DOCUMENT_FINISHED);
       });
 
       it('Should return the timestamp in milliseconds', () => {
@@ -167,7 +162,7 @@ describe('Project', () => {
     });
     describe('Test without provided inputs', () => {
       beforeEach(() => {
-        project = new Project(mockFirestore, TEST_DOCUMENT_ONGOING);
+        project = new Project(mockDatabase, TEST_DOCUMENT_ONGOING);
       });
 
       it('Should return null', () => {
@@ -180,7 +175,7 @@ describe('Project', () => {
   describe('Test getIconUrl', () => {
     describe('Test with provided input', () => {
       beforeEach(() => {
-        project = new Project(mockFirestore, TEST_DOCUMENT_WITH_ICON);
+        project = new Project(mockDatabase, TEST_DOCUMENT_WITH_ICON);
       });
 
       it('Should return the url to the icon', () => {
@@ -190,7 +185,7 @@ describe('Project', () => {
     });
     describe('Test without document instantiation', () => {
       beforeEach(() => {
-        project = new Project(mockFirestore, TEST_DOCUMENT_FINISHED);
+        project = new Project(mockDatabase, TEST_DOCUMENT_FINISHED);
       });
 
       it('Should return null', () => {
@@ -203,7 +198,7 @@ describe('Project', () => {
   describe('Test usesTechnologies', () => {
     describe('Test with document instantiation', () => {
       beforeEach(() => {
-        project = new Project(mockFirestore, TEST_DOCUMENT_FINISHED);
+        project = new Project(mockDatabase, TEST_DOCUMENT_FINISHED);
       });
       it('Should return false from array with no overlap', () => {
         let tech = ['c++', '.net'];
