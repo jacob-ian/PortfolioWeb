@@ -5,9 +5,8 @@ import {
   StateKey,
   TransferState,
 } from '@angular/platform-browser';
-import { query } from 'express';
 import { Observable, of } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +14,7 @@ import { map, tap } from 'rxjs/operators';
 export class DatabaseService {
   constructor(
     private transferState: TransferState,
-    private firestore: AngularFirestore
+    private afs: AngularFirestore
   ) {}
 
   public getCollection<T>(path: string): Observable<T[]> {
@@ -23,10 +22,9 @@ export class DatabaseService {
     if (this.collectionInState(key)) {
       return this.getCollectionFromState(key);
     }
-    return this.firestore
-      .collection<T>(path)
-      .valueChanges()
-      .pipe(tap((docs) => this.saveToState(key, docs)));
+    return this.getCollectionFromFirestore<T>(path).pipe(
+      tap((docs) => this.saveToState(key, docs))
+    );
   }
 
   private createStateKey<T>(path: string): StateKey<T[]> {
@@ -41,11 +39,15 @@ export class DatabaseService {
     return of(this.transferState.get(stateKey, null));
   }
 
+  private getCollectionFromFirestore<T>(path: string): Observable<T[]> {
+    return this.afs.collection<T>(path).valueChanges();
+  }
+
   private saveToState<T>(stateKey: StateKey<T[]>, docs: T[]): void {
     this.transferState.set(stateKey, docs);
   }
 
   public createId(): string {
-    return this.firestore.createId();
+    return this.afs.createId();
   }
 }
