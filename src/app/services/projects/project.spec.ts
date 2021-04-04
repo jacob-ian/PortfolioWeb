@@ -5,7 +5,16 @@ const TEST_DOCUMENT_FINISHED: ProjectDocument = {
   name: 'website',
   description: 'a website',
   technologies: ['angular', 'javascript', 'typescript'],
-  repoUrl: 'https://github.com',
+  links: [
+    {
+      name: 'GitHub Repo',
+      url: 'https://github.com',
+    },
+    {
+      name: 'Website',
+      url: 'https://google.com',
+    },
+  ],
   dateStart: new Date('01 Feb 2021').getTime(),
   status: 'finished',
   dateEnd: new Date('01 Mar 2021').getTime(),
@@ -16,7 +25,16 @@ const TEST_DOCUMENT_ONGOING: ProjectDocument = {
   name: 'website2',
   description: 'another website',
   technologies: ['angular', 'javascript', 'typescript'],
-  repoUrl: 'https://github.com',
+  links: [
+    {
+      name: 'GitHub Repo',
+      url: 'https://github.com',
+    },
+    {
+      name: 'Website',
+      url: 'https://google.com',
+    },
+  ],
   dateStart: new Date('01 Mar 2021').getTime(),
   status: 'ongoing',
 };
@@ -80,14 +98,14 @@ describe('Project', () => {
     });
   });
 
-  describe('Test getRepoUrl', () => {
+  describe('Test getLinks', () => {
     describe('Test with document instantiation', () => {
       beforeEach(() => {
         project = new Project(mockDatabase, TEST_DOCUMENT_FINISHED);
       });
       it('Should return the repo URL', () => {
-        let url = project.getRepoUrl();
-        expect(url).toBe(TEST_DOCUMENT_FINISHED.repoUrl);
+        let links = project.getLinks();
+        expect(links).toBe(TEST_DOCUMENT_FINISHED.links);
       });
     });
   });

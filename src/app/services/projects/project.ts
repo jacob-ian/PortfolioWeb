@@ -8,11 +8,16 @@ export interface ProjectDocument {
   name: string;
   description: string;
   technologies: string[];
-  repoUrl: string;
+  links: ProjectUrl[];
   dateStart: number;
   status: 'finished' | 'ongoing';
   dateEnd?: number;
   iconUrl?: string;
+}
+
+export interface ProjectUrl {
+  name: string;
+  url: string;
 }
 
 export class Project extends DatabaseObject {
@@ -20,7 +25,7 @@ export class Project extends DatabaseObject {
   private name: string;
   private description: string;
   private technologies: string[];
-  private repoUrl: string;
+  private links: ProjectUrl[];
   private dateStart: number;
   private status: 'finished' | 'ongoing';
   private dateEnd?: number;
@@ -34,7 +39,7 @@ export class Project extends DatabaseObject {
       this.name = document.name;
       this.description = document.description;
       this.technologies = document.technologies;
-      this.repoUrl = document.repoUrl;
+      this.links = document.links;
       this.dateStart = document.dateStart;
       this.status = document.status;
       this.dateEnd = document.dateEnd;
@@ -56,7 +61,7 @@ export class Project extends DatabaseObject {
       document.name &&
       document.description &&
       document.technologies.length > 0 &&
-      document.repoUrl &&
+      document.links.length > 0 &&
       document.dateStart &&
       document.status
     );
@@ -103,14 +108,14 @@ export class Project extends DatabaseObject {
     return this.technologies;
   }
 
-  public getRepoUrl(): string {
-    if (!this.repoUrl) {
+  public getLinks(): ProjectUrl[] {
+    if (!this.links) {
       throw new ProjectException(
         'invalid-input',
         'The Project Repo URL is undefined'
       );
     }
-    return this.repoUrl;
+    return this.links;
   }
 
   public getDateStart(): string {
