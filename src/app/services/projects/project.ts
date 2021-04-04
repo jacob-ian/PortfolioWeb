@@ -29,7 +29,7 @@ export class Project extends DatabaseObject {
   constructor(database: DatabaseService, document: ProjectDocument) {
     super(database);
 
-    if (this.isDocument(document)) {
+    if (this.documentIsValid) {
       this.id = document.id;
       this.name = document.name;
       this.description = document.description;
@@ -41,28 +41,21 @@ export class Project extends DatabaseObject {
       this.iconUrl = document.iconUrl;
       return;
     }
-
-    this.id = this.createId();
-    this.name = null;
-    this.description = null;
-    this.technologies = [];
-    this.repoUrl = null;
-    this.dateStart = null;
+    throw new ProjectException(
+      'invalid-input',
+      `The project document is invalid:\n${JSON.stringify(document)}.`
+    );
   }
 
-  private isDocument(document: ProjectDocument): document is ProjectDocument {
+  private documentIsValid(document: ProjectDocument): boolean {
     if (!document) {
-      throw new ProjectException(
-        'invalid-input',
-        'The project document is invalid.'
-      );
+      return false;
     }
-
     return !!(
       document.id &&
       document.name &&
       document.description &&
-      document.technologies &&
+      document.technologies.length > 0 &&
       document.repoUrl &&
       document.dateStart &&
       document.status
