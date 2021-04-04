@@ -1,5 +1,6 @@
 import { BrowserModule, Meta } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserTransferStateModule } from '@angular/platform-browser';
 
 import { USE_EMULATOR as USE_FIRESTORE_EMULATOR } from '@angular/fire/firestore';
 
@@ -56,6 +57,7 @@ import { MultiSelectOptionComponent } from './core/multi-select/multi-select-opt
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
+    BrowserTransferStateModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
