@@ -165,15 +165,22 @@ export class Project extends DatabaseObject {
   }
 
   public usesTechnologies(technologies: string[]): boolean {
-    if (this.techQueryEmpty(technologies)) {
-      return true;
+    if (this.canCompareTechnologies(technologies)) {
+      return this.areTechnologiesUsed(technologies);
     }
-
-    return this.areTechnologiesUsed(technologies);
+    return false;
   }
 
-  private techQueryEmpty(technologies: string[]): boolean {
-    return technologies.length === 0;
+  private canCompareTechnologies(query: string[]): boolean {
+    return this.hasTechnologies() && this.techQueryNotEmpty(query);
+  }
+
+  private hasTechnologies(): boolean {
+    return this.technologies && this.technologies.length > 0;
+  }
+
+  private techQueryNotEmpty(technologies: string[]): boolean {
+    return technologies.length > 0;
   }
 
   private areTechnologiesUsed(technologies: string[]): boolean {
