@@ -1,21 +1,18 @@
-import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { DatabaseObjectFactory } from './database-object-factory';
+import { DatabaseService } from './database.service';
 
 export abstract class DatabaseObject {
-  protected firestore: AngularFirestore;
   protected subcollectionFactory: DatabaseObjectFactory;
 
-  constructor(firestore: AngularFirestore) {
-    this.firestore = firestore;
-    this.subcollectionFactory = null;
-  }
+  constructor(protected database: DatabaseService) {}
 
   protected createId(): string {
-    return this.firestore.createId();
+    return this.database.createId();
   }
 
-  protected getSubcollection(): Observable<DatabaseObject[]> {
-    return this.subcollectionFactory.createFromCollection();
+  protected getSubcollection(path: string): Observable<DatabaseObject[]> {
+    let collection = this.database.getCollection(path);
+    return this.subcollectionFactory.createFromCollection(collection);
   }
 }

@@ -1,26 +1,25 @@
-import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable, OperatorFunction } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Exception } from '../exception';
 import { DatabaseObject } from './database-object';
+import { DatabaseService } from './database.service';
 
 const EMPTY_ARRAY: DatabaseObject[] = [];
 
 export abstract class DatabaseObjectFactory {
-  protected firestore: AngularFirestore;
-  protected path: string;
+  constructor(protected database: DatabaseService) {}
 
-  constructor(firestore: AngularFirestore, path: string) {
-    this.firestore = firestore;
-    this.path = path;
+  public createFromCollection(
+    collection: Observable<unknown[]>
+  ): Observable<DatabaseObject[]> {
+    return this.convertDocsToDatabaseObjects(collection);
   }
 
-  public createFromCollection(): Observable<DatabaseObject[]> {
+  private convertDocsToDatabaseObjects(
+    documents: Observable<unknown[]>
+  ): Observable<DatabaseObject[]> {
     try {
-      return this.firestore
-        .collection(this.path)
-        .valueChanges()
-        .pipe(this.mapDocsToDatabaseObjects());
+      return documents.pipe(map((docs) => this.mapDocsToDatabaseObjects(docs)));
     } catch (error) {
       throw new Exception(
         'DB',
@@ -31,16 +30,11 @@ export abstract class DatabaseObjectFactory {
     }
   }
 
-  private mapDocsToDatabaseObjects(): OperatorFunction<
-    unknown[],
-    DatabaseObject[]
-  > {
-    return map((documents) => {
-      if (this.docsExist(documents)) {
-        return documents.map((doc) => this.createDatabaseObject(doc));
-      }
-      return EMPTY_ARRAY;
-    });
+  private mapDocsToDatabaseObjects(docs: unknown[]): DatabaseObject[] {
+    if (this.docsExist(docs)) {
+      return docs.map((doc) => this.createDatabaseObject(doc));
+    }
+    return EMPTY_ARRAY;
   }
 
   private docsExist(docs: any[]): boolean {

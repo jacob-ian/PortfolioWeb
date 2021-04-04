@@ -45,7 +45,7 @@ export class DatabaseService {
     this.transferState.set(stateKey, docs);
   }
 
-  public getFirestore(): AngularFirestore {
-    return this.firestore;
+  public createId(): string {
+    return this.firestore.createId();
   }
 }

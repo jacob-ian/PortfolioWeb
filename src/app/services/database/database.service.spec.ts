@@ -111,4 +111,22 @@ describe('DatabaseService', () => {
       });
     });
   });
+
+  describe('Test creating an ID', () => {
+    beforeEach(() => {
+      TestBed.configureTestingModule({
+        providers: [
+          { provide: TransferState, useValue: new MockTransferState() },
+          { provide: AngularFirestore, useValue: firestore },
+        ],
+      });
+      service = TestBed.inject(DatabaseService);
+      transferState = TestBed.inject(TransferState);
+    });
+
+    it('Should return a generated ID', () => {
+      let id = service.createId();
+      expect(id).toBe('generated_id');
+    });
+  });
 });
