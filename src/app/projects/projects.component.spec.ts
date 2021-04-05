@@ -12,7 +12,16 @@ const TEST_PROJECT_DOC_1: ProjectDocument = {
   name: 'website1',
   description: 'another website',
   technologies: ['angular', 'javascript', 'typescript', 'react'],
-  repoUrl: 'https://github.com',
+  links: [
+    {
+      name: 'GitHub Repo',
+      url: 'https://github.com',
+    },
+    {
+      name: 'Website',
+      url: 'https://google.com',
+    },
+  ],
   dateStart: new Date('01 Mar 2021').getTime(),
   status: 'ongoing',
 };
@@ -22,7 +31,16 @@ const TEST_PROJECT_DOC_2: ProjectDocument = {
   name: 'website2',
   description: 'another website',
   technologies: ['angular', 'javascript', 'typescript'],
-  repoUrl: 'https://github.com',
+  links: [
+    {
+      name: 'GitHub Repo',
+      url: 'https://github.com',
+    },
+    {
+      name: 'Website',
+      url: 'https://google.com',
+    },
+  ],
   dateStart: new Date('01 Mar 2021').getTime(),
   status: 'ongoing',
 };

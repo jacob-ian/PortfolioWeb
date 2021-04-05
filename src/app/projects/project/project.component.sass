@@ -1,0 +1,130 @@
+:host
+  display: flex
+  background: var(--color-secondary)
+  padding: 25px
+  border-radius: 20px
+  flex-direction: column
+  margin-bottom: 15px
+
+:host:last-child
+  margin-bottom: 0
+
+.row
+  flex: 1
+  width: 100%
+  display: flex
+  flex-direction: row
+  align-items: center
+
+.icon
+  margin-right: 15px
+  img 
+    height: 64px
+    width: 64px
+  svg
+    height: 64px
+    width: 64px
+    path
+      fill: var(--font-color-default)
+
+.details
+  font-size: 1rem
+  display: flex
+  flex-direction: column
+  line-height: 150%
+
+.name-status
+  display: flex
+  flex-direction: row
+  align-items: center
+  justify-content: flex-start
+
+.name
+  font-size: 1.2rem
+  font-weight: 600
+  margin-right: 15px
+
+.status
+  padding: 3px 6px
+  align-self: flex-start
+  display: flex
+  justify-self: flex-start
+  flex-direction: row
+  align-items: center
+  border-radius: 10px
+
+  svg
+    height: 16px
+    width: 16px
+    margin-right: 2px
+    #circle
+      fill: var(--font-color-default)
+
+.status.finished
+  background: #24e6245c
+  
+  svg
+    #check
+      fill: green
+
+.status.ongoing
+  background-color: #e6d0248a
+
+  svg
+    #check
+      fill: var(--font-color-default)
+
+.description
+  font-size: 1rem
+  color: var(--font-color-subtitle)
+  margin-bottom: 10px
+
+.technologies
+  display: flex
+  flex-direction: row
+  justify-content: flex-start
+  align-content: center
+  margin-bottom: 10px
+
+  .technology
+    border-radius: 10px
+    background: var(--color-tertiary)
+    padding: 5px
+    margin-right: 7px
+
+  .technology:last-child
+    margin-right: 0
+
+app-button-expand
+  align-self: flex-start
+
+.links
+  flex: 1
+  margin-top: 15px
+  border-radius: 10px
+  background: var(--color-tertiary)
+  padding: 15px
+  display: flex
+  flex-direction: column
+  justify-content: flex-start
+  align-items: flex-start
+
+  .link
+    margin-bottom: 10px
+    position: relative
+
+  .link:last-child
+    margin-bottom: 0
+
+  .link::after
+    content: url('/assets/res/hyperlink.svg')
+    height: 20px
+    width: 20px
+    position: absolute
+    top: 50%
+    transform: translateY(-50%) rotate(135deg)
+    margin-left: 2px
+
+
+
+  
