@@ -30,6 +30,7 @@ import { ProjectComponent } from './projects/project/project.component';
 import { ProjectsFilterComponent } from './projects/projects-filter/projects-filter.component';
 import { MultiSelectComponent } from './core/multi-select/multi-select.component';
 import { MultiSelectOptionComponent } from './core/multi-select/multi-select-option/multi-select-option.component';
+import { ButtonExpandComponent } from './core/button-expand/button-expand.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { MultiSelectOptionComponent } from './core/multi-select/multi-select-opt
     ProjectsFilterComponent,
     MultiSelectComponent,
     MultiSelectOptionComponent,
+    ButtonExpandComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
