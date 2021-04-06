@@ -119,8 +119,9 @@ export const routes: Routes = [
       ],
     },
   },
+
   {
-    path: '404',
+    path: '**',
     component: NotFoundComponent,
     data: {
       title: 'Page Not Found | Jacob Ian Matthews',
@@ -142,7 +143,6 @@ export const routes: Routes = [
       ],
     },
   },
-  { path: '**', redirectTo: '404' },
 ];
 
 @NgModule({

@@ -1,4 +1,37 @@
 :host
   flex: 1
   display: flex
-  
+  flex-direction: column
+
+h1
+  margin-top: 0
+  margin-bottom: 10px
+
+.row
+  align-items: center
+  justify-content: center
+  svg
+    height: 48px
+    width: 48px
+    path
+      fill: var(--font-color-default)
+    margin-right: 10px
+
+.url
+  background-color: var(--color-secondary)
+  padding: 5px 10px
+  font-family: var(--font-family-mono)
+  margin: 0 5px
+  border-radius: 5px
+
+.go-home
+  margin-top: 15px
+  font-size: 1.2rem
+  font-weight: 700
+
+@media screen and ( max-width: 650px )
+  .row
+    flex-direction: column
+
+    p
+      text-align: center
