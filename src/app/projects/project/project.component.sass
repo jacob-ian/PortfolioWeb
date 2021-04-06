@@ -117,20 +117,47 @@ app-button-expand
 
   .link
     margin-bottom: 10px
-    position: relative
 
   .link:last-child
     margin-bottom: 0
 
   .link::after
-    content: url('/assets/res/hyperlink.svg')
-    height: 20px
-    width: 20px
-    position: absolute
-    top: 50%
-    transform: translateY(-50%) rotate(135deg)
+    content: ''
+    mask-image:  url('/assets/res/hyperlink.svg')
+    mask-size: 1em
+    mask-position: center
+    mask-repeat: no-repeat
+    -webkit-mask-image:  url('/assets/res/hyperlink.svg')
+    -webkit-mask-size: 1em
+    -webkit-mask-position: center
+    -webkit-mask-repeat: no-repeat
     margin-left: 2px
+    background-color: var(--font-color-accent)
+    padding-left: 1em
 
+@media screen and ( max-width:  550px )
+  .row
+    flex-direction: column
 
+  .icon
+    margin-bottom: 10px
+    svg
+      height: 48px
+      width: 48px
+    img
+      height: 48px
+      width: 48px
 
+  .name-status
+    flex-direction: column
+    align-items: normal
+
+    .name
+      margin-bottom: 5px
+
+    .status
+      margin-bottom: 10px
+      align-self: auto
   
+  .description
+    line-height: 160%
