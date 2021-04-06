@@ -17,6 +17,7 @@
   align-items: center
 
 .icon
+  align-self: flex-start
   margin-right: 15px
   img 
     height: 64px
@@ -83,14 +84,19 @@
   display: flex
   flex-direction: row
   justify-content: flex-start
-  align-content: center
-  margin-bottom: 10px
+  align-content: flex-start
+  margin-bottom: 5px
+  flex-wrap: wrap
+
 
   .technology
     border-radius: 10px
     background: var(--color-tertiary)
     padding: 5px
     margin-right: 7px
+    text-transform: lowercase
+    white-space: nowrap
+    margin-bottom: 5px
 
   .technology:last-child
     margin-right: 0
@@ -100,7 +106,7 @@ app-button-expand
 
 .links
   flex: 1
-  margin-top: 15px
+  margin-top: 5px
   border-radius: 10px
   background: var(--color-tertiary)
   padding: 15px

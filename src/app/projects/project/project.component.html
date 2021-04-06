@@ -32,12 +32,10 @@
       </div>
     </div>
     <app-button-expand label="Links" (expand)="showLinks($event)"></app-button-expand>
-  </div>
-</div>
-<div class="row" [style.display]="isLinksExpanded ? 'flex' : 'none'">
-  <div class="links">
-    <a class="link" *ngFor="let link of getLinks()" [href]="link.url" target="_blank">
-      {{link.name}}
-    </a>
+    <div class="links" [style.display]="isLinksExpanded ? 'flex' : 'none'">
+      <a class="link" *ngFor="let link of getLinks()" [href]="link.url" target="_blank">
+        {{link.name}}
+      </a>
+    </div>
   </div>
 </div>

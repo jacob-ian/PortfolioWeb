@@ -58,7 +58,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     if (this.canFilterProjects()) {
       projects = this.filterProjects(projects, technologies);
     }
-    let sortedFilteredProjects = this.sortProjectsByDateEnd(projects);
+    let sortedFilteredProjects = this.sortProjectsByDate(projects);
     return sortedFilteredProjects;
   }
 
@@ -81,8 +81,8 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     return projects.filter((project) => project.usesTechnologies(technologies));
   }
 
-  private sortProjectsByDateEnd(projects: Project[]): Project[] {
-    return projects.sort((a, b) => a.getDateEndMs() - b.getDateEndMs());
+  private sortProjectsByDate(projects: Project[]): Project[] {
+    return projects.sort((a, b) => b.getDateStartMs() - a.getDateStartMs());
   }
 
   private subscribeToFilter(): Subscription {
