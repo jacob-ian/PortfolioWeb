@@ -55,22 +55,34 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   private filterProjectsWithTechnologies(): Project[] {
     let projects = this.projects.value;
     let technologies = this.filter.value;
-    if (this.cantFilterProjects()) {
-      return projects;
+    if (this.canFilterProjects()) {
+      projects = this.filterProjects(projects, technologies);
     }
+    let sortedFilteredProjects = this.sortProjectsByDateEnd(projects);
+    return sortedFilteredProjects;
+  }
+
+  private canFilterProjects(): boolean {
+    return this.hasProjects() && this.hasTechnologies();
+  }
+
+  private hasProjects(): boolean {
+    return this.projects.value.length > 0;
+  }
+
+  private hasTechnologies(): boolean {
+    return this.filter.value.length > 0;
+  }
+
+  private filterProjects(
+    projects: Project[],
+    technologies: string[]
+  ): Project[] {
     return projects.filter((project) => project.usesTechnologies(technologies));
   }
 
-  private cantFilterProjects(): boolean {
-    return this.noProjects() || this.noTechnologies();
-  }
-
-  private noProjects(): boolean {
-    return this.projects.value.length === 0;
-  }
-
-  private noTechnologies(): boolean {
-    return this.filter.value.length === 0;
+  private sortProjectsByDateEnd(projects: Project[]): Project[] {
+    return projects.sort((a, b) => a.getDateEndMs() - b.getDateEndMs());
   }
 
   private subscribeToFilter(): Subscription {
