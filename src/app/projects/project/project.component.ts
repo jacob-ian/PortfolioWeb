@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { LoggerService } from 'src/app/services/logger.service';
 import { Project, ProjectUrl } from 'src/app/services/projects/project';
+import { ProjectException } from 'src/app/services/projects/project-exception';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-project',
@@ -65,5 +67,18 @@ export class ProjectComponent implements OnInit {
 
   public showLinks(show: boolean) {
     this.isLinksExpanded = show;
+  }
+
+  /**
+   * TESTING ONLY
+   */
+  public setProject(project: Project): void {
+    if (environment.production) {
+      throw new ProjectException(
+        'internal',
+        'Cannot use testing methods in production.'
+      );
+    }
+    this.project = project;
   }
 }
