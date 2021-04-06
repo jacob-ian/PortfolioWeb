@@ -1,10 +1,12 @@
-<div class="row">
+<div class="row" itempscope itemtype="https://schema.org/SoftwareSourceCode">
+  <meta itemprop="creator" content="Jacob Ian Matthews" />
+  <meta itemprop="dateCreated" [content]="getDateStartMs()" />
   <div class="icon">
     <ng-container *ngIf="getIconUrl() !== null; else default">
-      <img [src]="getIconUrl()" [alt]="getName()">
+      <img itemprop="image" [src]="getIconUrl()" [alt]="getName()">
     </ng-container>
     <ng-template #default>
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <svg itemprop="image" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
         <path
           d="M12.09 2.91C10.08.9 7.07.49 4.65 1.67L8.28 5.3c.39.39.39 1.02 0 1.41L6.69 8.3c-.39.4-1.02.4-1.41 0L1.65 4.67C.48 7.1.89 10.09 2.9 12.1c1.86 1.86 4.58 2.35 6.89 1.48l7.96 7.96c1.03 1.03 2.69 1.03 3.71 0 1.03-1.03 1.03-2.69 0-3.71L13.54 9.9c.92-2.34.44-5.1-1.45-6.99z" />
       </svg>
@@ -12,7 +14,7 @@
   </div>
   <div class="details">
     <div class="name-status">
-      <div class="name">{{getName()}}</div>
+      <div class="name" itemprop="name">{{getName()}}</div>
       <div class="status" [class]="getStatus()">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <g id="check_circle_black_24dp 1">
@@ -25,7 +27,7 @@
         {{getStatus()}}
       </div>
     </div>
-    <div class="description">{{getDescription()}}</div>
+    <div class="description" itemprop="abstract">{{getDescription()}}</div>
     <div class="technologies">
       <div class="technology" *ngFor="let technology of getTechnologies()">
         {{technology}}

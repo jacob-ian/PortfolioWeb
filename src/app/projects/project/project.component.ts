@@ -69,6 +69,14 @@ export class ProjectComponent implements OnInit {
     this.isLinksExpanded = show;
   }
 
+  public getDateStartMs(): number {
+    try {
+      return this.project.getDateStartMs();
+    } catch (error) {
+      this.logger.error(error);
+    }
+  }
+
   /**
    * TESTING ONLY
    */
