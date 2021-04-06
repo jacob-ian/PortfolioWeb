@@ -23,6 +23,9 @@ describe('FooterComponent', () => {
   });
 
   it('Should return the current year.', () => {
+    jasmine.clock().install();
+    jasmine.clock().mockDate(new Date('01 Jan, 2021'));
     expect(component.getYear()).toBe(2021);
+    jasmine.clock().uninstall();
   });
 });

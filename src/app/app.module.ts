@@ -16,7 +16,6 @@ import { NavItemComponent } from './window/navigation-bar/nav-item/nav-item.comp
 import { ContentBoxComponent } from './window/content-box/content-box.component';
 import { FooterComponent } from './window/footer/footer.component';
 import { PrivacyComponent } from './privacy/privacy.component';
-import { TermsComponent } from './terms/terms.component';
 import { DisplayButtonComponent } from './home/display-button/display-button.component';
 import { FlexContainerComponent } from './window/flex-container/flex-container.component';
 import { SocialLinksComponent } from './window/social-links/social-links.component';
@@ -45,7 +44,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ContentBoxComponent,
     FooterComponent,
     PrivacyComponent,
-    TermsComponent,
     DisplayButtonComponent,
     FlexContainerComponent,
     SocialLinksComponent,

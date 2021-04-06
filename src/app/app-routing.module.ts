@@ -5,7 +5,6 @@ import { AboutComponent } from './about/about.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { PrivacyComponent } from './privacy/privacy.component';
-import { TermsComponent } from './terms/terms.component';
 
 export const routes: Routes = [
   {
@@ -117,34 +116,6 @@ export const routes: Routes = [
           content: 'https://jacobianmatthews.com/privacy',
         },
         { name: 'title', content: 'Privacy Policy | Jacob Ian Matthews' },
-      ],
-    },
-  },
-  {
-    path: 'terms',
-    component: TermsComponent,
-    data: {
-      title: 'Terms and Conditions | Jacob Ian Matthews',
-      meta: [
-        {
-          name: 'description',
-          content: 'The Terms and Conditions of use of jacobianmatthews.com',
-        },
-      ],
-      og: [
-        {
-          name: 'image',
-          content: 'https://jacobianmatthews.com/assets/icons/icon-512x512.png',
-        },
-        {
-          name: 'type',
-          content: 'website',
-        },
-        {
-          name: 'url',
-          content: 'https://jacobianmatthews.com/terms',
-        },
-        { name: 'title', content: 'Terms and Conditions | Jacob Ian Matthews' },
       ],
     },
   },
