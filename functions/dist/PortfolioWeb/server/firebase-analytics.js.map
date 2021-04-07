@@ -1,0 +1,1 @@
+{"version":3,"sources":["./node_modules/firebase/analytics/dist/index.cjs.js"],"names":[],"mappings":";;;;;;;;;;;AAAa;;AAEb,mBAAO,CAAC,iCAAqB;;AAE7B","file":"firebase-analytics.js","sourcesContent":["'use strict';\n\nrequire('@firebase/analytics');\n\n//# sourceMappingURL=index.cjs.js.map\n"],"sourceRoot":"webpack:///"}

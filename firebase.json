@@ -2,7 +2,7 @@
   "hosting": [
     {
       "target": "PortfolioWeb",
-      "public": "dist/PortfolioWeb/dist/PortfolioWeb/browser",
+      "public": "functions/dist/PortfolioWeb/browser",
       "ignore": ["**/.*"],
       "headers": [
         {
@@ -24,13 +24,12 @@
     }
   ],
   "functions": {
-    "source": "dist/PortfolioWeb"
+    "source": "functions/dist/PortfolioWeb",
+    "predeploy": "npm --prefix functions run build"
   },
-
   "firestore": {
     "rules": "firestore.rules"
   },
-
   "emulators": {
     "firestore": {
       "port": 8080
