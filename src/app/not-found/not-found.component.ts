@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-not-found',
@@ -7,7 +9,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./not-found.component.sass'],
 })
 export class NotFoundComponent implements OnInit {
-  private badRequest: string;
+  private badRequest: Observable<string>;
 
   constructor(private route: ActivatedRoute) {}
 
@@ -15,12 +17,14 @@ export class NotFoundComponent implements OnInit {
     this.badRequest = this.getBadRequestFromRoute();
   }
 
-  private getBadRequestFromRoute(): string {
-    let routeSnapshot = this.route.snapshot;
-    return routeSnapshot.url.join('/');
+  private getBadRequestFromRoute(): Observable<string> {
+    let routeSnapshot = this.route.url.pipe(
+      map((segment) => segment.join('/'))
+    );
+    return routeSnapshot;
   }
 
-  public getBadRequest(): string {
+  public getBadRequest(): Observable<string> {
     return this.badRequest;
   }
 }
