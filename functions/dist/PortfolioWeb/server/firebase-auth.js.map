@@ -1,1 +1,0 @@
-{"version":3,"sources":["./node_modules/firebase/auth/dist/index.cjs.js"],"names":[],"mappings":";;;;;;;;;;;AAAa;;AAEb,mBAAO,CAAC,4BAAgB;;AAExB","file":"firebase-auth.js","sourcesContent":["'use strict';\n\nrequire('@firebase/auth');\n\n//# sourceMappingURL=index.cjs.js.map\n"],"sourceRoot":"webpack:///"}
