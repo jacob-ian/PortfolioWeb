@@ -2,7 +2,7 @@
   "hosting": [
     {
       "target": "PortfolioWeb",
-      "public": "functions/dist/PortfolioWeb/browser",
+      "public": "dist/PortfolioWeb/browser",
       "ignore": ["**/.*"],
       "headers": [
         {
@@ -24,8 +24,8 @@
     }
   ],
   "functions": {
-    "source": "functions/dist/PortfolioWeb",
-    "predeploy": "npm --prefix functions run build"
+    "source": "dist/PortfolioWeb",
+    "predeploy": "npm run build"
   },
   "firestore": {
     "rules": "firestore.rules"
