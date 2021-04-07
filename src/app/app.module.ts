@@ -21,7 +21,6 @@ import { FlexContainerComponent } from './window/flex-container/flex-container.c
 import { SocialLinksComponent } from './window/social-links/social-links.component';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
 import { environment } from 'src/environments/environment';
 import { QualificationComponent } from './about/qualification/qualification.component';
 import { ProjectComponent } from './projects/project/project.component';
@@ -59,7 +58,6 @@ import { ButtonExpandComponent } from './core/button-expand/button-expand.compon
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    AngularFireAnalyticsModule,
   ],
   providers: [
     Meta,

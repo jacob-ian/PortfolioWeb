@@ -1,0 +1,25 @@
+:host
+  display: flex
+  flex: 1
+  flex-direction: column
+
+h1
+  margin-top: 0
+  margin-bottom: 10px
+
+.row
+  align-items: center
+  justify-content: center
+
+.go-back
+  margin-top: 15px
+  font-size: 1.2rem
+  font-weight: 700
+  cursor: pointer
+
+@media screen and ( max-width: 650px )
+  .row
+    flex-direction: column
+
+    p
+      text-align: center
