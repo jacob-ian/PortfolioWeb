@@ -24,8 +24,7 @@
     }
   ],
   "functions": {
-    "source": "dist/PortfolioWeb",
-    "predeploy": "npm run build"
+    "source": "dist/PortfolioWeb"
   },
   "firestore": {
     "rules": "firestore.rules"
