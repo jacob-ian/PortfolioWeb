@@ -4,15 +4,17 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build && npm --prefix functions run build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "dev:ssr": "ng run PortfolioWeb:serve-ssr",
-    "serve:ssr": "node dist/PortfolioWeb/server/main.js",
+    "serve:ssr": "node functions/dist/PortfolioWeb/server/main.js",
     "build:ssr": "ng build --prod && ng run PortfolioWeb:server:production",
+    "build:all": "npm run build && ng run PortfolioWeb:server",
+    "build:prod": "ng build --prod && ng run PortfolioWeb:server:production && npm --prefix functions run build",
     "prerender": "ng run PortfolioWeb:prerender",
-    "emulate": "firebase emulators:start --only firestore --export-on-exit=./data --import=./data"
+    "emulate": "firebase emulators:start --export-on-exit=./data --import=./data"
   },
   "private": true,
   "dependencies": {

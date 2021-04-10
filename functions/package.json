@@ -1,7 +1,7 @@
 {
   "name": "functions",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc -p tsconfig.build.json",
     "test": "mocha --require ts-node/register --watch --watch-files src, src/**/*.spec.ts",
     "serve": "npm run build && firebase emulators:start --only functions",
     "shell": "npm run build && firebase functions:shell",
@@ -12,7 +12,7 @@
   "engines": {
     "node": "12"
   },
-  "main": "lib/index.js",
+  "main": "dist/PortfolioWeb/index.js",
   "dependencies": {
     "firebase-admin": "^9.2.0",
     "firebase-backend": "^0.1.5",
@@ -24,7 +24,6 @@
     "@types/sinon": "^9.0.11",
     "chai": "^4.3.4",
     "firebase-functions-test": "^0.2.3",
-    "jasmine": "^3.7.0",
     "mocha": "^8.3.2",
     "sinon": "^10.0.1",
     "ts-node": "^9.1.1",
