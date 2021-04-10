@@ -12,10 +12,10 @@ jobs:
       - name: Setup Node.js environment
         uses: actions/setup-node@master
         with:
-          node_version: '10.x'
-      - name: Install the Release Dependencies
-        run: npm run release-install
-      - name: Run Semantic Release
+          node_version: '12.x'
+      - name: Install the Semantic Release Dependencies
+        run: npm install -D semantic-release @semantic-release/git @semantic-release/npm last-release-git
+      - name: Create the Release
         run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
