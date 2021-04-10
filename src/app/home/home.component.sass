@@ -1,0 +1,93 @@
+:host
+  flex: 1
+  display: flex
+  flex-direction: column
+  background-color: var(--color-primary)
+  font-size: 1.2rem
+
+.row 
+  flex: 1
+  display: flex
+  flex-direction: row
+  align-items: center
+  justify-content: center
+  
+.item
+  flex: 1
+  flex-direction: row
+  display: flex
+  align-items: center
+  justify-content: center
+
+  img
+    height: 200px
+    filter: brightness(10)
+
+.larger
+  flex: 2 
+
+.top-room
+  margin-top: 50px
+
+.display
+  font-family: var(--font-family-display)
+  font-size: 3rem
+
+.bg-secondary
+  background-color: var(--color-secondary)
+
+.bg-tertiary
+  background-color: var(--color-tertiary)
+
+.accent
+  color: var(--font-color-accent)
+  
+.first
+  margin-bottom: 150px
+  margin-left: 20px
+  
+  a
+    color: var(--font-color-default)
+    font-weight: 300
+
+.third
+  margin-top: 60px
+  margin-right: 20px
+
+  a
+    font-weight: 300
+
+.small-font
+  font-size: 0.9rem
+
+@media screen and ( max-width: 750px )
+  .row
+    flex-direction: column
+
+  .item
+    flex-direction: column
+
+  .top-room
+    margin-top: 30px
+
+  .larger
+    flex: 1
+
+  .first
+    margin-left: 0
+    margin-bottom: 65px
+
+  .third
+    margin-right: 0
+    margin-top: 25px
+    font-size: 1.4rem
+
+@media screen and ( max-width: 250px )
+  :host
+    font-size: 1rem
+
+  .display
+    font-size: 2.5rem
+  
+  .third
+    font-size: 1.2rem

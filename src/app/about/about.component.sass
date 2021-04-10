@@ -1,0 +1,55 @@
+:host
+  flex: 1
+  display: flex
+  flex-direction: column
+  
+.row
+  align-items: center
+  justify-content: flex-start
+  margin-bottom: 15px
+
+.item
+  text-align: center
+
+.item:last-child
+  margin-right: 0
+
+.profile-image
+  width: 200px
+  height: 200px
+  border-radius: 50%
+  border: var(--font-color-default) 10px solid
+
+.larger
+  flex: 2
+  margin-right: 50px
+
+.hide
+  display: none
+
+.education-container
+  position: relative
+  padding: 20px 0
+
+  .education-timeline
+    height: 100%
+    position: absolute
+    z-index: -10
+    width: 2px
+    background-color: var(--font-color-subtitle)
+    border-radius: 100px
+    top: 0
+    left: 50%
+    transform: translateX(-50%)
+
+@media screen and ( max-width: 650px )
+  .row
+    flex-direction: column
+    margin-bottom: 20px
+  
+    .item
+      margin-right: 0
+
+    .item:last-child
+      margin-bottom: 0
+

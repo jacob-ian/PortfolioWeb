@@ -1,0 +1,45 @@
+:host
+  display: flex
+  flex-direction: row
+  
+button
+  flex: 1
+  padding: 12px 15px
+  font-size: 0.9rem
+  transition: all ease-in-out 200ms
+  cursor: pointer
+  display: flex
+  flex-direction: row
+  align-items: center
+  justify-content: flex-start
+  background: transparent
+  color: var(--font-color-default)
+  border: none
+  outline: none
+  text-transform: capitalize
+
+  .content
+    flex: 1
+    white-space: nowrap
+    text-align: left
+
+  svg
+    flex: none
+    margin-right: 10px
+    width: 24px
+    height: 24px
+    path
+      fill: var(--font-color-default)
+
+    #check
+      display: none
+
+  .checked
+
+    #check
+      display: block
+      
+
+button:hover
+  background-color: rgba(255,255,255,0.2)
+

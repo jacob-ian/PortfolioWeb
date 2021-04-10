@@ -1,0 +1,35 @@
+:host
+  flex-grow: 1
+  flex-basis: 90px
+  min-height: 50px
+  min-width: 90px
+  max-width: 200px
+  padding: 15px 0 
+  display: flex
+  flex-direction: column
+  justify-content: center
+  
+li
+  list-style: none
+  text-transform: lowercase
+  font-size: 0.9rem
+
+  a
+    display: flex
+    flex-direction: row
+    align-items: center
+    justify-content: center
+    text-decoration: none
+    color: var(--font-color-default)
+    transition: var(--default-transition)
+    font-weight: 300
+    -webkit-tap-highlight-color: transparent
+
+    img
+      height: 40px
+
+  a:hover
+    color: var(--font-color-accent)
+
+  .activated
+    color: var(--font-color-accent)

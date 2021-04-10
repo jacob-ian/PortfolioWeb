@@ -1,0 +1,32 @@
+<div class="date top">{{getDateEnd()}}</div>
+<div class="qualification-container">
+  <div class="qualification-image" itemprop="alumniOf" itemscope
+    [attr.itemtype]="'https://schema.org/'+ getInstitutionType()">
+    <meta itemprop="name" [content]="getInstitutionName()" />
+    <meta itemprop="location" [content]="getInstitutionLocation()" />
+    <a [href]="getInstitutionUrl()" target="_blank">
+      <img [src]="getImage()" [alt]="getInstitutionName()" itemprop="logo" />
+    </a>
+    <meta itemprop="url" [content]="getInstitutionUrl()" />
+  </div>
+  <div class="qualification-details">
+    <div class="institution">
+      <a class="institution-name" [href]="getInstitutionUrl()" target="_blank">{{getInstitutionName()}},
+        {{getInstitutionLocation()}}</a>
+    </div>
+
+    <div class="qualification" itemprop="hasCredential" itemscope
+      itemtype="https://schema.org/EducationalOccupationalCredential">
+      <div class="qualification-name">
+        <a [href]="getUrl()" target="_blank"><span itemprop="name">{{getName()}}</span></a>
+        <meta itemprop="url" [content]="getUrl()" />
+      </div>
+      <meta itemprop="credentialCategory" [content]="getCredentialCategory()" />
+      <meta itemprop="educationalLevel" [content]="getEducationLevel()" />
+      <div *ngIf="getDescription() as description" class="qualification-description"><span
+          itemprop="comment">{{description}}</span></div>
+    </div>
+
+  </div>
+</div>
+<div class="date bottom">{{getDateStart()}}</div>

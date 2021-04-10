@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "outDir": "dist/PortfolioWeb",
+    "sourceMap": true,
+    "strict": true,
+    "target": "es2017",
+    "baseUrl": "./",
+    "paths": {
+      "@shared/*": ["../shared/*"]
+    },
+    "types": []
+  },
+  "compileOnSave": true,
+  "include": [
+    "src"
+  ],
+}

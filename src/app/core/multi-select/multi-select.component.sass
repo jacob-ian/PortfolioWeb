@@ -1,0 +1,57 @@
+:host
+  position: relative
+  
+button
+  display: flex
+  flex-direction: row
+  justify-content: space-between
+  align-items: center
+  background: transparent
+  border-radius: 10px
+  border: 1px solid var(--font-color-default)
+  padding: 5px 10px
+  min-width: 175px
+  cursor: pointer
+  transition: all ease-in-out 200ms
+
+  .selected-options
+    text-transform: capitalize
+    color: var(--font-color-default)
+    font-family: var(--font-family-default)
+    transition: all ease-in-out 200ms
+
+  svg
+    height: 24px
+    width: 24px
+
+    path
+      transition: all ease-in-out 200ms
+      fill: var(--font-color-default)
+
+button:focus
+  -webkit-tap-highlight-color: transparent
+  outline: none
+
+button:hover
+  border-color: var(--font-color-subtitle)
+
+  .selected-options
+    color: var(--font-color-subtitle)
+
+  svg
+    path
+      fill: var(--font-color-subtitle)
+
+  
+.options
+  position: absolute
+  top: 0
+  left: 0
+  z-index: 1000
+  display: flex
+  flex-direction: column
+  background-color: var(--color-tertiary)
+  border-radius: 20px
+  overflow-x: hidden
+  overflow-y: scroll
+  max-height: 200px
