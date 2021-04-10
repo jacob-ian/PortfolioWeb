@@ -3,17 +3,18 @@
     "module": "commonjs",
     "noImplicitReturns": true,
     "noUnusedLocals": true,
-    "outDir": "../dist/PortfolioWeb",
+    "outDir": "dist/PortfolioWeb",
     "sourceMap": true,
     "strict": true,
     "target": "es2017",
     "baseUrl": "./",
     "paths": {
-      "@app/*": ["../src/app/*"]
-    }
+      "@shared/*": ["../shared/*"]
+    },
+    "types": []
   },
   "compileOnSave": true,
   "include": [
     "src"
-  ]
+  ],
 }
