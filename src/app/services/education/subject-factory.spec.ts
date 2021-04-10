@@ -1,20 +1,21 @@
 import { Observable, of } from 'rxjs';
-import { Subject, SubjectDocument } from './subject';
+import { Subject } from './subject';
+import { Subjects } from '@shared/education';
 import { SubjectFactory } from './subject-factory';
 
-const TEST_DOC_1: SubjectDocument = {
+const TEST_DOC_1: Subjects.Document = {
   id: '1',
   name: 'Test 1',
   handbookUrl: 'test.com',
 };
 
-const TEST_DOC_2: SubjectDocument = {
+const TEST_DOC_2: Subjects.Document = {
   id: '2',
   name: 'Test 2',
   handbookUrl: 'test2.com',
 };
 
-export const TEST_SUBJECT_DOCS_1: Observable<SubjectDocument[]> = of([
+export const TEST_SUBJECT_DOCS_1: Observable<Subjects.Document[]> = of([
   TEST_DOC_1,
   TEST_DOC_2,
 ]);

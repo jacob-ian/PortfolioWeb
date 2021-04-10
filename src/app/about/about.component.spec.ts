@@ -1,7 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
-import { DatabaseService } from '../services/database/database.service';
-import { MockDatabaseService } from '../services/database/mock-database-service';
 import { EducationService } from '../services/education/education.service';
 
 import { AboutComponent } from './about.component';

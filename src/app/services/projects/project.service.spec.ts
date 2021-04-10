@@ -2,11 +2,11 @@ import { TestBed } from '@angular/core/testing';
 import { Observable } from 'rxjs';
 import { DatabaseService } from '../database/database.service';
 import { MockDatabaseService } from '../database/mock-database-service';
-import { Project, ProjectDocument } from './project';
+import { Project } from './project';
+import { Projects, Technologies } from '@shared/projects';
 import { ProjectService } from './project.service';
-import { TechnologyDocument } from './technology';
 
-const TEST_PROJECT_DOCS: ProjectDocument[] = [
+const TEST_PROJECT_DOCS: Projects.Document[] = [
   {
     id: '1',
     name: 'website1',
@@ -45,7 +45,7 @@ const TEST_PROJECT_DOCS: ProjectDocument[] = [
   },
 ];
 
-const TEST_TECH_DOCS: TechnologyDocument[] = [
+const TEST_TECH_DOCS: Technologies.Document[] = [
   { id: '1', name: 'angular' },
   { id: '2', name: 'react' },
 ];

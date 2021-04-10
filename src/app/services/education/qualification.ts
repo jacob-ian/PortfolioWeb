@@ -5,26 +5,7 @@ import { Observable } from 'rxjs';
 import { SubjectFactory } from './subject-factory';
 import { Utils } from '../utils';
 import { DatabaseService } from '../database/database.service';
-
-export interface QualificationDocument {
-  id: string;
-  name: string;
-  description: string;
-  dateStart: number;
-  dateEnd: number;
-  handbookUrl: string;
-  institution: Institution;
-  credentialCategory: 'degree' | 'diploma' | 'certificate';
-  educationLevel: 'beginner' | 'intermediate' | 'advanced';
-}
-
-export interface Institution {
-  name: string;
-  location: string;
-  url: string;
-  imageUrl: string;
-  type: 'CollegeOrUniversity' | 'HighSchool' | 'MiddleSchool';
-}
+import { Qualifications } from '@shared/education';
 
 export class Qualification extends DatabaseObject {
   private id: string;
@@ -33,16 +14,16 @@ export class Qualification extends DatabaseObject {
   private dateStart: number;
   private dateEnd: number;
   private handbookUrl: string;
-  private institution: Institution;
+  private institution: Qualifications.Institution;
   private credentialCategory: 'degree' | 'diploma' | 'certificate';
   private educationLevel: 'beginner' | 'intermediate' | 'advanced';
 
   constructor(database: DatabaseService);
   constructor(database: DatabaseService, documentId: string);
-  constructor(database: DatabaseService, document: QualificationDocument);
+  constructor(database: DatabaseService, document: Qualifications.Document);
   constructor(
     database: DatabaseService,
-    idOrDocument?: string | QualificationDocument
+    idOrDocument?: string | Qualifications.Document
   ) {
     super(database);
 
@@ -81,13 +62,13 @@ export class Qualification extends DatabaseObject {
     }
   }
 
-  private inputIsId(input: string | QualificationDocument): input is string {
+  private inputIsId(input: string | Qualifications.Document): input is string {
     return typeof input === 'string';
   }
 
   private inputIsQualificationDoc(
-    input: QualificationDocument
-  ): input is QualificationDocument {
+    input: Qualifications.Document
+  ): input is Qualifications.Document {
     return !!(
       input.id &&
       input.name &&
@@ -186,7 +167,7 @@ export class Qualification extends DatabaseObject {
     );
   }
 
-  public getInstitution(): Institution {
+  public getInstitution(): Qualifications.Institution {
     if (this.institution) {
       return this.institution;
     }

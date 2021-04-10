@@ -1,6 +1,7 @@
-import { Project, ProjectDocument } from './project';
+import { Project } from './project';
+import { Projects } from '@shared/projects';
 
-const TEST_DOCUMENT_FINISHED: ProjectDocument = {
+const TEST_DOCUMENT_FINISHED: Projects.Document = {
   id: '1',
   name: 'website',
   description: 'a website',
@@ -20,7 +21,7 @@ const TEST_DOCUMENT_FINISHED: ProjectDocument = {
   dateEnd: new Date('01 Mar 2021').getTime(),
 };
 
-const TEST_DOCUMENT_ONGOING: ProjectDocument = {
+const TEST_DOCUMENT_ONGOING: Projects.Document = {
   id: '2',
   name: 'website2',
   description: 'another website',
@@ -39,7 +40,7 @@ const TEST_DOCUMENT_ONGOING: ProjectDocument = {
   status: 'ongoing',
 };
 
-const TEST_DOCUMENT_WITH_ICON: ProjectDocument = {
+const TEST_DOCUMENT_WITH_ICON: Projects.Document = {
   ...TEST_DOCUMENT_ONGOING,
   iconUrl: 'https://fakeicon.com/icon.png',
 };

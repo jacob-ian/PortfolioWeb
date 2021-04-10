@@ -1,12 +1,7 @@
 import { DatabaseObject } from '../database/database-object';
 import { DatabaseService } from '../database/database.service';
 import { EducationException } from './education-exception';
-
-export interface SubjectDocument {
-  id: string;
-  name: string;
-  handbookUrl: string;
-}
+import { Subjects } from '@shared/education';
 
 export class Subject extends DatabaseObject {
   private id: string;
@@ -14,8 +9,8 @@ export class Subject extends DatabaseObject {
   private handbookUrl: string;
 
   constructor(database: DatabaseService);
-  constructor(database: DatabaseService, document: SubjectDocument);
-  constructor(database: DatabaseService, document?: SubjectDocument) {
+  constructor(database: DatabaseService, document: Subjects.Document);
+  constructor(database: DatabaseService, document?: Subjects.Document) {
     super(database);
     if (document) {
       this.id = document.id;

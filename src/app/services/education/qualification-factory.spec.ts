@@ -1,9 +1,10 @@
 import { Observable, of } from 'rxjs';
 import { MockDatabaseService } from '../database/mock-database-service';
-import { Qualification, QualificationDocument } from './qualification';
+import { Qualifications } from '@shared/education';
+import { Qualification } from './qualification';
 import { QualificationFactory } from './qualification-factory';
 
-const TEST_DOC_1: QualificationDocument = {
+const TEST_DOC_1: Qualifications.Document = {
   id: '1',
   name: 'Fake Degree',
   description: 'A Minor in Testing',
@@ -21,7 +22,7 @@ const TEST_DOC_1: QualificationDocument = {
   educationLevel: 'intermediate',
 };
 
-const TEST_DOC_2: QualificationDocument = {
+const TEST_DOC_2: Qualifications.Document = {
   id: '2',
   name: 'Fake Degree2',
   description: 'A Minor in Testing2',
@@ -39,7 +40,7 @@ const TEST_DOC_2: QualificationDocument = {
   educationLevel: 'intermediate',
 };
 
-const TEST_QUALIFICATION_DOCS: Observable<QualificationDocument[]> = of([
+const TEST_QUALIFICATION_DOCS: Observable<Qualifications.Document[]> = of([
   TEST_DOC_1,
   TEST_DOC_2,
 ]);

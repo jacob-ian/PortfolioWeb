@@ -1,10 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { Project, ProjectDocument } from 'src/app/services/projects/project';
+import { Projects } from '@shared/projects';
+import { Project } from 'src/app/services/projects/project';
 
 import { ProjectComponent } from './project.component';
 
-const TEST_PROJECT_DOC_ONGOING: ProjectDocument = {
+const TEST_PROJECT_DOC_ONGOING: Projects.Document = {
   id: '1',
   name: 'website1',
   description: 'another website',
@@ -23,7 +24,7 @@ const TEST_PROJECT_DOC_ONGOING: ProjectDocument = {
   status: 'ongoing',
 };
 
-const TEST_PROJECT_DOC_FINISHED: ProjectDocument = {
+const TEST_PROJECT_DOC_FINISHED: Projects.Document = {
   id: '2',
   name: 'website2',
   description: 'another website',

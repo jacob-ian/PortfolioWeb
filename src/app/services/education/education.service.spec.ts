@@ -3,9 +3,10 @@ import { Observable } from 'rxjs';
 import { DatabaseService } from '../database/database.service';
 import { MockDatabaseService } from '../database/mock-database-service';
 import { EducationService } from './education.service';
-import { Qualification, QualificationDocument } from './qualification';
+import { Qualification } from './qualification';
+import { Qualifications } from '@shared/education';
 
-const TEST_QUALIFICATION_DOCS: QualificationDocument[] = [
+const TEST_QUALIFICATION_DOCS: Qualifications.Document[] = [
   {
     id: '1',
     name: 'Fake Degree',

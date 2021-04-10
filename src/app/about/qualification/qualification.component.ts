@@ -1,9 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import {
-  Institution,
-  Qualification,
-} from 'src/app/services/education/qualification';
+import { Qualification } from 'src/app/services/education/qualification';
+import { Qualifications } from '@shared/education';
 import { Subject } from 'src/app/services/education/subject';
 import { Exception } from 'src/app/services/exception';
 import { LoggerService } from 'src/app/services/logger.service';
@@ -45,7 +43,7 @@ export class QualificationComponent implements OnInit {
     }
   }
 
-  public getInstitution(): Institution {
+  public getInstitution(): Qualifications.Institution {
     try {
       return this.qualification.getInstitution();
     } catch (error) {

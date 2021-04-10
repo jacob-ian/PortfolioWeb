@@ -1,13 +1,14 @@
 import { Observable, of } from 'rxjs';
-import { Technology, TechnologyDocument } from './technology';
+import { Technologies } from '@shared/projects';
+import { Technology } from './technology';
 import { TechnologyFactory } from './technology-factory';
 
-const TEST_TECH_DOCS: TechnologyDocument[] = [
+const TEST_TECH_DOCS: Technologies.Document[] = [
   { id: '1', name: 'angular' },
   { id: '2', name: 'react' },
 ];
 
-const TEST_EMPTY_DOCS: TechnologyDocument[] = [];
+const TEST_EMPTY_DOCS: Technologies.Document[] = [];
 
 describe('TechnologyFactory', () => {
   let factory: TechnologyFactory;

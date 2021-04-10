@@ -1,7 +1,8 @@
 import { MockDatabaseService } from '../database/mock-database-service';
-import { Subject, SubjectDocument } from './subject';
+import { Subjects } from '@shared/education';
+import { Subject } from './subject';
 
-export const TEST_SUBJECT_DOCUMENT: SubjectDocument = {
+export const TEST_SUBJECT_DOCUMENT: Subjects.Document = {
   id: 'test_id',
   name: 'Test Subject',
   handbookUrl: 'google.com',

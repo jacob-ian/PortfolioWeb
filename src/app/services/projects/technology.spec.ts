@@ -1,7 +1,8 @@
 import { MockDatabaseService } from '../database/mock-database-service';
-import { Technology, TechnologyDocument } from './technology';
+import { Technologies } from '@shared/projects';
+import { Technology } from './technology';
 
-const TEST_TECH_1: TechnologyDocument = {
+const TEST_TECH_1: Technologies.Document = {
   id: '1',
   name: 'angular',
 };

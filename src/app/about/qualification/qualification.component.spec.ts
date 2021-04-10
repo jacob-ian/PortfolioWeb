@@ -1,14 +1,12 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import {
-  Qualification,
-  QualificationDocument,
-} from 'src/app/services/education/qualification';
+import { Qualifications } from '@shared/education';
+import { Qualification } from 'src/app/services/education/qualification';
 
 import { QualificationComponent } from './qualification.component';
 
-const TEST_DOCUMENT: QualificationDocument = {
+const TEST_DOCUMENT: Qualifications.Document = {
   id: '1',
   name: 'Fake Degree',
   description: 'A Minor in Testing',

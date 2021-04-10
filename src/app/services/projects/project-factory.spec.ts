@@ -1,8 +1,9 @@
 import { Observable, of } from 'rxjs';
-import { Project, ProjectDocument } from './project';
+import { Projects } from '@shared/projects';
+import { Project } from './project';
 import { ProjectFactory } from './project-factory';
 
-const TEST_PROJECT_DOCS: ProjectDocument[] = [
+const TEST_PROJECT_DOCS: Projects.Document[] = [
   {
     id: '1',
     name: 'website1',
@@ -40,7 +41,7 @@ const TEST_PROJECT_DOCS: ProjectDocument[] = [
     status: 'ongoing',
   },
 ];
-const TEST_EMPTY_DOCS: ProjectDocument[] = [];
+const TEST_EMPTY_DOCS: Projects.Document[] = [];
 
 describe('ProjectFactory', () => {
   let factory: ProjectFactory;

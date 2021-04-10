@@ -1,4 +1,3 @@
-import { AngularFirestore } from '@angular/fire/firestore';
 import { DatabaseObject } from '../database/database-object';
 import { DatabaseObjectFactory } from '../database/database-object-factory';
 import { DatabaseService } from '../database/database.service';

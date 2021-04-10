@@ -1,13 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Observable, of } from 'rxjs';
-import { Project, ProjectDocument } from '../services/projects/project';
+import { Projects } from '@shared/projects';
+import { Project } from '../services/projects/project';
 import { ProjectService } from '../services/projects/project.service';
 import { ProjectComponent } from './project/project.component';
 import { ProjectsFilterComponent } from './projects-filter/projects-filter.component';
 import { ProjectsComponent } from './projects.component';
 
-const TEST_PROJECT_DOC_1: ProjectDocument = {
+const TEST_PROJECT_DOC_1: Projects.Document = {
   id: '1',
   name: 'website1',
   description: 'another website',
@@ -26,7 +27,7 @@ const TEST_PROJECT_DOC_1: ProjectDocument = {
   status: 'ongoing',
 };
 
-const TEST_PROJECT_DOC_2: ProjectDocument = {
+const TEST_PROJECT_DOC_2: Projects.Document = {
   id: '2',
   name: 'website2',
   description: 'another website',

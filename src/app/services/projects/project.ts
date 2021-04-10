@@ -2,36 +2,20 @@ import { DatabaseObject } from '../database/database-object';
 import { DatabaseService } from '../database/database.service';
 import { Utils } from '../utils';
 import { ProjectException } from './project-exception';
-
-export interface ProjectDocument {
-  id: string;
-  name: string;
-  description: string;
-  technologies: string[];
-  links: ProjectUrl[];
-  dateStart: number;
-  status: 'finished' | 'ongoing';
-  dateEnd?: number;
-  iconUrl?: string;
-}
-
-export interface ProjectUrl {
-  name: string;
-  url: string;
-}
+import { Projects } from '@shared/projects';
 
 export class Project extends DatabaseObject {
   private id: string;
   private name: string;
   private description: string;
   private technologies: string[];
-  private links: ProjectUrl[];
+  private links: Projects.Link[];
   private dateStart: number;
   private status: 'finished' | 'ongoing';
   private dateEnd?: number;
   private iconUrl?: string;
 
-  constructor(database: DatabaseService, document: ProjectDocument) {
+  constructor(database: DatabaseService, document: Projects.Document) {
     super(database);
 
     if (this.documentIsValid) {
@@ -52,7 +36,7 @@ export class Project extends DatabaseObject {
     );
   }
 
-  private documentIsValid(document: ProjectDocument): boolean {
+  private documentIsValid(document: Projects.Document): boolean {
     if (!document) {
       return false;
     }
@@ -108,7 +92,7 @@ export class Project extends DatabaseObject {
     return this.technologies;
   }
 
-  public getLinks(): ProjectUrl[] {
+  public getLinks(): Projects.Link[] {
     if (!this.links) {
       throw new ProjectException(
         'invalid-input',

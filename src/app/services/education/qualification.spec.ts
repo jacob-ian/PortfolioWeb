@@ -1,10 +1,11 @@
 import { Observable } from 'rxjs';
 import { MockDatabaseService } from '../database/mock-database-service';
 import { EducationException } from './education-exception';
-import { Qualification, QualificationDocument } from './qualification';
-import { Subject, SubjectDocument } from './subject';
+import { Qualifications, Subjects } from '@shared/education';
+import { Qualification } from './qualification';
+import { Subject } from './subject';
 
-const TEST_DOCUMENT: QualificationDocument = {
+const TEST_DOCUMENT: Qualifications.Document = {
   id: '1',
   name: 'Fake Degree',
   description: 'A Minor in Testing',
@@ -22,18 +23,18 @@ const TEST_DOCUMENT: QualificationDocument = {
   educationLevel: 'intermediate',
 };
 
-const TEST_DOCUMENT_FUTURE_END: QualificationDocument = {
+const TEST_DOCUMENT_FUTURE_END: Qualifications.Document = {
   ...TEST_DOCUMENT,
   dateEnd: Date.now() + 8.64e7,
 };
 
-const TEST_DOCUMENT_INVALID_DATES: QualificationDocument = {
+const TEST_DOCUMENT_INVALID_DATES: Qualifications.Document = {
   ...TEST_DOCUMENT,
   dateStart: new Date('February 1, 2021').getTime(),
   dateEnd: new Date('January 1, 2021').getTime(),
 };
 
-export const TEST_SUBJECT_DOCS_1: SubjectDocument[] = [
+export const TEST_SUBJECT_DOCS_1: Subjects.Document[] = [
   {
     id: '1',
     name: 'Test 1',

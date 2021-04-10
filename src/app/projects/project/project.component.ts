@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { LoggerService } from 'src/app/services/logger.service';
-import { Project, ProjectUrl } from 'src/app/services/projects/project';
+import { Projects } from '@shared/projects';
+import { Project } from 'src/app/services/projects/project';
 import { ProjectException } from 'src/app/services/projects/project-exception';
 import { environment } from 'src/environments/environment';
 
@@ -25,7 +26,7 @@ export class ProjectComponent implements OnInit {
     }
   }
 
-  public getLinks(): ProjectUrl[] {
+  public getLinks(): Projects.Link[] {
     try {
       return this.project.getLinks();
     } catch (error) {

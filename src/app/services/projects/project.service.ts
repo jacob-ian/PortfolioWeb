@@ -4,9 +4,10 @@ import { map } from 'rxjs/operators';
 import { DatabaseObjectFactory } from '../database/database-object-factory';
 import { DatabaseService } from '../database/database.service';
 import { LoggerService } from '../logger.service';
-import { Project, ProjectDocument } from './project';
+import { Projects, Technologies } from '@shared/projects';
+import { Project } from './project';
 import { ProjectFactory } from './project-factory';
-import { Technology, TechnologyDocument } from './technology';
+import { Technology } from './technology';
 import { TechnologyFactory } from './technology-factory';
 
 @Injectable({
@@ -22,12 +23,12 @@ export class ProjectService {
 
   public getProjects(): Observable<Project[]> {
     this.dbObjectFactory = new ProjectFactory(this.database);
-    let collection = this.database.getCollection<ProjectDocument>('projects');
+    let collection = this.database.getCollection<Projects.Document>('projects');
     return this.createProjectsFromCollection(collection);
   }
 
   private createProjectsFromCollection(
-    collection: Observable<ProjectDocument[]>
+    collection: Observable<Projects.Document[]>
   ): Observable<Project[]> {
     try {
       return this.dbObjectFactory.createFromCollection(
@@ -40,14 +41,14 @@ export class ProjectService {
 
   public getTechnologies(): Observable<string[]> {
     this.dbObjectFactory = new TechnologyFactory(this.database);
-    let collection = this.database.getCollection<TechnologyDocument>(
+    let collection = this.database.getCollection<Technologies.Document>(
       'technologies'
     );
     return this.createTechnologiesFromCollection(collection);
   }
 
   private createTechnologiesFromCollection(
-    collection: Observable<TechnologyDocument[]>
+    collection: Observable<Technologies.Document[]>
   ): Observable<string[]> {
     try {
       let technologies = this.dbObjectFactory.createFromCollection(

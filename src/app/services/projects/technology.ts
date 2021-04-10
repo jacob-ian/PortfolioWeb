@@ -1,17 +1,13 @@
 import { DatabaseObject } from '../database/database-object';
 import { DatabaseService } from '../database/database.service';
 import { ProjectException } from './project-exception';
-
-export interface TechnologyDocument {
-  id: string;
-  name: string;
-}
+import { Technologies } from '@shared/projects';
 
 export class Technology extends DatabaseObject {
   private id: string;
   private name: string;
 
-  constructor(database: DatabaseService, document: TechnologyDocument) {
+  constructor(database: DatabaseService, document: Technologies.Document) {
     super(database);
 
     if (this.isDocument(document)) {
@@ -23,7 +19,7 @@ export class Technology extends DatabaseObject {
     this.id = this.createId();
   }
 
-  private isDocument(doc: TechnologyDocument): doc is TechnologyDocument {
+  private isDocument(doc: Technologies.Document): doc is Technologies.Document {
     if (!doc) {
       return false;
     }
