@@ -28,6 +28,7 @@ import { ProjectsFilterComponent } from './projects/projects-filter/projects-fil
 import { MultiSelectComponent } from './core/multi-select/multi-select.component';
 import { MultiSelectOptionComponent } from './core/multi-select/multi-select-option/multi-select-option.component';
 import { ButtonExpandComponent } from './core/button-expand/button-expand.component';
+import { HomeAnimationComponent } from './home/home-animation/home-animation.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { ButtonExpandComponent } from './core/button-expand/button-expand.compon
     MultiSelectComponent,
     MultiSelectOptionComponent,
     ButtonExpandComponent,
+    HomeAnimationComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

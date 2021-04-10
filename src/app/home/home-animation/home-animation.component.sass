@@ -1,0 +1,53 @@
+:host
+  flex: 1
+
+@keyframes wiggle
+  0%
+    transform: translate(1px, 1px)
+
+  50%
+    transform: translate(-1px, 1px)
+
+
+@keyframes flame1
+  0%
+    opacity: 0.8
+
+  100%
+    opacity: 1
+  
+@keyframes flame2
+  0%
+    opacity: 1
+  100%
+    opacity: 0.8
+
+@keyframes flyby
+  0%
+    transform: translateY(-100px)
+  100%
+    transform: translateY(600px)
+    
+svg
+  height: 400px
+  width: 400px
+
+#rocket
+  animation: wiggle 500ms infinite alternate-reverse
+
+#flame1
+  animation: flame1 400ms ease-in-out infinite alternate-reverse
+
+#flame2
+  animation: flame2 400ms ease-in-out infinite alternate-reverse
+
+#star1, #star2, #star3, #star4, #star5, #star6, #star7, #star8
+  transform: translateY(-100px)
+  animation: flyby 1.5s
+  animation-timing-function: linear
+  animation-delay: calc(var(--order) * 2s)
+
+@media only screen and ( max-width: 1000px  )
+  svg
+    width: 250px
+    height: 250px
