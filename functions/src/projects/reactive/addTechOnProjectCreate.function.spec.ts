@@ -1,3 +1,4 @@
+import { describe, beforeEach, afterEach, it } from 'mocha';
 import { expect } from 'chai';
 import { stub } from 'sinon';
 import * as testing from 'firebase-functions-test';
@@ -5,9 +6,9 @@ import * as admin from 'firebase-admin';
 import { addTechOnProjectCreate } from './addTechOnProjectCreate.function';
 import { FeaturesList } from 'firebase-functions-test/lib/features';
 import { WrappedFunction } from 'firebase-functions-test/lib/main';
-import { ProjectDocument } from '@app/services/projects/project';
+import { Projects } from '@shared/projects';
 
-const TEST_PROJECT_DOC_1: ProjectDocument = {
+const TEST_PROJECT_DOC_1: Projects.Document = {
   id: '1',
   name: 'Test1',
   technologies: ['angular', 'react', 'typescript'],

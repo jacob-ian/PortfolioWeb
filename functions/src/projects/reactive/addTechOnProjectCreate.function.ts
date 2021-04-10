@@ -1,7 +1,6 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
-import { ProjectDocument } from '@app/services/projects/project';
-import { TechnologyDocument } from '@app/services/projects/technology';
+import { Projects, Technologies } from '@shared/projects';
 
 admin.initializeApp();
 const firestore = admin.firestore();
@@ -12,7 +11,7 @@ type DocumentCollection = FirebaseFirestore.QuerySnapshot<FirebaseFirestore.Docu
 export const addTechOnProjectCreate = functions.firestore
   .document('projects/{projectId}')
   .onCreate((snap) => {
-    let project = <ProjectDocument>snap.data();
+    let project = <Projects.Document>snap.data();
     let technologies = project.technologies;
     return updateTechnologiesCollection(technologies);
   });
@@ -57,7 +56,7 @@ async function addTechnology(technology: string): Promise<void> {
   return await saveToFirestore({ id, name: technology });
 }
 
-async function saveToFirestore(document: TechnologyDocument): Promise<void> {
+async function saveToFirestore(document: Technologies.Document): Promise<void> {
   return technologiesCollection
     .doc(document.id)
     .set(document)
