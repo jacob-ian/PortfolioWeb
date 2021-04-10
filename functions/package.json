@@ -3,6 +3,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "test": "mocha --require ts-node/register --watch --watch-files src, src/**/*.spec.ts",
+    "test:ci": "mocha --require ts-node/register src/**/*.spec.ts",
     "serve": "npm run build && firebase emulators:start --only functions",
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
