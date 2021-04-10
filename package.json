@@ -7,7 +7,7 @@
     "build": "ng build && npm --prefix functions run build",
     "test:ci": "ng test --browsers=ChromeHeadless --watch=false --code-coverage && npm run test:functions",
     "test:angular": "ng test",
-    "test:functions": "npm --prefix run test",
+    "test:functions": "npm --prefix functions run test",
     "install:ci": "npm ci && npm --prefix functions ci",
     "lint": "ng lint",
     "e2e": "ng e2e",
