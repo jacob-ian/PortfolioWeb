@@ -12,12 +12,8 @@ jobs:
       - name: Setup Node.js Environment
         uses: actions/setup-node@master
         with:
-          node_version: '10.x'
+          node_version: '12.x'
       - name: Install Project Dependencies
         run: npm ci
-      - name: Build Project
-        run: npm run build
-      - name: Run Project Tests
-        run: npm run test
-
-
+      - name: Run Unit Tests
+        run: npm run test:ci
