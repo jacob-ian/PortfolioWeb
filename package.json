@@ -34,10 +34,11 @@
     "@angular/router": "~10.1.2",
     "@nguniversal/express-engine": "^10.1.0",
     "express": "^4.15.2",
+    "firebase": "^7.0 || ^8.0",
+    "firebase-backend": "^0.1.5",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
-    "zone.js": "~0.10.2",
-    "firebase": "^7.0 || ^8.0"
+    "zone.js": "~0.10.2"
   },
   "devDependencies": {
     "@angular-devkit/architect": ">= 0.900 < 0.1200",
