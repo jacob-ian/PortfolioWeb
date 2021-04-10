@@ -20,7 +20,7 @@ jobs:
       - name: Build Project for Production
         run: npm run build:prod
       - name: Deploy to Firebase
-        run: npx firebase deploy
+        run: npx firebase deploy --force
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         
