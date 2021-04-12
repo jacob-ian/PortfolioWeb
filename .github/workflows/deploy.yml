@@ -24,6 +24,7 @@ jobs:
         env: 
           BACKUP_EMAIL: ${{ secrets.FIRESTORE_BACKUP_EMAIL }}
           BACKUP_KEY: ${{ secrets.FIRESTORE_BACKUP_KEY }}
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
       - name: Deploy to Firebase
         run: npx firebase deploy --force
         env:
