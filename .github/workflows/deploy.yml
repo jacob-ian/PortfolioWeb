@@ -19,6 +19,11 @@ jobs:
         run: npm install -d firebase-tools
       - name: Build Project for Production
         run: npm run build:prod
+      - name: Set Firebase Functions Config
+        run: npx firebase functions:config:set backupserviceaccount.email="$BACKUP_EMAIL" backupserviceaccount.key="$BACKUP_KEY"
+        env: 
+          BACKUP_EMAIL: ${{ secrets.FIRESTORE_BACKUP_EMAIL }}
+          BACKUP_KEY: ${{ secrets.FIRESTORE_BACKUP_KEY }}
       - name: Deploy to Firebase
         run: npx firebase deploy --force
         env:
