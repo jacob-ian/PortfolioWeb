@@ -7,11 +7,12 @@
     <app-projects-filter (filterTo)="onFilter($event)"></app-projects-filter>
   </div>
 
-  <ng-container *ngIf="getFilteredProjects() | async; let projects">
+  <ng-container *ngIf="getFilteredProjects() | async as projects">
     <div class="projects-container" *ngIf="projects.length > 0">
       <app-project *ngFor="let project of projects" [project]="project">
       </app-project>
     </div>
   </ng-container>
+  <app-loading-animation *ngIf="isLoading"></app-loading-animation>
 
 </app-flex-container>
