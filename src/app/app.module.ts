@@ -29,6 +29,7 @@ import { MultiSelectComponent } from './core/multi-select/multi-select.component
 import { MultiSelectOptionComponent } from './core/multi-select/multi-select-option/multi-select-option.component';
 import { ButtonExpandComponent } from './core/button-expand/button-expand.component';
 import { HomeAnimationComponent } from './home/home-animation/home-animation.component';
+import { LoadingAnimationComponent } from './core/loading-animation/loading-animation.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { HomeAnimationComponent } from './home/home-animation/home-animation.com
     MultiSelectOptionComponent,
     ButtonExpandComponent,
     HomeAnimationComponent,
+    LoadingAnimationComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

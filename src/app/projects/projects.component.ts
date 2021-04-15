@@ -9,6 +9,7 @@ import { ProjectService } from '../services/projects/project.service';
   styleUrls: ['./projects.component.sass'],
 })
 export class ProjectsComponent implements OnInit, OnDestroy {
+  public isLoading: boolean = true;
   private filter: BehaviorSubject<string[]>;
   private projects: BehaviorSubject<Project[]>;
   private filteredProjects: BehaviorSubject<Project[]>;
@@ -38,6 +39,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
 
   private subscribeToProjects(): Subscription {
     return this.getProjectsObservable().subscribe((projects) => {
+      this.isLoading = false;
       this.projects.next(projects);
       this.onObservableChange();
     });

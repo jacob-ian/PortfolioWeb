@@ -1,0 +1,32 @@
+:host
+  flex: 1
+  display: flex
+  align-items: center
+  flex-direction: row
+  justify-content: center
+  margin-top: 30px
+
+@keyframes orbit
+  0%
+    transform: rotateZ(0deg)
+  
+  100%
+    transform: rotateZ(360deg)
+
+svg
+  height: 200px
+  width: 200px
+  
+  #blackhole
+    fill: #222
+  #orbit1
+    transform-origin: 50%
+    animation: orbit linear infinite 0.8s
+    fill: var(--font-color-subtitle)
+  #orbit2
+    transform-origin: 50%
+    animation: orbit linear infinite 1.5s
+    fill: var(--font-color-accent)
+
+    
+  

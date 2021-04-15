@@ -27,6 +27,19 @@
     transform: translateY(-100px)
   100%
     transform: translateY(600px)
+
+@keyframes glitter
+  0%
+    opacity: 1
+  
+  50%
+    opacity: 0.8
+  
+  75%
+    opacity: 1
+
+  100% 
+    opacity: 0.8
     
 svg
   height: 250px
@@ -41,8 +54,12 @@ svg
 #flame2
   animation: flame2 400ms ease-in-out infinite alternate-reverse
 
+.stars
+  animation: glitter 300ms linear
+
 #star1, #star2, #star3, #star4, #star5, #star6, #star7, #star8
   transform: translateY(-100px)
-  animation: flyby 1.5s
+  animation: flyby 1.5s linear, glitter 1.5s infinite
   animation-timing-function: linear
   animation-delay: calc(var(--order) * 2s)
+
