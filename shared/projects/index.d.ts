@@ -21,5 +21,6 @@ export declare namespace Technologies {
   interface Document {
     id: string;
     name: string;
+    projects: string[];
   }
 }
