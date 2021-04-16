@@ -5,6 +5,7 @@ import { Technology } from './technology';
 const TEST_TECH_1: Technologies.Document = {
   id: '1',
   name: 'angular',
+  projects: [],
 };
 
 describe('Technology', () => {

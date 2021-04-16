@@ -4,8 +4,8 @@ import { Technology } from './technology';
 import { TechnologyFactory } from './technology-factory';
 
 const TEST_TECH_DOCS: Technologies.Document[] = [
-  { id: '1', name: 'angular' },
-  { id: '2', name: 'react' },
+  { id: '1', name: 'angular', projects: [] },
+  { id: '2', name: 'react', projects: [] },
 ];
 
 const TEST_EMPTY_DOCS: Technologies.Document[] = [];

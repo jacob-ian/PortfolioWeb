@@ -46,8 +46,8 @@ const TEST_PROJECT_DOCS: Projects.Document[] = [
 ];
 
 const TEST_TECH_DOCS: Technologies.Document[] = [
-  { id: '1', name: 'angular' },
-  { id: '2', name: 'react' },
+  { id: '1', name: 'angular', projects: [] },
+  { id: '2', name: 'react', projects: [] },
 ];
 
 const TEST_DOCS_EMPTY = [];
