@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build && npm --prefix functions run build",
+    "build": "ng build && npm run build:functions",
+    "build:functions": "npm --prefix functions run build",
     "test:ci": "ng test --browsers=ChromeHeadless --watch=false --code-coverage && npm --prefix functions run test:ci",
     "test:angular": "ng test",
     "test:functions": "npm --prefix functions run test",
